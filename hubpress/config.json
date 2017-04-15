@@ -5,6 +5,23 @@
     "branch": "master"
   },
   "theme": {
-    "name": "Ghostium"
+    "name": "casper"
+  },
+  "urls": {
+    "site": "https://roobyz.github.io",
+    "hubpress": "https://roobyz.github.io",
+    "theme": "//roobyz.github.io/themes/casper",
+    "images": "https://roobyz.github.io/images"
+  },
+  "initialisationConfigComponent": {
+    "name": "initialise-configuration",
+    "computed": {},
+    "methods": {},
+    "staticRenderFns": [
+      null,
+      null,
+      null
+    ],
+    "_Ctor": {}
   }
 }
