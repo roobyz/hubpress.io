@@ -1,12 +1,11 @@
 // = Your Blog title
 // See https://hubpress.gitbooks.io/hubpress-knowledgebase/content/ for information about the parameters.
 // :hp-image: /covers/cover.png
-// :published_at: 2019-01-31
-// :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Test Post
-:hp-tags: Blog, OpenSource, Machine_Learning
+= Identifying the Successful Completion of Weight-Lifting Exercises
+:hp-tags: Blog, Open_Source, Machine_Learning
+:published_at: 2017-04-15
 
 One day your company tells you that the analytics team should switch from a proprietary platform like SAS, to something open source like RStudio. Undoubtedly some analysts may feel excited, while others a bit anxious. How would you get people excited about the potential switch?
 
@@ -17,4 +16,3 @@ Leveraging Human Activity Recognition (HAR) data provided from a Groupware@LES s
 This machine learning exercise is a "toy" project in the sense that the Groupware@LES data is well balanced across the class variables. This saves us from needing to account for that, however provides ample opportunity to do all of the other major data wrangling and analytics steps required in most projects.
 
 The machine learning goal... can we distinguish between participants in a fitness experiment, that have correctly completed fitness exercises versus those that haven’t and what mistakes were made, if any? We will assess how accurately we can classify the exercises performed by non-participants solely based on their HAR data.
-
