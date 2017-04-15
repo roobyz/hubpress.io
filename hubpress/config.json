@@ -11,7 +11,7 @@
   "urls": {
     "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/uno-zen",
+    "theme": "//roobyz.github.io/themes/uno",
     "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
@@ -33,7 +33,7 @@
     "delay": "",
     "postsPerPage": "5",
     "googleAnalytics": "",
-    "disqus": ""
+    "disqus": "roobyz"
   },
   "socialnetwork": {
     "email": "",
