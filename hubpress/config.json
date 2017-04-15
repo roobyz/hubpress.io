@@ -6,12 +6,12 @@
     "cname": ""
   },
   "theme": {
-    "name": "saga"
+    "name": "uno"
   },
   "urls": {
     "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/roon",
+    "theme": "//roobyz.github.io/themes/saga",
     "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
