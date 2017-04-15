@@ -6,7 +6,7 @@
 // :hp-alt-title: My English Title
 
 = Test Post
-:hp-tags: HubPress, Blog, Open_Source, Post
+:hp-tags: Blog, Open_Source
 
 This is the _first_ one!
 
