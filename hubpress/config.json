@@ -6,12 +6,12 @@
     "cname": ""
   },
   "theme": {
-    "name": "the-shell"
+    "name": "casper"
   },
   "urls": {
     "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/ghostium",
+    "theme": "//roobyz.github.io/themes/the-shell",
     "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
