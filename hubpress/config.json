@@ -28,7 +28,7 @@
   "site": {
     "title": "Roobyz Ramblings",
     "description": " A clean responsive site for thoughts and words.",
-    "logo": "/images/user_pic.jpg",
+    "logo": "roobyz.github.io/images/user_pic.jpg",
     "cover": "",
     "delay": "",
     "postsPerPage": "5",
