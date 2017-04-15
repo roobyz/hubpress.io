@@ -8,9 +8,9 @@
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics
 :published_at: 2017-04-15
 
-One day your company tells your team that they should switch from a proprietary analytics platform like link:https://www.sas.com/[SAS], to something open source like link:http://rmarkdown.rstudio.com/[RStudio]. Undoubtedly some analysts may become fascinated, while others anxious. How would you get them excited about the switch?
+One day your company tells your team that they should switch from a proprietary analytics platform like link:https://www.sas.com/[SAS], to something link:https://opensource.org/[open source] like link:http://rmarkdown.rstudio.com/[RStudio]. Undoubtedly some analysts may become fascinated, while others anxious. How would you get them excited about the switch?
 
-My approach was to demonstrate the potential of the new platform. How easily could RStudio generate reproducible research and facilitate story telling with data? How could we weave together narrative text and code to seamlessly produce and deliver elegantly formatted analyses to multiple audiences?
+My approach was to demonstrate the potential of the new open source platform. How easily could RStudio generate reproducible research and facilitate story telling with data? How could we weave together narrative text and code to seamlessly produce and deliver elegantly formatted analyses to multiple audiences?
 
 Leveraging Human Activity Recognition (HAR) data provided from a link:http://groupware.les.inf.puc-rio.br/har#ixzz3de67BWZU[Groupware@LES] study, a machine learning use-case was born. HAR data has become ubiquitous with the advent of devices like the Fitbit, Nike FuelBand, and even smartphones. Although users of these devices tend to quantify how much they participate in an activity, they rarely consider how _well_ they perform the activity.
 
