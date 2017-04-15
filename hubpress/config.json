@@ -11,7 +11,7 @@
   "urls": {
     "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/uno",
+    "theme": "//roobyz.github.io/themes/uno-zen",
     "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
@@ -27,7 +27,7 @@
   },
   "site": {
     "title": "Roobyz Ramblings",
-    "description": " A clean responsive blog for thoughts and words.",
+    "description": " A clean responsive site for thoughts and words.",
     "logo": "",
     "cover": "",
     "delay": "",
