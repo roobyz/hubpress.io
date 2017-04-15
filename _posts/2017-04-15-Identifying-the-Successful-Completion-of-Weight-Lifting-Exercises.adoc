@@ -3,7 +3,8 @@
 // :hp-image: /covers/cover.png
 // :hp-alt-title: My English Title
 
-= Identifying the Successful Completion of Weight-Lifting Exercises
+= Qualitative Completion of Weight-Lifting Exercises
+:hp-alt-title: Identifying the Successful Completion of Weight-Lifting Exercises
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics
 :published_at: 2017-04-15
 
@@ -13,10 +14,10 @@ Demonstrate the potential of the new platform, right? How easily can RStudio gen
 
 Leveraging Human Activity Recognition (HAR) data provided from a link:http://groupware.les.inf.puc-rio.br/har#ixzz3de67BWZU[Groupware@LES] study, a machine learning use-case was born. HAR data has become ubiquitous with the advent of devices like the Fitbit, Nike FuelBand, and even smartphones. Although users of these devices tend to quantify how much they participate in an activity, they rarely consider how _well_ they perform the activity.
 
-This machine learning exercise is "simple" in the sense that our data is well balanced across the class variables. This saves us from needing to account for that. However, there is ample opportunity for demonstrating other major analytics steps required in most machine learning projects.
+This machine learning exercise is "simple" in the sense that our data is well balanced across the class variables. This saves us from needing to account for that. However, there is ample opportunity to demonstrate the other major analytics steps required in most machine learning projects.
 
 The machine learning goal: can we distinguish between participants in a fitness experiment, that have correctly completed fitness exercises versus those that haven’t and what mistakes were made, if any? We will assess how accurately we can classify the exercises performed by non-participants solely based on their HAR data.
 
-link:https://cdn.rawgit.com/roobyz/PredictiveML/c0297e0d771e39633436b3cff87707f0c5f4b851/ml_activity_success.html[Project Results]
+The link:https://cdn.rawgit.com/roobyz/PredictiveML/c0297e0d771e39633436b3cff87707f0c5f4b851/ml_activity_success.html[Project Results], and code are available on my link:https://github.com/roobyz/PredictiveML[GitHub Repository].
 
 
