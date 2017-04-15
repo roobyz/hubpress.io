@@ -6,8 +6,16 @@
 // :hp-alt-title: My English Title
 
 = Test Post
-:hp-tags: Blog, OpenSource
+:hp-tags: Blog, OpenSource, Machine_Learning
 
-This is the _first_ one!
+One day your company tells you that the analytics teams should switch from a proprietary analytics platform like SAS, to something open source like RStudio. How could you get people excited about the switch? What would the change management look like? 
 
-More stuff, *now* that we began.
+To demonstrate how RStudio may be used to create reproducible research, while facilitating story with data.
+
+readily facilitates analysis, sharing, and reproducibility.
+
+Human Activity Recognition (HAR) data has become ubiquitous with the advent of devices like the Jawbone Up, Nike FuelBand, Fitbit and even smart-phones. Although users of these devices tend to quantify how much they participate in an activity, they rarely consider “how well” they perform the activity.
+
+This machine learning exercise is a  "toy" project from the sense that the data is well balanced.
+
+This project leverages machine learning to distinguish between participants in a fitness experiment, that have correctly completed fitness exercises versus those that haven’t and what mistakes were made, if any. We will assess how accurately we can classify the exercises performed by non-participants solely based on their Human Activity Recognition (HAR) data.
