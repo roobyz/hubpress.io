@@ -11,7 +11,7 @@
   "urls": {
     "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/uno",
+    "theme": "//roobyz.github.io/themes/ghostium",
     "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
