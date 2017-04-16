@@ -9,14 +9,18 @@
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
 
-So we are aspiring data scienctists and want to dip our toes into the the water. How do we get started using link:http://rmarkdown.rstudio.com/[RStudio]? We dive into the into the waters of the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"], of course!
+So we are aspiring data scienctists and want to dip our toes into the the water. How do we get started using link:http://rmarkdown.rstudio.com/[RStudio]? We dive into the into the waters of the link:https://www.kaggle.com/c/titanic[Kaggle Titanic Starting "Competition"], of course!
 
 Our objective: 
 
 * learn how to think about the competition from a data science perspective
-* predict whether or not a passenger would survive the sinking of the Titanic.
+* predict whether or not a passenger would survive the sinking of the link:https://en.wikipedia.org/wiki/RMS_Titanic[RMS Titanic]
 * enter a Kaggle submission file for evaluation
 * profit!
+
+== Quick History Lesson
+
+
 
 
 
