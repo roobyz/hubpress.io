@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 18:47:17 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning Data Science from the Titanic]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 19:09:11 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning Data Science from the Titanic]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
@@ -28,7 +28,7 @@
 <h2 id="_kaggle_basics">Kaggle Basics</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Kaggle is a community of data scientists and a platform for facilitating data science journeys. To participate, you may enter data science competitions. Kaggle provides two datasets for the Titanic competition containing passenger attributes:</p>
+<p>Kaggle is a community of data scientists and a platform for facilitating data science journeys. One way to participate, is through entering data science competitions. Kaggle provides two datasets for the Titanic competition containing passenger attributes:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -52,15 +52,12 @@
 <td class="content">
 <div class="title"><strong>Thinking like a Data Scientist</strong></div>
 <div class="paragraph">
-<p>We need to use the provided attributes (variables) to train a predictive model, but how does that work?</p>
+<p>We need to use the provided attributes (variables) to train a predictive model, but how does that work? Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree. We need to:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree</p>
-</li>
-<li>
-<p>We need to maximize the number of explanatory variables: those that are correlated with the outcome variable and</p>
+<p>maximize the number of explanatory variables: those that are correlated with the outcome variable, and</p>
 </li>
 <li>
 <p>minimize the correlation of explanatory variables to each other (<a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>).</p>
@@ -80,13 +77,13 @@
 <h2 id="_titanic_history_lesson">Titanic History Lesson</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage enroute to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. There were approximately 2200 passengers and crew aboard.</p>
+<p>The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage enroute to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers.</p>
 </div>
 <div class="paragraph">
-<p>Of the 1,317 passengers, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.</p>
+<p>There were 2,224 passengers and crew aboard. Of the 1,317 passengers, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.</p>
 </div>
 <div class="paragraph">
-<p>The ship had enough lifeboats for about 1100 passengers, and more than 1500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.</p>
+<p>The ship had enough lifeboats for about 1,100 passengers, and more than 1,500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.</p>
 </div>
 </div>
 </div>]]></description><link>https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Machine_Learning]]></category><category><![CDATA[Analytics]]></category><category><![CDATA[Data_Science]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Sun, 16 Apr 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[Qualitative Prediction of Weight-Lifting Exercises]]></title><description><![CDATA[<div class="paragraph">
