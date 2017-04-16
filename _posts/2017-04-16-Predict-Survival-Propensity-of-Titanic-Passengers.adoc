@@ -18,9 +18,29 @@ Our objective:
 * enter a Kaggle submission file for evaluation
 * profit!
 
+== Kaggle Basics
+
+Kaggle is a community of data scientists and a platform for facilitating data science journeys. To participate, you may enter data science competitions. Kaggle provides two datasets for the Titanic competition containing passenger attributes:
+
+* a training set, complete with the outcome (target) variable for training our predictive model.
+* a test set, for predicting the unknown outcome variable based on the passenger attributes provided in both datasets.
+
+After training and validating our predictive model, we then enter the submission file to Kaggle for evaluation.
+
+[NOTE]
+====
+Think like a Data Scientist:
+We know that we need to use the provided attributes (variables) to train a predictive model, right? How does that work? 
+Some variables are correlated with each other. When those variables vary, the outcome may also vary. We need to maximize the number of variables that are correlated with the outcome variable. In addition, we need to minimize the variables that are correlated with each other. In other words, we need to find the fewest quantity of variables that can explain everything that is going on.
+
 == Quick History Lesson
 
-The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage enroute to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. There were approximately 2200 passengers across multiple classes from emigrants starting a new life, to the wealthiest people of the time. The ship had only enough life boats for about 1100 passengers, and around 1500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.
+The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage enroute to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. There were approximately 2200 passengers and crew aboard.  
+
+Of the 1,317 passenger, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.
+
+The ship had enough life boats for about 1100 passengers, and more than 1500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.
+
 
 
 
