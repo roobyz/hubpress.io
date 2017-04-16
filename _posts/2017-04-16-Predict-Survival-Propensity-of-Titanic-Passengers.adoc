@@ -20,18 +20,18 @@ Our objective:
 
 == Kaggle Basics
 
-Kaggle is a community of data scientists and a platform for facilitating data science journeys. One way to participate, is through entering data science competitions. Kaggle provides two datasets for the Titanic competition containing passenger attributes:
+Kaggle is a community of data scientists and a platform for facilitating data science journeys. One way to participate, is by entering data science competitions. Similar to other competitions, Kaggle provides two Titanic datasets containing passenger attributes:
 
-* a training set, complete with the outcome (target) variable for training our predictive model.
-* a test set, for predicting the unknown outcome variable based on the passenger attributes provided in both datasets.
+* a _training set_, complete with the outcome (target) variable for training our predictive model(s)
+* a _test set_, for predicting the unknown outcome variable based on the passenger attributes provided in both datasets.
 
-After training and validating our predictive model, we then enter the submission file to Kaggle for evaluation.
+After training and validating our predictive model(s), we then enter the submission file to Kaggle for evaluation. As we iterate, we can see the progress we make on the leaderboard.
 
 //[icon="/images/note.png"]
 [NOTE]
 .*Thinking like a Data Scientist*
 =====================================
-We need to use the provided attributes (variables) to train a predictive model, but how does that work? Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree. We need to:
+We need to use the provided attributes (variables) to train a predictive model, but how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:
 
 - maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
 - minimize the correlation of explanatory variables to each other (link:https://en.wikipedia.org/wiki/Multicollinearity[multicollinearity]).
