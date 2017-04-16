@@ -11,4 +11,4 @@
 
 Say that we are aspiring data scienctists. How do we dip our toes into the the water? How can we get hands-on experience using link:http://rmarkdown.rstudio.com/[RStudio] for data science? Start with a Kaggle competition and learn from others, of course!
 
-We are going to use the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"] as a basis for our introduction to data sciene.
+We are going to use the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"] as a basis for our introduction to data science.
