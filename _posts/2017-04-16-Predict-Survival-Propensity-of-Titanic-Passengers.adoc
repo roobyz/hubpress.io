@@ -27,16 +27,17 @@ Kaggle is a community of data scientists and a platform for facilitating data sc
 
 After training and validating our predictive model, we then enter the submission file to Kaggle for evaluation.
 
-.Think like a Data Scientist: 
-************************************************
+[NOTE]
+.Think like a Data Scientist
+=====================================
 We need to use the provided attributes (variables) to train a predictive model, but how does that work? 
 
-- Some variables are correlated with each other. When those variables vary, the outcome will also vary to some degree. 
+- Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree. 
 - We need to maximize the number of variables that are correlated with the outcome variable. 
 - In addition, we need to minimize the variables that are correlated with each other. 
 
 In other words, we need to find the fewest quantity of variables that can explain everything that is going on.
-************************************************
+=====================================
 
 == Quick History Lesson
 
