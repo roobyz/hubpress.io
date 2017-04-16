@@ -28,7 +28,7 @@ Kaggle is a community of data scientists and a platform for facilitating data sc
 After training and validating our predictive model, we then enter the submission file to Kaggle for evaluation.
 
 [NOTE]
-.Think like a Data Scientist
+.*Think like a Data Scientist*
 =====================================
 We need to use the provided attributes (variables) to train a predictive model, but how does that work? 
 
