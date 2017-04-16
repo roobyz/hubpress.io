@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 23:27:06 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 23:35:26 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
@@ -113,13 +113,20 @@
 </ol>
 </div>
 <div id="app-listing" class="listingblock">
-<div class="title">test.rb</div>
+<div class="title">test.R</div>
 <div class="content">
-<pre class="highlight"><code class="language-ruby" data-lang="ruby">require 'sinatra'
+<pre class="highlight"><code class="language-R" data-lang="R">setwd("/home/rstudio/code")
 
-get '/hi' do
-  "Hello World!"
-end</code></pre>
+trnFile = "data/pml-har-trn.csv"
+tstFile = "data/pml-har-tst.csv"
+if (!file.exists(trnFile)) {
+    trnfileUrl &lt;- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+    download.file(trnfileUrl, destfile = trnFile, method = "curl")
+}
+if (!file.exists(tstFile)) {
+    tstfileUrl &lt;- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+    download.file(tstfileUrl, destfile = tstFile, method = "curl")
+}</code></pre>
 </div>
 </div>
 </div>
