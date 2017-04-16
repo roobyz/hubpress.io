@@ -34,10 +34,9 @@ After training and validating our predictive model, we then enter the submission
 We need to use the provided attributes (variables) to train a predictive model, but how does that work? 
 
 - Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree. 
-- We need to maximize the number of variables that are correlated with the outcome variable. 
-- In addition, we need to minimize the variables that are correlated with each other. 
+- We need to maximize the number of variables that are correlated with the outcome variable and minimize the variables correlated to each other. 
 
-In other words, we need to find the fewest quantity of variables that can explain everything that is going on.
+In other words, we need to find the fewest quantity of variables that can explain everything that is going on with the outcome we want to predict.
 =====================================
 
 == Quick History Lesson
