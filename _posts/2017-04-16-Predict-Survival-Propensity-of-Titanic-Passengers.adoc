@@ -41,7 +41,7 @@ In other words, we need to find the fewest quantity of variables that can explai
 
 == Titanic History Lesson
 
-The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage enroute to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. 
+The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage en route to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. 
 
 There were 2,224 passengers and crew aboard. Of the 1,317 passengers, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.
 
