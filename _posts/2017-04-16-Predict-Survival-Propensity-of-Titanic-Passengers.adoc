@@ -26,7 +26,7 @@ Kaggle is a community of data scientists and a platform for facilitating data sc
 * a _training set_, complete with the outcome (target) variable for training our predictive model(s)
 * a _test set_, for predicting the unknown outcome variable based on the passenger attributes provided in both datasets.
 
-After training and validating our predictive model(s), we then enter the submission file to Kaggle for evaluation. As we iterate, we can see the progress we make on the leaderboard.
+After training and validating our predictive model(s), we can then enter the submission file to Kaggle for evaluation. As we iterate, we can submit more files and assess our progress on the leaderboard. Subtle improvements can lead to significant performnce leaps.
 
 //[icon="/images/note.png"]
 [NOTE]
