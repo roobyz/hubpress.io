@@ -11,7 +11,7 @@
   "urls": {
     "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/ghostium",
+    "theme": "//roobyz.github.io/themes/uno",
     "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
@@ -29,7 +29,7 @@
     "title": "Roobyz Ramblings",
     "description": "A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.",
     "logo": "/images/user_pic.jpg",
-    "cover": "",
+    "cover": "/images/background.jpg",
     "delay": "",
     "postsPerPage": "5",
     "googleAnalytics": "UA-53332527-1",
