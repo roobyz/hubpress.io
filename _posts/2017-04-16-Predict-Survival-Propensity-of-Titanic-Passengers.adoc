@@ -5,13 +5,18 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Kaggle: Learning from the Titanic
+= Kaggle: Learning from Titanic
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
 
-Say that we are aspiring data scienctists. How do we dip our toes into the the water? How can we get hands-on experience using link:http://rmarkdown.rstudio.com/[RStudio] for data science? Start with a Kaggle competition and learn from others, of course!
+Say that we are aspiring data scienctists, how do we dip our toes into the the water? How can we get hands-on experience using link:http://rmarkdown.rstudio.com/[RStudio] for data science? Start with a Kaggle competition and learn from others, of course!
 
-We are going to use the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"] as a basis for our introduction to data science.
+We are going to use the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"] as a basis for our introduction to data science using RStudio. Our objective: 
+
+* predict whether or not a passenger would survive the sinking of the Titanic.
+* learn how to think about the competition from a data science perspective
+* enter a Kaggle submission file for evaluation
+* profit!
 
 
- 
+
