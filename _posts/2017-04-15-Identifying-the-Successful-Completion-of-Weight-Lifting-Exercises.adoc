@@ -5,7 +5,7 @@
 
 = Qualitative Prediction of Weight-Lifting Exercises
 :hp-alt-title: Identifying the Successful Completion of Weight-Lifting Exercises
-:hp-tags: Blog, Open_Source, Machine_Learning, Analytics
+:hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
 :published_at: 2017-04-15
 
 One day your company tells your team that they should switch from a proprietary analytics platform like link:https://www.sas.com/[SAS], to something link:https://opensource.org/[open source] like link:http://rmarkdown.rstudio.com/[RStudio]. Undoubtedly some analysts may become fascinated, while others anxious. How would you get them excited about the switch?
