@@ -25,6 +25,6 @@ The link:https://cdn.rawgit.com/roobyz/PredictiveML/c0297e0d771e39633436b3cff877
 
 ++++
 <br /><table><tbody>
-<tr><td style="width:100px"><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></td><td style="vertical-align:text-top;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, which means you can remix, tweak, and build upon this work even for commercial purposes, as long as you credit the authors of the original work.</td></tr>
+<tr><td style="width:100px; vertical-align:middle;"><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a></td><td style="vertical-align:top;">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>, which means you can remix, tweak, and build upon this work even for commercial purposes, as long as you credit the authors of the original work.</td></tr>
 </tbody></table>
 ++++
