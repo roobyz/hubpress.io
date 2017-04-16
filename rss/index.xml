@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 17:57:22 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning from Titanic]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 18:00:47 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning from Titanic]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scienctists and want to dip our toes into the the water. How do we get started using <a href="http://rmarkdown.rstudio.com/">RStudio</a>? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic Starting "Competition"</a>, of course!</p>
@@ -50,7 +50,7 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="title">Think like a Data Scientist</div>
+<div class="title"><strong>Think like a Data Scientist</strong></div>
 <div class="paragraph">
 <p>We need to use the provided attributes (variables) to train a predictive model, but how does that work?</p>
 </div>
