@@ -34,6 +34,7 @@ Think like a Data Scientist: We need to use the provided attributes (variables) 
 - Some variables are correlated with each other. When those variables vary, the outcome may also vary. 
 - We need to maximize the number of variables that are correlated with the outcome variable. 
 - In addition, we need to minimize the variables that are correlated with each other. 
+====
 
 In other words, we need to find the fewest quantity of variables that can explain everything that is going on.
 
