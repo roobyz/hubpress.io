@@ -7,4 +7,5 @@
 
 = Kaggle: Learning from Titanic
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
+:hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
 
