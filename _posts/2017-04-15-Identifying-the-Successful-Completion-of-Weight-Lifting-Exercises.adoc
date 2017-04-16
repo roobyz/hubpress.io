@@ -22,4 +22,3 @@ Machine learning project goals:
 * demonstrate the feasibility of using RStudio for delivering reproducible research via a webpage.
 
 The link:https://cdn.rawgit.com/roobyz/PredictiveML/c0297e0d771e39633436b3cff87707f0c5f4b851/ml_activity_success.html[project results], and link:https://raw.githubusercontent.com/roobyz/PredictiveML/master/ml_activity_success.Rmd[code] are available on my link:https://github.com/roobyz/PredictiveML[GitHub Repository].
-
