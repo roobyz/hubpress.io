@@ -5,7 +5,7 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Titanic: Learning Data Science with R
+= Titanic: Learning Data Science with RStudio
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
 
@@ -51,7 +51,7 @@ The ship had enough lifeboats for about 1,100 passengers, and more than 1,500 di
 
 We'll approach this project in multiple parts. This is still a work in progress, but roughly speaking it should look like:
 
-. Part 1: Basic setup
+. Part 1: Basic Setup
 . Part 2: Feature Engineering
 . Part 3: Prediction
 . Part 4: Conclusion
