@@ -14,6 +14,7 @@ So we are aspiring data scientists and want to dip our toes into link:http://rma
 Our objective: 
 
 * learn how to think about the competition from a data science perspective
+* get somewhat comfortable with RStudio
 * predict whether or not a passenger would survive the sinking of the link:https://en.wikipedia.org/wiki/RMS_Titanic[RMS Titanic]
 * enter a Kaggle submission file for evaluation
 * profit!
@@ -29,9 +30,9 @@ After training and validating our predictive model(s), we then enter the submiss
 
 //[icon="/images/note.png"]
 [NOTE]
-.*Thinking like a Data Scientist*
+.*Data Science Perspective*
 =====================================
-We need to use the provided attributes (variables) to train a predictive model, but how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:
+We need to use the provided attributes (variables) to train a predictive model, and how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:
 
 - maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
 - minimize the correlation of explanatory variables to each other (link:https://en.wikipedia.org/wiki/Multicollinearity[multicollinearity]).
