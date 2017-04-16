@@ -5,7 +5,10 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Kaggle: Learning from Titanic
+= Kaggle: Learning from the Titanic
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
+
+Say that you are new to data science. How do you get your toes into the the water? How do you learn how to do it using RStudio? Start with a Kaggle competition and learn from others, of course!
+
 
