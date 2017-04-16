@@ -58,7 +58,7 @@ We'll approach this project in multiple parts. This is still a work in progress,
 . Part 4: Conclusion
 
 [[app-listing]]
-[source,R]
+[source,r]
 .test.R
 ----
 setwd("/home/rstudio/code")
