@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 19:35:13 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 23:25:44 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
@@ -10,6 +10,9 @@
 <ul>
 <li>
 <p>learn how to think about the competition from a data science perspective</p>
+</li>
+<li>
+<p>get somewhat comfortable with RStudio</p>
 </li>
 <li>
 <p>predict whether or not a passenger would survive the sinking of the <a href="https://en.wikipedia.org/wiki/RMS_Titanic">RMS Titanic</a></p>
@@ -41,7 +44,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>After training and validating our predictive model(s), we then enter the submission file to Kaggle for evaluation. As we iterate, we can see the progress we make on the leaderboard.</p>
+<p>After training and validating our predictive model(s), we can then enter the submission file to Kaggle for evaluation. As we iterate, we can submit more files and assess our progress on the leaderboard. Subtle model improvements can lead to significant leaps on the leaderboard.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -50,9 +53,9 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="title"><strong>Thinking like a Data Scientist</strong></div>
+<div class="title"><strong>Data Science Perspective</strong></div>
 <div class="paragraph">
-<p>We need to use the provided attributes (variables) to train a predictive model, but how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:</p>
+<p>We need to use the provided attributes (variables) to train a predictive model, and how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -108,6 +111,16 @@
 <p>Part 4: Conclusion</p>
 </li>
 </ol>
+</div>
+<div class="listingblock">
+<div class="title">test.rb</div>
+<div class="content">
+<pre class="highlight"><code class="language-ruby" data-lang="ruby">require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end</code></pre>
+</div>
 </div>
 </div>
 </div>]]></description><link>https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Machine_Learning]]></category><category><![CDATA[Analytics]]></category><category><![CDATA[Data_Science]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Sun, 16 Apr 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[Qualitative Prediction of Weight-Lifting Exercises]]></title><description><![CDATA[<div class="paragraph">
