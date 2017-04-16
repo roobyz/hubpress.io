@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 18:20:21 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning from Titanic]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 18:00:47 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning from Titanic]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scienctists and want to dip our toes into the the water. How do we get started using <a href="http://rmarkdown.rstudio.com/">RStudio</a>? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic Starting "Competition"</a>, of course!</p>
@@ -60,12 +60,15 @@
 <p>Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree.</p>
 </li>
 <li>
-<p>We need to maximize the number of variables that are correlated with the outcome variable and minimize the variables correlated to each other.</p>
+<p>We need to maximize the number of variables that are correlated with the outcome variable.</p>
+</li>
+<li>
+<p>In addition, we need to minimize the variables that are correlated with each other.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In other words, we need to find the fewest quantity of variables that can explain everything that is going on with the outcome we want to predict.</p>
+<p>In other words, we need to find the fewest quantity of variables that can explain everything that is going on.</p>
 </div>
 </td>
 </tr>
