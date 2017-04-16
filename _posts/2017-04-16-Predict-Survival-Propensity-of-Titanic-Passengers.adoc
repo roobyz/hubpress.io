@@ -47,7 +47,12 @@ There were 2,224 passengers and crew aboard. Of the 1,317 passengers, there were
 
 The ship had enough lifeboats for about 1,100 passengers, and more than 1,500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.
 
+== Tutorial Approach
 
+We'll approach this project in multiple parts. This is still a work in progress, but roughly speaking it should look like:
 
-
+. Part 1: Basic setup
+. Part 2: Feature Engineering
+. Part 3: Prediction
+. Part 4: Conclusion
 
