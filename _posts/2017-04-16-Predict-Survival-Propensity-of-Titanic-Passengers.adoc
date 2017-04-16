@@ -57,7 +57,8 @@ We'll approach this project in multiple parts. This is still a work in progress,
 . Part 3: Prediction
 . Part 4: Conclusion
 
-[source, ruby]
+[[app-listing]]
+[source,ruby]
 .test.rb
 ----
 require 'sinatra'
