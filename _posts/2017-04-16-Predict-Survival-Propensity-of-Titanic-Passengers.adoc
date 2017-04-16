@@ -57,22 +57,10 @@ We'll approach this project in multiple parts. This is still a work in progress,
 . Part 3: Prediction
 . Part 4: Conclusion
 
-[[app-listing]]
-[source,r]
-.test.R
-----
-setwd("/home/rstudio/code")
-
-trnFile = "data/pml-har-trn.csv"
-tstFile = "data/pml-har-tst.csv"
-if (!file.exists(trnFile)) {
-    trnfileUrl <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
-    download.file(trnfileUrl, destfile = trnFile, method = "curl")
-}
-if (!file.exists(tstFile)) {
-    tstfileUrl <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
-    download.file(tstfileUrl, destfile = tstFile, method = "curl")
-}
-----
+//[[app-listing]]
+//[source,ruby]
+//.test.ruby
+//----
+//----
 
 
