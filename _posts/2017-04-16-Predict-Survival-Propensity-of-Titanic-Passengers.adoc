@@ -28,7 +28,7 @@ Kaggle is a community of data scientists and a platform for facilitating data sc
 
 After training and validating our predictive model(s), we can then enter the submission file to Kaggle for evaluation. As we iterate, we can submit more files and assess our progress on the leaderboard. Subtle model improvements can lead to significant leaps on the leaderboard.
 
-[icon="/images/note.png"][4x]
+[icon="/images/note.png",width=100]
 .*Data Science Perspective*
 [TIP]
 =====================================
