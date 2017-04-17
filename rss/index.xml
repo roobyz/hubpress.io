@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 17 Apr 2017 03:33:49 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 17 Apr 2017 03:38:02 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
@@ -46,17 +46,9 @@
 <div class="paragraph">
 <p>After training and validating our predictive model(s), we can then enter the submission file to Kaggle for evaluation. As we iterate, we can submit more files and assess our progress on the leaderboard. Subtle model improvements can lead to significant leaps on the leaderboard.</p>
 </div>
-<div class="paragraph">
-<p><span class="icon"><i class="fa fa-comment fa-4x"></i></span></p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
+<div class="quoteblock">
 <div class="title"><strong>Data Science Perspective</strong></div>
+<blockquote>
 <div class="paragraph">
 <p>We need to use the provided attributes (variables) to train a predictive model, and how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:</p>
 </div>
@@ -73,9 +65,7 @@
 <div class="paragraph">
 <p>In other words, we need to find the fewest quantity of variables that can explain everything that is going on with the outcome that we want to predict.</p>
 </div>
-</td>
-</tr>
-</table>
+</blockquote>
 </div>
 </div>
 </div>
