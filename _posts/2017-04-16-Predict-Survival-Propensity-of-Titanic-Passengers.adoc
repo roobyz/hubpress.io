@@ -32,7 +32,7 @@ After training and validating our predictive model(s), we can then enter the sub
 // 20 for lg, 28 for 2x, 42 for 3x, 56 for 4x, 70 for 5x, 84 for 6x, 98 for 7x, 112 for 8x or 126 for 9x
 [cols="1, 8a"]
 |===
-^|image:/images/icons/tip.png[icon="tip",size="4x",width=56]
+^.^|image:/images/icons/tip.png[icon="tip",size="4x",width=56]
 |*Data Science Perspective*
 
 We need to use the provided attributes (variables) to train a predictive model, and how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:
