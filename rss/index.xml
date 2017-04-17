@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 17 Apr 2017 06:40:30 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 17 Apr 2017 06:46:49 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
@@ -55,23 +55,23 @@
 <tr>
 <td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p><strong>Data Science Perspective</strong>: Predictive models are trained using the provided attributes (variables), but how does that work?</p>
+<p> <strong>Data Science Perspective</strong>: Predictive models are trained using the provided attributes (variables), but how does that work?</p>
 </div>
 <div class="paragraph">
-<p><em>Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. For reasonable model performance, we need to:</em></p>
+<p>Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. For reasonable model performance, we need to:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>maximize the number of explanatory variables: those that are correlated with the outcome variable, and</em></p>
+<p>maximize the number of explanatory variables: those that are correlated with the outcome variable, and</p>
 </li>
 <li>
-<p><em>minimize the correlation of explanatory variables to each other (<a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>).</em></p>
+<p>minimize the correlation of explanatory variables to each other (<a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><em>In other words, we need to find the fewest quantity of variables that can explain almost everything that is going on with the outcome that we want to predict.</em></p>
+<p>In other words, we need to find the fewest quantity of variables that can explain almost everything that is going on with the outcome that we want to predict.</p>
 </div></div></td>
 </tr>
 </tbody>
