@@ -48,9 +48,6 @@ Some variables are correlated with each other. When those attributes vary, the c
 In other words, we need to find the fewest quantity of variables that can explain almost everything that is going on with the outcome that we want to predict.
 |===
 
-'''
-
-
 == Titanic History Lesson
 
 The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage en route to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. 
