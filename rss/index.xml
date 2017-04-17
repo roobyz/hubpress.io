@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 23:27:06 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 17 Apr 2017 03:21:25 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
@@ -50,7 +50,7 @@
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<img src="/images/note.png" alt="Note">
 </td>
 <td class="content">
 <div class="title"><strong>Data Science Perspective</strong></div>
@@ -111,16 +111,6 @@
 <p>Part 4: Conclusion</p>
 </li>
 </ol>
-</div>
-<div id="app-listing" class="listingblock">
-<div class="title">test.rb</div>
-<div class="content">
-<pre class="highlight"><code class="language-ruby" data-lang="ruby">require 'sinatra'
-
-get '/hi' do
-  "Hello World!"
-end</code></pre>
-</div>
 </div>
 </div>
 </div>]]></description><link>https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Machine_Learning]]></category><category><![CDATA[Analytics]]></category><category><![CDATA[Data_Science]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Sun, 16 Apr 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[Qualitative Prediction of Weight-Lifting Exercises]]></title><description><![CDATA[<div class="paragraph">
