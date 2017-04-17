@@ -33,13 +33,13 @@ After training and validating our predictive model(s), we can then enter the sub
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
-|*Data Science Perspective*: Predictive models are trained using the provided attributes (variables), but how does that work? 
+|*Data Science Perspective*: Predictive models are trained using attributes (variables), right? How does that work? 
 
-Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. For reasonable model performance, we need to:
+Some attributes are correlated: when they vary, another attribute will also vary to some degree. Machine learning leverages that interdependence to model outcome predictions. For reasonable model performance, we need to:
 
-  * maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
+* maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
 
-  * minimize the correlation of explanatory variables to each other (link:https://en.wikipedia.org/wiki/Multicollinearity[multicollinearity]).
+* minimize the correlation of explanatory variables to each other (link:https://en.wikipedia.org/wiki/Multicollinearity[multicollinearity]).
 
 In other words, we need to find the fewest quantity of variables that can explain almost everything that is going on with the outcome that we want to predict.
 |===
