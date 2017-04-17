@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 17 Apr 2017 05:53:36 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><generator>RSS for Node</generator><lastBuildDate>Sun, 16 Apr 2017 18:00:47 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Kaggle: Learning from Titanic]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
+<p>So we are aspiring data scienctists and want to dip our toes into the the water. How do we get started using <a href="http://rmarkdown.rstudio.com/">RStudio</a>? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic Starting "Competition"</a>, of course!</p>
 </div>
 <div class="paragraph">
 <p>Our objective:</p>
@@ -10,9 +10,6 @@
 <ul>
 <li>
 <p>learn how to think about the competition from a data science perspective</p>
-</li>
-<li>
-<p>get somewhat comfortable with RStudio</p>
 </li>
 <li>
 <p>predict whether or not a passenger would survive the sinking of the <a href="https://en.wikipedia.org/wiki/RMS_Titanic">RMS Titanic</a></p>
@@ -31,92 +28,65 @@
 <h2 id="_kaggle_basics">Kaggle Basics</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Kaggle is a community of data scientists and a platform for facilitating data science journeys. One way to participate, is by entering data science competitions. Similar to other competitions, Kaggle provides two Titanic datasets containing passenger attributes:</p>
+<p>Kaggle is a community of data scientists and a platform for facilitating data science journeys. To participate, you may enter data science competitions. Kaggle provides two datasets for the Titanic competition containing passenger attributes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>a <em>training set</em>, complete with the outcome (target) variable for training our predictive model(s)</p>
+<p>a training set, complete with the outcome (target) variable for training our predictive model.</p>
 </li>
 <li>
-<p>a <em>test set</em>, for predicting the unknown outcome variable based on the passenger attributes provided in both datasets.</p>
+<p>a test set, for predicting the unknown outcome variable based on the passenger attributes provided in both datasets.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>After training and validating our predictive model(s), we can then enter the submission file to Kaggle for evaluation. As we iterate, we can submit more files and assess our progress on the leaderboard. Subtle model improvements can lead to significant leaps on the leaderboard.</p>
+<p>After training and validating our predictive model, we then enter the submission file to Kaggle for evaluation.</p>
 </div>
-<hr>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 88.8889%;">
-</colgroup>
-<tbody>
+<div class="admonitionblock note">
+<table>
 <tr>
-<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/tip.png" alt="tip.png" width="56"></span></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p><strong>Data Science Perspective</strong></p>
-</div>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title"><strong>Think like a Data Scientist</strong></div>
 <div class="paragraph">
-<p>Predictive models are trained using the provided attributes (variables), but how does that work?</p>
-</div>
-<div class="paragraph">
-<p>Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. We need to:</p>
+<p>We need to use the provided attributes (variables) to train a predictive model, but how does that work?</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>maximize the number of explanatory variables: those that are correlated with the outcome variable, and</p>
+<p>Some variables are correlated with each other. When those variables vary, the other variables will also vary to some degree.</p>
 </li>
 <li>
-<p>minimize the correlation of explanatory variables to each other (<a href="https://en.wikipedia.org/wiki/Multicollinearity">multicollinearity</a>).</p>
+<p>We need to maximize the number of variables that are correlated with the outcome variable.</p>
+</li>
+<li>
+<p>In addition, we need to minimize the variables that are correlated with each other.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>In other words, we need to find the fewest quantity of variables that can explain almost everything that is going on with the outcome that we want to predict.</p>
-</div></div></td>
+<p>In other words, we need to find the fewest quantity of variables that can explain everything that is going on.</p>
+</div>
+</td>
 </tr>
-</tbody>
 </table>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_titanic_history_lesson">Titanic History Lesson</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage en route to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers.</p>
-</div>
-<div class="paragraph">
-<p>There were 2,224 passengers and crew aboard. Of the 1,317 passengers, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.</p>
-</div>
-<div class="paragraph">
-<p>The ship had enough lifeboats for about 1,100 passengers, and more than 1,500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.</p>
-</div>
-</div>
 </div>
 <div class="sect1">
-<h2 id="_tutorial_approach">Tutorial Approach</h2>
+<h2 id="_quick_history_lesson">Quick History Lesson</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We&#8217;ll approach this project in multiple parts. This is still a work in progress, but roughly speaking it should look like:</p>
+<p>The Titanic was a British passenger liner that sank after colliding with an iceberg in the Atlantic on its maiden voyage enroute to New York City. It was the largest ship of its time with 10 decks, 8 of which were for passengers. There were approximately 2200 passengers and crew aboard.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Part 1: Basic Setup</p>
-</li>
-<li>
-<p>Part 2: Feature Engineering</p>
-</li>
-<li>
-<p>Part 3: Prediction</p>
-</li>
-<li>
-<p>Part 4: Conclusion</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>Of the 1,317 passenger, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.</p>
+</div>
+<div class="paragraph">
+<p>The ship had enough life boats for about 1100 passengers, and more than 1500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.</p>
 </div>
 </div>
 </div>]]></description><link>https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Machine_Learning]]></category><category><![CDATA[Analytics]]></category><category><![CDATA[Data_Science]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Sun, 16 Apr 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[Qualitative Prediction of Weight-Lifting Exercises]]></title><description><![CDATA[<div class="paragraph">
