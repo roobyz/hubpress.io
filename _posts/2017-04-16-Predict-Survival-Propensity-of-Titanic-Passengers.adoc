@@ -37,13 +37,15 @@ After training and validating our predictive model(s), we can then enter the sub
 ^.^|image:/images/icons/tip.png[icon="tip",size="4x",width=56]
 |*Data Science Perspective*
 
-We need to use the provided attributes (variables) to train a predictive model, and how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:
+The predictive model is trained using the provided attributes (variables), but how does that work? 
+
+Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. We need to:
 
   * maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
 
   * minimize the correlation of explanatory variables to each other (link:https://en.wikipedia.org/wiki/Multicollinearity[multicollinearity]).
 
-In other words, we need to find the fewest quantity of variables that can explain everything that is going on with the outcome that we want to predict.
+In other words, we need to find the fewest quantity of variables that can explain almost everything that is going on with the outcome that we want to predict.
 |===
 
 '''
