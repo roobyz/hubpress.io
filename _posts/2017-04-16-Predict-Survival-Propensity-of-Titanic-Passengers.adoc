@@ -57,7 +57,7 @@ The ship had enough lifeboats for about 1,100 people, and more than 1,500 died. 
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*Data Science Perspective*: So the different variables like gender and class could influence whether someone survived, correct?
 
-Yes, for example, if someone was in the lower decks, they may not have been able to get to the lifeboats: which is correlated to class.
+Yes, for example, if someone was in a lower deck, they may not have been able to get to the lifeboats: which is correlated to class. To achieve reasonably accurate predictions, the model that we create will assign different weights the attributes (variables of importance).
 |===
 
 == Next Steps...
