@@ -8,7 +8,6 @@
 = Titanic: Learning Data Science with RStudio
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
-:icons: font
 
 So we are aspiring data scientists and want to dip our toes into link:http://rmarkdown.rstudio.com/[RStudio]. How do we get started? We dive into the into the waters of the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"], of course!
 
@@ -29,7 +28,7 @@ Kaggle is a community of data scientists and a platform for facilitating data sc
 
 After training and validating our predictive model(s), we can then enter the submission file to Kaggle for evaluation. As we iterate, we can submit more files and assess our progress on the leaderboard. Subtle model improvements can lead to significant leaps on the leaderboard.
 
-//[icon="/images/note.png",width="64px"]
+//[icon="/images/note.png"]
 .*Data Science Perspective*
 [TIP]
 =====================================
