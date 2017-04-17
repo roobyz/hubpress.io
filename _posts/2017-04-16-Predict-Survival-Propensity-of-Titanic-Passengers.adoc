@@ -33,7 +33,7 @@ After training and validating our predictive model(s), we can then enter the sub
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
-|*Data Science Perspective*: Predictive models are trained using attributes (variables), right? How does that work? 
+|*About That*: Predictive models are trained using attributes (variables), right? How does that work? 
 
 Some attributes are correlated: when they vary, another attribute will also vary to some degree. Machine learning leverages that interdependence to model outcome predictions. For reasonable model performance, we need to:
 
@@ -55,9 +55,9 @@ The ship had enough lifeboats for about 1,100 people, and more than 1,500 died. 
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
-|*Data Science Perspective*: So the different variables like gender and class could influence whether someone survived, correct?
+|*About That*: So the different variables like gender and class could influence whether someone survived, correct?
 
-Yes, for example, if someone was in a lower deck, they may not have been able to get to the lifeboats: which is correlated to class. To achieve reasonably accurate survival predictions, the model that we create will assign different weights to the variables of importance.
+Yes, for example, someone in a lower deck may not have been able to get to the lifeboats: which is correlated to class. To achieve reasonably accurate survival predictions, the model that we create will assign different weights to the variables of importance.
 |===
 
 == Next Steps...
