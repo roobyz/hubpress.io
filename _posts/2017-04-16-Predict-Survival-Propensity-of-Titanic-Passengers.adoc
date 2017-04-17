@@ -35,7 +35,7 @@ After training and validating our predictive model(s), we can then enter the sub
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*About That*: Predictive models are trained using attributes (variables), right? How does that work? 
 
-Some attributes are correlated: when they vary, another attribute will also vary to some degree. Machine learning leverages that interdependence to model the predicted outcomes. For accurate model performance, we need to:
+Some attributes are correlated: when they vary other attributes will also vary to some degree. Machine learning leverages that interdependence to model the predicted outcomes. For accurate model performance, we need to:
 
 * maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
 
