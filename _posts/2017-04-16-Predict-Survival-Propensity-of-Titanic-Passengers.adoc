@@ -52,9 +52,17 @@ There were 2,224 passengers and crew aboard. Of the 1,317 passengers, there were
 
 The ship had enough lifeboats for about 1,100 people, and more than 1,500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.
 
-== Tutorial Approach
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
+|*Data Science Perspective*: So the different variables like gender and class could influence whether someone survived, correct?
 
-We'll approach this project in multiple parts. This is still a work in progress, but roughly speaking it should look like:
+Yes, for example, if someone was down in the lower decks, they may not have been able to get to the lifeboats: which is correlated to their class.
+|===
+
+== Next Steps...
+
+We'll approach this in multiple parts. This is still a work in progress, but roughly speaking it should look like:
 
 * Part 1: Basic Setup
 * Part 2: Feature Engineering
