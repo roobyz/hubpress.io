@@ -37,7 +37,7 @@ After training and validating our predictive model(s), we can then enter the sub
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*Data Science Perspective*: Predictive models are trained using the provided attributes (variables), but how does that work? 
 
-Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. Before training the model, we need to:
+Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. For reasonable model performance, we need to:
 
   * maximize the number of explanatory variables: those that are correlated with the outcome variable, and 
 
