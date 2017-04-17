@@ -34,7 +34,7 @@ After training and validating our predictive model(s), we can then enter the sub
 // 20 for lg, 28 for 2x, 42 for 3x, 56 for 4x, 70 for 5x, 84 for 6x, 98 for 7x, 112 for 8x or 126 for 9x
 [cols="1, 8a"]
 |===
-^.^|image:/images/icons/tip.png[icon="tip",size="4x",width=56]
+^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*Data Science Perspective*: Predictive models are trained using the provided attributes (variables), but how does that work? 
 
 Some variables are correlated with each other. When those attributes vary, the correlated attributes will also vary to some degree. We need to:
@@ -52,16 +52,16 @@ The Titanic was a British passenger liner that sank after colliding with an iceb
 
 There were 2,224 passengers and crew aboard. Of the 1,317 passengers, there were: 324 in First Class (including some of the wealthiest people of the time), 284 in Second Class, and 709 in Third Class. Of these, 869 (66%) were male and 447 (34%) female. There were 107 children aboard, the largest number of which were in Third Class.
 
-The ship had enough lifeboats for about 1,100 passengers, and more than 1,500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.
+The ship had enough lifeboats for about 1,100 people, and more than 1,500 died. Due to the "women and children first" protocol, men were disproportionately left aboard. Also, not all lifeboats were completely filled during the evacuation. The 705 surviving passengers were rescued by the RMS Carpathia around 2 hours after the catastrophe.
 
 == Tutorial Approach
 
 We'll approach this project in multiple parts. This is still a work in progress, but roughly speaking it should look like:
 
-. Part 1: Basic Setup
-. Part 2: Feature Engineering
-. Part 3: Prediction
-. Part 4: Conclusion
+* Part 1: Basic Setup
+* Part 2: Feature Engineering
+* Part 3: Prediction
+* Part 4: Conclusion
 
 //[[app-listing]]
 //[source,ruby]
