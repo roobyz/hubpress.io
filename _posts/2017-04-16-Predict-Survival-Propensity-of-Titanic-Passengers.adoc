@@ -30,9 +30,9 @@ After training and validating our predictive model(s), we can then enter the sub
 
 icon:comment[4x]
 
-[icon="/images/note.png"]
-[NOTE]
+//[icon="/images/note.png"]
 .*Data Science Perspective*
+[TIP]
 =====================================
 We need to use the provided attributes (variables) to train a predictive model, and how does that work? Some variables are correlated with each other. When those variables vary, the correlated variables will also vary to some degree. We need to:
 
