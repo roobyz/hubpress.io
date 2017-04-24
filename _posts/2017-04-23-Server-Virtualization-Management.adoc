@@ -12,16 +12,18 @@
 
 Say we want to build a powerful server for the home office and we want good "bang for the buck". We want to run some powerful analytics software which undoubtably requires Linux, and we still want to run Windows. Proxmox is a relatively easy to install solution that fits the bill. 
 
-Proxmox facilitates the creation and connection of virtual "servers" via a web browser.
+Proxmox facilitates the creation and connection of virtual "servers" via a web browser. We can create and connect to multiple virtual machines; as many as our hardware allows.
 
-To ensure that you get good performance, you need to:
+To ensure good performance, we need to configure SPICE (Simple Protocol for Independent Computing Environments). The SPICE packages include drivers (QXL and virtio) that enhance virtualization performance:
 
-* setup SPICE Guest Tools on the virtual machines.
-* 
+* SPICE Client (virt-viewer) for Linux, Windows, and Mac systems
+* SPICE Guest Tools for the virtual machines
+
 
 https://pve.proxmox.com/wiki/Windows_7_guest_best_practices
 
 https://pve.proxmox.com/wiki/SPICE
 
+https://www.spice-space.org/download.html
 
 
