@@ -5,14 +5,16 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Proxmox: Server Virtualization for Work and Play
+= Proxmox VE: Server Virtualization for Work and Play
 :hp-alt-title: Server Virtualization Management
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
 
-Say we want a powerful "bang for the buck" home server for games and other system-intensive pursuits. In addition, we may want to run powerful analytics applications which undoubtably requires Linux, but we also want to run Windows. Finally, we want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. 
+Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which undoubtably requires Linux, but we also want to run Windows. Finally, we want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. 
 
-With the help of ProxMox VE we can achieve all of these objectives. It facilitates the creation and connection of multiple virtual OS "servers" via a PVE Web GUI; as many as our hardware allows. This guide will document a new Proxmox setup, running on the following hardware:
+https://www.proxmox.com/en/
+
+With the help of Proxmox Virtual Environment (PVE) we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware allows. This guide will document the Proxmox setup on the following hardware:
 
 * AMD Ryzen 7 1600 (8 cores, 16 threads @ 3.7GHz)
 * 64GB 2400MHz DDR4
@@ -22,19 +24,14 @@ With the help of ProxMox VE we can achieve all of these objectives. It facilitat
 ** 1x 2TB 7200rpm mechanical drives
 
 
-== Hardware
+== Hardware Considerations
 
-We'll need a CPU and motherboard that supports IOMMU to allow hardware virtualization. While most of the computer hardware can be shared between multiple operating systems (OS), the graphics card (GPU) cannot be shared. We'll need at least two graphics cards:
+Our CPU and motherboard must supports IOMMU to allow for hardware virtualization. While most of the computer hardware can be shared between multiple operating systems (OS), the graphics card (GPU) cannot readily be shared. We'll need at least two graphics cards:
 
 . One GPU for ProxMox (the host);
-. One reasonably powerful GPU for your virtual machine (VM) guest (Windows or Linux).
+. One reasonably powerful GPU for your virtual machine (VM) guest (Windows, Linux, etc.).
 
-We need to ensure that “VT-d” (Intel) or “AMD Virtualization” (AMD) is enabled in firmware. Since presumably we'll be using our VMs for games and other system-intensive pursuits, it’s a good idea to have 32GB of RAM or more, so that we can reserve at least 16GB for a single VM and still have some left over for ProxMox.
-
-1600 Ryzen
-NVMe
-SSD
-Disks
+We need to ensure that “AMD Virtualization” (SVM) and IOMMU is enabled in firmware. We should have 32GB of RAM or more, so that we can reserve at least 16GB for a single VM and still have enough memory left over for ProxMox and other VMs.
 
 == Software
 
