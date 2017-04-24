@@ -88,13 +88,14 @@ lspci -nn | grep `lspci | grep VGA | cut -d "." -f1`
 
 Take a note of the IDs in the square brackets near the end of each line: in my case 10de:1b80 (graphics) and 10de:10f0 (audio).
 
-Edit: `/etc/modprobe.d/vfio.conf`
-Add: `options vfio-pci ids=10de:1b80,10de:10f0`
+```
+echo "options vfio-pci ids=10de:1b80,10de:10f0" > /etc/modprobe.d/vfio.conf
+```
 
 //Update the grub settings:
 
 //* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash" to:
-//* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on pci-stub.ids=10de:1b80,10de:10f0"
+//* GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"
 
 amd_iommu=on
 
