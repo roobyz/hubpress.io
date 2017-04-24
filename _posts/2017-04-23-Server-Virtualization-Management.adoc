@@ -10,7 +10,17 @@
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
 
-Say we want to build a powerful server for the home office and we want good "bang for the buck". We want to run some powerful analytics software which undoubtably requires Linux, and we still want to run Windows. In addition, we want near native 2D and 3D graphics performance inside the guest OS while making dual-booting obsolete.
+Say we want a powerful "bang for the buck" home server for games and other system-intensive pursuits. In addition, we may want to run powerful analytics applications which undoubtably requires Linux, but we also want to run Windows. Finally, we want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. 
+
+With the help of ProxMox VE we can achieve all of these objectives. It facilitates the creation and connection of multiple virtual OS "servers" via a PVE Web GUI; as many as our hardware allows. This guide will document a new Proxmox setup, running on the following hardware:
+
+* AMD Ryzen 7 1600 (8 cores, 16 threads @ 3.7GHz)
+* 64GB 2400MHz DDR4
+* 1x 512GB Samsung 950-PRO NVMe V-Nand SSD 
+* Striped-mirrored ZFS storage:
+** 2x 1TB Mushkin SSD
+** 1x 2TB 7200rpm mechanical drives
+
 
 == Hardware
 
@@ -28,7 +38,6 @@ Disks
 
 == Software
 
-Proxmox is a relatively easy to install solution that fits the bill. It facilitates the creation and connection of virtual "servers" via a PVE Web GUI. We can create and connect to multiple virtual machines; as many as our hardware allows.
 
 Disconnect all the drives except the boot drive
 
