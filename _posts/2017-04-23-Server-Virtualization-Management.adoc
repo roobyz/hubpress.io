@@ -29,7 +29,7 @@ Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which m
 While most of the computer hardware can be shared between multiple operating systems (OS), the graphics card (GPU) cannot readily be shared. We'll need at least two GPUs:
 
 . One GPU for ProxMox (the host);
-. One powerful GPU for your VM (the guest: Windows, Linux, etc.).
+. One powerful GPU for our VM (the guest: Windows, Linux, etc.).
 
 == Software
 
