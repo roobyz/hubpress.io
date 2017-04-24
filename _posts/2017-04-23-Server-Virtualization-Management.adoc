@@ -10,42 +10,40 @@
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
 
-Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which undoubtably requires Linux, but we may also want to run Windows applications. Finally, we want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. 
+Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtably require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. 
 
-With the help of link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)] we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware allows. This guide will document the Proxmox setup on the following hardware:
+With the help of link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)] we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware will allow. This guide will document the setup of Proxmox on the following hardware:
 
 * AMD Ryzen 7 1600 (8 cores, 16 threads @ 3.7GHz)
 * 64GB 2400MHz DDR4
-* Boot Drive: 1x 512GB Samsung 950-PRO NVMe V-Nand SSD 
+* Boot Drive: 1x 512GB NVMe SSD 
 * Storage (Striped-mirrored ZFS):
-** 2x 1TB Mushkin SSD
-** 1x 2TB 7200rpm mechanical drives
+** 2x 1TB SATA SSD (striped)
+** 1x 2TB 7200rpm mechanical drives (mirrored)
 
 == Hardware Considerations
 
-Our CPU and motherboard requires "virtualization” (SVM) and IOMMU support, which must be enabled in firmware for proper resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and other VMs.
+Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and potentially other VMs running simultaneously.
 
 While most of the computer hardware can be shared between multiple VMs, the graphics card (GPU) cannot readily be shared. We'll need at least two GPUs:
 
 . One GPU for ProxMox (the host);
-. One powerful GPU for our VM (the guest: Windows, Linux, etc.).
+. One powerful GPU for our VMs (the guests: Windows, Linux, etc.).
 
-== Software
+== Software Considerations
 
-Although at the time of this writing link:https://jannikjung.me/proxmox-ve-5-0-beta1/[Proxmox 5.0] is in beta, it has the best support for our rather new Ryzen hardware.
+link:https://jannikjung.me/proxmox-ve-5-0-beta1/[PVE 5.0] is based in link:https://wiki.debian.org/DebianStretch[Debian Linux (Stretch)]. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has the best support for Ryzen.
 
-Disconnect all the drives except the boot drive
-
-
-
-KVM
-
-Debian Linux
+Since the guest systems will run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get Windows 7 updates. Just remember to identify your Windows link:https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine[Universally Unique Identifier (UUID)] since we need it to stay the same for the VM.
 
 == Installation
 
+https://forum.level1techs.com/t/proxmox-zfs-with-ssd-caching-setup-guide/97663
 https://pve.proxmox.com/wiki/Quick_installation
 
+Disconnect all the drives except the boot drive
+
+KVM
 
 == Post-Install
 
