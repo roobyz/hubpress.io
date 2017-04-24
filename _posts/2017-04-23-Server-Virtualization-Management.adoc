@@ -26,6 +26,8 @@ Ensure you have a reasonably new graphics card and your BIOS has “VT-d” (Int
 
 Proxmox is a relatively easy to install solution that fits the bill. It facilitates the creation and connection of virtual "servers" via a PVE Web GUI. We can create and connect to multiple virtual machines; as many as our hardware allows.
 
+Disconnect all the drives except the boot drive
+
 https://jannikjung.me/proxmox-ve-5-0-beta1/
 
 KVM
@@ -64,5 +66,12 @@ https://www.spice-space.org/download.html
 
 === Further Tweaks
 
+==== Setting up passthrough
 
+Identify the video card: 
+```
+lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
+```
+
+Take a note of the IDs in the square brackets near the end of each line: in my case 10de:1b80 (graphics) and 10de:10f0 (audio).
 
