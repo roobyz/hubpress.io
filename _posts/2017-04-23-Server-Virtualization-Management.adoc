@@ -21,22 +21,22 @@ With the help of link:https://www.proxmox.com/en/[Proxmox Virtual Environment (P
 ** 2x 1TB Mushkin SSD
 ** 1x 2TB 7200rpm mechanical drives
 
-
 == Hardware Considerations
 
-Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which must be enabled in firmware for proper resource sharing. We need 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and other VMs.
+Our CPU and motherboard requires "virtualization” (SVM) and IOMMU support, which must be enabled in firmware for proper resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and other VMs.
 
-While most of the computer hardware can be shared between multiple operating systems (OS), the graphics card (GPU) cannot readily be shared. We'll need at least two GPUs:
+While most of the computer hardware can be shared between multiple VMs, the graphics card (GPU) cannot readily be shared. We'll need at least two GPUs:
 
 . One GPU for ProxMox (the host);
 . One powerful GPU for our VM (the guest: Windows, Linux, etc.).
 
 == Software
 
+Although at the time of this writing link:https://jannikjung.me/proxmox-ve-5-0-beta1/[Proxmox 5.0] is in beta, it has the best support for our rather new Ryzen hardware.
 
 Disconnect all the drives except the boot drive
 
-https://jannikjung.me/proxmox-ve-5-0-beta1/
+
 
 KVM
 
