@@ -26,18 +26,31 @@ Ensure you have a reasonably new graphics card and your BIOS has “VT-d” (Int
 
 Proxmox is a relatively easy to install solution that fits the bill. It facilitates the creation and connection of virtual "servers" via a PVE Web GUI. We can create and connect to multiple virtual machines; as many as our hardware allows.
 
+https://jannikjung.me/proxmox-ve-5-0-beta1/
+
 KVM
 
 Debian Linux
 
+== Installation
 
-== Optimization
+https://pve.proxmox.com/wiki/Quick_installation
+
+
+== Post-Install
+
+
+=== Optimization
+
+
+Remove Proxmox License Nag: sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/pve-manager/ext6/pvemanagerlib.js
 
 For good performance, we need to configure SPICE (Simple Protocol for Independent Computing Environments). The SPICE packages include drivers (QXL and virtio) that enhance virtualization performance:
 
 * SPICE Client (virt-viewer) for Linux, Windows, and Mac systems
 * SPICE Guest Tools for the virtual machines
 
+https://pve.proxmox.com/wiki/Paravirtualized_Block_Drivers_for_Windows
 
 https://pve.proxmox.com/wiki/Windows_7_guest_best_practices
 
@@ -45,7 +58,7 @@ https://pve.proxmox.com/wiki/SPICE
 
 https://www.spice-space.org/download.html
 
-== Further Tweaks
+=== Further Tweaks
 
 
 
