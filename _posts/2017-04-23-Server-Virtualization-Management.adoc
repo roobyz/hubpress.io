@@ -10,9 +10,14 @@
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
 
-Say we want to build a powerful server for the home office and we want good "bang for the buck". We want to run some powerful analytics software which undoubtably requires Linux, and we still want to run Windows. 
+Say we want to build a powerful server for the home office and we want good "bang for the buck". We want to run some powerful analytics software which undoubtably requires Linux, and we still want to run Windows. In addition, we want near native 2D and 3D graphics performance inside the guest OS while making dual-booting obsolete.
 
 == Hardware
+
+In addition to a CPU and motherboard that supports IOMMU, you need two graphics cards (GPU):
+
+. One GPU ProxMox (the host);
+. One powerful GPU for your virtual machine guest (Windows, Linux).
 
 1600 Ryzen
 NVMe
@@ -74,4 +79,12 @@ lspci -nn | grep `lspci | grep VGA | cut -d "." -f1`
 ```
 
 Take a note of the IDs in the square brackets near the end of each line: in my case 10de:1b80 (graphics) and 10de:10f0 (audio).
+
+Update the grub settings:
+
+* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash" to:
+* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on pci-stub.ids=10de:1b80,10de:10f0"
+
+amd_iommu=on
+
 
