@@ -79,6 +79,8 @@ In the file: /etc/pve/qemu-server/101.conf
 
 ==== GPU Passthrough
 
+https://pve.proxmox.com/wiki/Pci_passthrough
+
 Identify the video card: 
 ```
 lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
@@ -86,10 +88,13 @@ lspci -nn | grep `lspci | grep VGA | cut -d "." -f1`
 
 Take a note of the IDs in the square brackets near the end of each line: in my case 10de:1b80 (graphics) and 10de:10f0 (audio).
 
-Update the grub settings:
+Edit: `/etc/modprobe.d/vfio.conf`
+Add: `options vfio-pci ids=10de:1b80,10de:10f0`
 
-* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash" to:
-* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on pci-stub.ids=10de:1b80,10de:10f0"
+//Update the grub settings:
+
+//* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash" to:
+//* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on pci-stub.ids=10de:1b80,10de:10f0"
 
 amd_iommu=on
 
