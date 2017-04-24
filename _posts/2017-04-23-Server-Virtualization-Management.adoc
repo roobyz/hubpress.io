@@ -10,3 +10,18 @@
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
 
+Say we want to build a powerful server for the home office and we want good "bang for the buck". We want to run some powerful analytics software which undoubtably requires Linux, and we still want to run Windows. Proxmox is a relatively easy to install solution that fits the bill. 
+
+Proxmox facilitates the creation and connection of virtual "servers" via a web browser.
+
+To ensure that you get good performance, you need to:
+
+* setup SPICE Guest Tools on the virtual machines.
+* 
+
+https://pve.proxmox.com/wiki/Windows_7_guest_best_practices
+
+https://pve.proxmox.com/wiki/SPICE
+
+
+
