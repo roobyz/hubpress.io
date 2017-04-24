@@ -14,18 +14,17 @@ Say we want to build a powerful server for the home office and we want good "ban
 
 == Hardware
 
-In addition to a CPU and motherboard that supports IOMMU, you need two graphics cards (GPU):
+We'll need a CPU and motherboard that supports IOMMU to allow hardware virtualization. While most of the computer hardware can be shared between multiple operating systems (OS), the graphics card (GPU) cannot be shared. We'll need at least two graphics cards:
 
-. One GPU ProxMox (the host);
-. One powerful GPU for your virtual machine guest (Windows, Linux).
+. One GPU for ProxMox (the host);
+. One reasonably powerful GPU for your virtual machine (VM) guest (Windows or Linux).
+
+We need to ensure that “VT-d” (Intel) or “AMD Virtualization” (AMD) is enabled in firmware. Since presumably we'll be using our VMs for games and other system-intensive pursuits, it’s a good idea to have 32GB of RAM or more, so that we can reserve at least 16GB for a single VM and still have some left over for ProxMox.
 
 1600 Ryzen
 NVMe
 SSD
 Disks
-GPU
-
-Ensure you have a reasonably new graphics card and your BIOS has “VT-d” (Intel) or “AMD Virtualization” (AMD) enabled.
 
 == Software
 
@@ -71,7 +70,14 @@ https://www.spice-space.org/download.html
 
 === Further Tweaks
 
-==== Setting up passthrough
+==== Emulation Settings
+
+In the file: /etc/pve/qemu-server/101.conf
+
+* Update the following: `cpu: Haswell,hidden=1`
+* Add the following: `args: ...`
+
+==== GPU Passthrough
 
 Identify the video card: 
 ```
