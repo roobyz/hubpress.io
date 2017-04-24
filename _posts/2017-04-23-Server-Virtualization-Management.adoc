@@ -39,6 +39,10 @@ https://pve.proxmox.com/wiki/Quick_installation
 
 == Post-Install
 
+=== Security
+
+https://www.kiloroot.com/secure-proxmox-install-sudo-firewall-with-ipv6-and-more-how-to-configure-from-start-to-finish/
+
 
 === Optimization
 
