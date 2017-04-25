@@ -37,8 +37,7 @@ So what's the difference between a VM and a container anyway, and how do we choo
 |
 |===
 
-If we need to run multiple applications on one server, or we want increased security then a VM is the best choice. To run different versions of a particular application, then we want to use containers. Containers are quicker and lighter weight than VMs. We can easily run multiple versions of an application (i.e RStudio) in different containers to validate reproducibility and reliability. In addition containers are transient so they can be packaged, shared, and moved to other hardware.
-
+If we need to run multiple applications on one server, we want increased security, or we want to run a different operating system on our host system, then a VM is our choice. To run different versions of an application (i.e RStudio) and validate reproducibility and reliability, then we want to use containers. Compared to VMs, containers are quicker, "lighter weight" and more transient so they can be readily packaged, shared, and moved to other hardware.
 
 == Hardware Considerations
 
