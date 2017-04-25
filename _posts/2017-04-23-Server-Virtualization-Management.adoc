@@ -5,7 +5,7 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Proxmox VE: Virtualization for Work and Play
+= Proxmox VE: Virtualization for Work and Play (The Plan)
 :hp-alt-title: Server Virtualization Management
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
@@ -48,4 +48,9 @@ We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS], a storage plat
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*About That*: KVM supports multiple disk formats; raw images, the native QEMU format (qcow2), VMware format, and many more. When working with ZFS on PVE, we need to use raw images. It may not seem obvious at first, but we can easily convert an existing KVM file from one format to a raw image. Near the end of this guide, we'll cover the process to convert a qcow2 format to the required PVE raw image.
 |===
+
+== Next Steps...
+
+* Part 2: Getting Started
+* Part 3: System Optimization
 
