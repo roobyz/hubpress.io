@@ -18,7 +18,7 @@ toc::[]
 
 == Introduction
 
-With the link:https://opensource.org/[open source] server management solution, link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)], we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of Proxmox on the following hardware:
+With the link:https://opensource.org/[open source] server management solution, link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)], we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of PVE on the following hardware:
 
 * AMD Ryzen 7 1600 (8 cores, 16 threads @ 3.7GHz)
 * 64GB 2400MHz DDR4
@@ -41,11 +41,11 @@ If we need to run multiple applications on one server, we want increased securit
 
 == Hardware Considerations
 
-Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and potentially other VMs running simultaneously.
+Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for PVE and potentially other VMs running simultaneously.
 
 While most of our computer hardware can be shared between multiple VMs, the graphics card (GPU) cannot readily be shared. We'll need at least two GPUs:
 
-. One GPU for ProxMox (the host);
+. One GPU for PVE (the host);
 . One powerful GPU for our VMs (the guests: Windows, Linux, etc.).
 
 == Software Considerations
