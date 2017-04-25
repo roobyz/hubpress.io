@@ -51,6 +51,9 @@ We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS], a storage plat
 
 == Next Steps...
 
+This tutorial is a work in progress. 
+
 * Part 2: Getting Started
 * Part 3: System Optimization
+
 
