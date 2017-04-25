@@ -12,11 +12,11 @@
 :toc: macro 
 :published_at: 2017-04-23
 
+Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. 
+
 toc::[]
 
 == Introduction
-
-Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. 
 
 With the link:https://opensource.org/[open source] server management solution, link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)], we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of Proxmox on the following hardware:
 
