@@ -8,6 +8,7 @@
 = Proxmox VE: Virtualization for Work and Play (The Plan)
 :hp-alt-title: Server Virtualization Management
 :hp-tags: Blog, Open_Source, Technology
+// :published_at: 2019-01-31
 :icons: image
 :toc: macro 
 
@@ -15,7 +16,7 @@ toc::[]
 
 == Introduction
 
-Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtably require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. 
+Say we want a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. 
 
 With the link:https://opensource.org/[open source] server management solution, link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)], we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of Proxmox on the following hardware:
 
@@ -39,9 +40,9 @@ While most of our computer hardware can be shared between multiple VMs, the grap
 
 link:https://jannikjung.me/proxmox-ve-5-0-beta1/[PVE 5.0] is based in link:https://wiki.debian.org/DebianStretch[Debian Linux (Stretch)]. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has better support for Ryzen than PVE 4.4.
 
-PVE natively supports both link:https://www.linux-kvm.org/page/Main_Page[KVM virtual machines] for hardware virtualization and link:https://linuxcontainers.org/lxc/introduction/[LXC containers]. Since the guest systems can run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get link:http://www.pcworld.com/article/3189990/windows/microsoft-blocks-kaby-lake-and-ryzen-pcs-from-windows-7-81-updates.html[Windows 7 updates]. We would need to identify our Windows link:https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine[Universally Unique Identifier (UUID)] so that it may be identical on our VM. Otherwise Microsoft may think that we have a new version of Windows that needs to be registered.
+PVE natively supports both link:https://www.linux-kvm.org/page/Main_Page[KVM virtual machines] for hardware virtualization and link:https://linuxcontainers.org/lxc/introduction/[LXC containers]. Since the guest systems can run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get link:http://www.pcworld.com/article/3189990/windows/microsoft-blocks-kaby-lake-and-ryzen-pcs-from-windows-7-81-updates.html[Windows 7 updates]. We would need to identify our Windows link:https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine[Universally Unique Identifier (UUID)] so that it may be identical on our VM. Otherwise, Microsoft may think that we have a new version of Windows that needs to be registered.
 
-We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS], a storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, functionality and performance. Our ZFS installation will be compressed and striped: our two SSD drives will run in parallel and require less storage space, which improves read/write performance. In addition, our ZFS will be mirrored: our SSD drives will be cloned so that we have a backup in case of drive failure.
+We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS], a storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, and performance. Our ZFS installation will be compressed and striped: our two SSD drives will run in parallel and require less storage space, which improves read/write performance. In addition, our ZFS will be mirrored: our SSD drives will be cloned so that we have a backup in case of drive failure.
 
 [cols="1, 8a"]
 |===
@@ -51,7 +52,7 @@ We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS], a storage plat
 
 == Next Steps...
 
-This tutorial is a work in progress. 
+This is Part 1 of a multipart tutorial, and a work in progress. Roughly speaking the next parts are as follows. As I complete each part, I'll update the links.
 
 * Part 2: Getting Started
 * Part 3: System Optimization
