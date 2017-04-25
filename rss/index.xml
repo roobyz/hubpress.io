@@ -1,4 +1,120 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 25 Apr 2017 04:25:44 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 25 Apr 2017 04:27:15 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Proxmox VE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Say we want a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_hardware_considerations">Hardware Considerations</a></li>
+<li><a href="#_software_considerations">Software Considerations</a></li>
+<li><a href="#_next_steps">Next Steps&#8230;&#8203;</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With the <a href="https://opensource.org/">open source</a> server management solution, <a href="https://www.proxmox.com/en/">Proxmox Virtual Environment (PVE)</a>, we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of Proxmox on the following hardware:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AMD Ryzen 7 1600 (8 cores, 16 threads @ 3.7GHz)</p>
+</li>
+<li>
+<p>64GB 2400MHz DDR4</p>
+</li>
+<li>
+<p>Boot Drive: 1x 512GB NVMe SSD</p>
+</li>
+<li>
+<p>Storage (Striped-mirrored ZFS):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>2x 1TB SATA SSD (striped)</p>
+</li>
+<li>
+<p>1x 2TB 7200rpm mechanical drives (mirrored)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware_considerations">Hardware Considerations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and potentially other VMs running simultaneously.</p>
+</div>
+<div class="paragraph">
+<p>While most of our computer hardware can be shared between multiple VMs, the graphics card (GPU) cannot readily be shared. We&#8217;ll need at least two GPUs:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>One GPU for ProxMox (the host);</p>
+</li>
+<li>
+<p>One powerful GPU for our VMs (the guests: Windows, Linux, etc.).</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_software_considerations">Software Considerations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://jannikjung.me/proxmox-ve-5-0-beta1/">PVE 5.0</a> is based in <a href="https://wiki.debian.org/DebianStretch">Debian Linux (Stretch)</a>. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has better support for Ryzen than PVE 4.4.</p>
+</div>
+<div class="paragraph">
+<p>PVE natively supports both <a href="https://www.linux-kvm.org/page/Main_Page">KVM</a> for hardware virtualization and <a href="https://linuxcontainers.org/lxc/introduction/">LXC containers</a> for linux system virtualization. Since the guest systems can run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get <a href="http://www.pcworld.com/article/3189990/windows/microsoft-blocks-kaby-lake-and-ryzen-pcs-from-windows-7-81-updates.html">Windows 7 updates</a>. We would need to identify our Windows <a href="https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine">Universally Unique Identifier (UUID)</a> so that it may be identical on our VM. Otherwise, Microsoft may think that we have a new version of Windows that needs to be registered.</p>
+</div>
+<div class="paragraph">
+<p>We will use <a href="https://github.com/zfsonlinux/zfs/wiki/faq">ZFS</a>, a storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, and performance. Our ZFS installation will be compressed and striped: our two SSD drives will run in parallel and require less storage space, which improves read/write performance. In addition, our ZFS will be mirrored: our SSD drives will be cloned so that we have a backup in case of drive failure.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>About That</strong>: KVM supports multiple disk formats; raw images, the native QEMU format (qcow2), VMware format, and many more. When working with ZFS on PVE, we need to use raw images. It may not seem obvious at first, but we can easily convert an existing KVM file from one format to a raw image. Near the end of this guide, we&#8217;ll cover the process to convert a qcow2 format to the required PVE raw image.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps">Next Steps&#8230;&#8203;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is Part 1 of a multipart tutorial, and a work in progress. Roughly speaking the next parts are as follows. As I complete each part, I&#8217;ll update the links.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Part 2: Getting Started</p>
+</li>
+<li>
+<p>Part 3: System Optimization</p>
+</li>
+</ul>
+</div>
+</div>
+</div>]]></description><link>https://roobyz.github.io/2017/04/23/Server-Virtualization-Management.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/04/23/Server-Virtualization-Management.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Technology]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Sun, 23 Apr 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[Titanic: Learning Data Science with RStudio]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
