@@ -32,9 +32,14 @@ While most of the computer hardware can be shared between multiple VMs, the grap
 
 == Software Considerations
 
-link:https://jannikjung.me/proxmox-ve-5-0-beta1/[PVE 5.0] is based in link:https://wiki.debian.org/DebianStretch[Debian Linux (Stretch)]. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has the best support for Ryzen.
+link:https://jannikjung.me/proxmox-ve-5-0-beta1/[PVE 5.0] is based in link:https://wiki.debian.org/DebianStretch[Debian Linux (Stretch)]. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has better support for Ryzen than PVE 4.4. PVE natively supports both link:https://www.linux-kvm.org/page/Main_Page[KVM virtual machines] and link:https://linuxcontainers.org/lxc/introduction/[LXC containers].
 
-Since the guest systems will run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get Windows 7 updates. Just remember to identify your Windows link:https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine[Universally Unique Identifier (UUID)] since we need it to stay the same for the VM.
+Since the guest systems will run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get link:http://www.pcworld.com/article/3189990/windows/microsoft-blocks-kaby-lake-and-ryzen-pcs-from-windows-7-81-updates.html[Windows 7 updates]. First, we must identify our Windows link:https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine[Universally Unique Identifier (UUID)] since we need it to stay the same for the VM. Otherwise Microsoft will think that you have a new version of Windows that needs to be registered.
+
+We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS on Linux]: an implementation of OpenZFS designed to work on Linux. ZFS is a storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, functionality and performance. Our ZFS installation will be compressed and striped: our two SSD drives will run in parallel and use require less space, which improves read/write performance. In addition, our ZFS will be mirrored: our SSD drives will be cloned so that we have a backup in case of drive failure.
+
+KVM supports multiple file formats qcow2, and raw, however ZFS only supports raw KVM files. For an existing KVM qcow2 file, we can easily convert to raw format. We'll cover that process near the end of this guide.
+
 
 == Installation
 
