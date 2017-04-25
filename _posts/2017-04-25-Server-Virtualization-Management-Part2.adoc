@@ -14,7 +14,7 @@
 
 toc::[]
 
-In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and set a plan to 
+In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and created a plan to 
 
 
 == Installation
