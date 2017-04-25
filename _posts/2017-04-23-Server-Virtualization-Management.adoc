@@ -27,6 +27,8 @@ With the link:https://opensource.org/[open source] server management solution, l
 ** 2x 1TB SATA SSD (striped)
 ** 1x 2TB 7200rpm mechanical drives (mirrored)
 
+image:Server-Virtualization-Management/vms-and-containers.png
+
 == Hardware Considerations
 
 Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for ProxMox and potentially other VMs running simultaneously.
