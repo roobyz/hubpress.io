@@ -5,17 +5,16 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Proxmox VE: Virtualization for Work and Play - Installation
+= Proxmox VE: Virtualization for Work and Play - Getting Started
 :hp-alt-title: Server Virtualization Management Part2
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
 :toc: macro 
 :published_at: 2017-04-25
 
+In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and outlined our plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Now we begin.
+
 toc::[]
-
-In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and created a plan to 
-
 
 == Installation
 
