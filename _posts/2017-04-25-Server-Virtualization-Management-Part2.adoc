@@ -1,0 +1,85 @@
+// = Your Blog title
+// See https://hubpress.gitbooks.io/hubpress-knowledgebase/content/ for information about the parameters.
+// :hp-image: /covers/cover.png
+// :published_at: 2019-01-31
+// :hp-tags: HubPress, Blog, Open_Source,
+// :hp-alt-title: My English Title
+
+= Proxmox VE: Virtualization for Work and Play - Installation
+:hp-alt-title: Server Virtualization Management Part2
+:hp-tags: Blog, Open_Source, Technology
+:icons: image
+:toc: macro 
+:published_at: 2017-04-25
+
+toc::[]
+
+In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and set a plan to 
+
+
+== Installation
+
+https://forum.level1techs.com/t/proxmox-zfs-with-ssd-caching-setup-guide/97663
+https://pve.proxmox.com/wiki/Quick_installation
+
+Disconnect all the drives except the boot drive
+
+KVM
+
+== Post-Install
+
+=== Security
+
+https://www.kiloroot.com/secure-proxmox-install-sudo-firewall-with-ipv6-and-more-how-to-configure-from-start-to-finish/
+
+
+=== Optimization
+
+
+Remove Proxmox License Nag: sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/pve-manager/ext6/pvemanagerlib.js
+
+For good performance, we need to configure SPICE (Simple Protocol for Independent Computing Environments). The SPICE packages include drivers (QXL and virtio) that enhance virtualization performance:
+
+* SPICE Client (virt-viewer) for Linux, Windows, and Mac systems
+* SPICE Guest Tools for the virtual machines
+
+https://pve.proxmox.com/wiki/Paravirtualized_Block_Drivers_for_Windows
+
+https://pve.proxmox.com/wiki/Windows_7_guest_best_practices
+
+https://pve.proxmox.com/wiki/SPICE
+
+https://www.spice-space.org/download.html
+
+=== Further Tweaks
+
+==== Emulation Settings
+
+In the file: /etc/pve/qemu-server/101.conf
+
+* Update the following: `cpu: Haswell,hidden=1`
+* Add the following: `args: ...`
+
+==== GPU Passthrough
+
+https://pve.proxmox.com/wiki/Pci_passthrough
+
+Identify the video card: 
+```
+lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
+```
+
+Take a note of the IDs in the square brackets near the end of each line: in my case 10de:1b80 (graphics) and 10de:10f0 (audio).
+
+```
+echo "options vfio-pci ids=10de:1b80,10de:10f0" > /etc/modprobe.d/vfio.conf
+```
+
+//Update the grub settings:
+
+//* GRUB_CMDLINE_LINUX_DEFAULT="quiet splash" to:
+//* GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"
+
+amd_iommu=on
+
+
