@@ -9,16 +9,20 @@
 :hp-alt-title: Predict Survival Propensity of Titanic Passengers
 :hp-tags: Blog, Open_Source, Machine_Learning, Analytics, Data_Science
 :icons: image
+:toc: macro 
 
 So we are aspiring data scientists and want to dip our toes into link:http://rmarkdown.rstudio.com/[RStudio]. How do we get started? We dive into the into the waters of the link:https://www.kaggle.com/c/titanic[Kaggle Titanic "Competition"], of course!
 
-Our objective: 
+toc::[]
 
-* learn how to think about the competition from a data science perspective
+== Our objective
+
+Use this Kaggle exercise to:
+
+* learn computational reasoning and problem solving from a data science perspective
 * get somewhat comfortable with RStudio
 * predict whether or not a passenger would survive the sinking of the link:https://en.wikipedia.org/wiki/RMS_Titanic[RMS Titanic]
 * enter a Kaggle submission file for evaluation
-* profit!
 
 == Kaggle Basics
 
@@ -57,7 +61,7 @@ The ship had enough lifeboats for about 1,100 people, and more than 1,500 died. 
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*About That*: So the different variables like gender and class could influence whether someone survived, correct?
 
-Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to class. To achieve reasonably accurate survival predictions, the model that we create will assign different weights to the variables of importance.
+Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to third class. Also, children were disporptionately in third class, but they were also impacted by the "children first" protocal.
 |===
 
 == Next Steps...
