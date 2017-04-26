@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 26 Apr 2017 03:51:43 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Proxmox VE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 26 Apr 2017 04:07:04 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Proxmox VE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Say we want a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. Lets do it!</p>
@@ -142,13 +142,27 @@
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
 </div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_our_objective">Our objective</a></li>
+<li><a href="#_kaggle_basics">Kaggle Basics</a></li>
+<li><a href="#_titanic_history_lesson">Titanic History Lesson</a></li>
+<li><a href="#_next_steps">Next Steps&#8230;&#8203;</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_our_objective">Our objective</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Our objective:</p>
+<p>Use this Kaggle exercise to:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>learn how to think about the competition from a data science perspective</p>
+<p>learn computational reasoning and problem solving from a data science perspective</p>
 </li>
 <li>
 <p>get somewhat comfortable with RStudio</p>
@@ -158,9 +172,6 @@
 </li>
 <li>
 <p>enter a Kaggle submission file for evaluation</p>
-</li>
-<li>
-<p>profit!</p>
 </li>
 </ul>
 </div>
@@ -241,7 +252,7 @@
 <p><strong>About That</strong>: So the different variables like gender and class could influence whether someone survived, correct?</p>
 </div>
 <div class="paragraph">
-<p>Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to class. To achieve reasonably accurate survival predictions, the model that we create will assign different weights to the variables of importance.</p>
+<p>Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to third class. Also, children were disporptionately in third class, but they were also impacted by the "children first" protocal.</p>
 </div></div></td>
 </tr>
 </tbody>

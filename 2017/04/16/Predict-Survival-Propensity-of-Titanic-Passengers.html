@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493178703528" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493179624060" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html" />
     <meta name="referrer" content="origin" />
@@ -33,7 +33,7 @@
     <meta property="og:site_name" content="Roobyz Ramblings" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Titanic: Learning Data Science with RStudio" />
-    <meta property="og:description" content="So we are aspiring data scientists and want to dip our toes into RStudio. How do we get started? We dive into the into the waters of the Kaggle Titanic &quot;Competition&quot;, of course! Our objective: learn how to think about the competition from a data science perspective get somewhat comfortable" />
+    <meta property="og:description" content="So we are aspiring data scientists and want to dip our toes into RStudio. How do we get started? We dive into the into the waters of the Kaggle Titanic &quot;Competition&quot;, of course! Table of Contents Our objective Kaggle Basics Titanic History Lesson Next Steps&amp;#8230;&amp;#8203; Our objective Use" />
     <meta property="og:url" content="https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html" />
     <meta property="article:published_time" content="2017-04-16T00:00:00.000Z" />
     <meta property="article:tag" content="Blog" />
@@ -44,7 +44,7 @@
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Titanic: Learning Data Science with RStudio" />
-    <meta name="twitter:description" content="So we are aspiring data scientists and want to dip our toes into RStudio. How do we get started? We dive into the into the waters of the Kaggle Titanic &quot;Competition&quot;, of course! Our objective: learn how to think about the competition from a data science perspective get somewhat comfortable" />
+    <meta name="twitter:description" content="So we are aspiring data scientists and want to dip our toes into RStudio. How do we get started? We dive into the into the waters of the Kaggle Titanic &quot;Competition&quot;, of course! Table of Contents Our objective Kaggle Basics Titanic History Lesson Next Steps&amp;#8230;&amp;#8203; Our objective Use" />
     <meta name="twitter:url" content="https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html" />
     
     <script type="application/ld+json">
@@ -63,7 +63,7 @@
     "url": "https://roobyz.github.io/2017/04/16/Predict-Survival-Propensity-of-Titanic-Passengers.html",
     "datePublished": "2017-04-16T00:00:00.000Z",
     "keywords": "Blog, Open_Source, Machine_Learning, Analytics, Data_Science",
-    "description": "So we are aspiring data scientists and want to dip our toes into RStudio. How do we get started? We dive into the into the waters of the Kaggle Titanic &quot;Competition&quot;, of course! Our objective: learn how to think about the competition from a data science perspective get somewhat comfortable"
+    "description": "So we are aspiring data scientists and want to dip our toes into RStudio. How do we get started? We dive into the into the waters of the Kaggle Titanic &quot;Competition&quot;, of course! Table of Contents Our objective Kaggle Basics Titanic History Lesson Next Steps&amp;#8230;&amp;#8203; Our objective Use"
 }
     </script>
 
@@ -162,13 +162,27 @@
 <div class="paragraph">
 <p>So we are aspiring data scientists and want to dip our toes into <a href="http://rmarkdown.rstudio.com/">RStudio</a>. How do we get started? We dive into the into the waters of the <a href="https://www.kaggle.com/c/titanic">Kaggle Titanic "Competition"</a>, of course!</p>
 </div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_our_objective">Our objective</a></li>
+<li><a href="#_kaggle_basics">Kaggle Basics</a></li>
+<li><a href="#_titanic_history_lesson">Titanic History Lesson</a></li>
+<li><a href="#_next_steps">Next Steps&#8230;&#8203;</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_our_objective">Our objective</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Our objective:</p>
+<p>Use this Kaggle exercise to:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>learn how to think about the competition from a data science perspective</p>
+<p>learn computational reasoning and problem solving from a data science perspective</p>
 </li>
 <li>
 <p>get somewhat comfortable with RStudio</p>
@@ -178,9 +192,6 @@
 </li>
 <li>
 <p>enter a Kaggle submission file for evaluation</p>
-</li>
-<li>
-<p>profit!</p>
 </li>
 </ul>
 </div>
@@ -261,7 +272,7 @@
 <p><strong>About That</strong>: So the different variables like gender and class could influence whether someone survived, correct?</p>
 </div>
 <div class="paragraph">
-<p>Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to class. To achieve reasonably accurate survival predictions, the model that we create will assign different weights to the variables of importance.</p>
+<p>Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to third class. Also, children were disporptionately in third class, but they were also impacted by the "children first" protocal.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -338,7 +349,7 @@
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493178703528"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493179624060"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
