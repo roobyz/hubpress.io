@@ -32,7 +32,7 @@ So what's the difference between a VM and a container anyway, and how do we choo
 [cols="1, 8a, 1"]
 |===
 |
-|Diagram 1: Comparison of a Virtual Machine and Container on One Machine
+|Diagram 1: Comparison of a VM & Container on One Machine
 image:Server-Virtualization-Management/vms-and-containers.png[vms-cnt]
 |
 |===
