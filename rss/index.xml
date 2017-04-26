@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 26 Apr 2017 04:12:38 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Proxmox VE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 26 Apr 2017 04:25:27 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Proxmox VE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Say we want a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. Lets do it!</p>
@@ -145,7 +145,7 @@
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_our_objective">Our objective</a></li>
+<li><a href="#_our_objective">Our Objective</a></li>
 <li><a href="#_kaggle_basics">Kaggle Basics</a></li>
 <li><a href="#_titanic_history_lesson">Titanic History Lesson</a></li>
 <li><a href="#_next_steps">Next Steps&#8230;&#8203;</a></li>
@@ -154,7 +154,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_our_objective">Our objective</h2>
+<h2 id="_our_objective">Our Objective</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Use this Kaggle exercise to:</p>
@@ -162,7 +162,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>learn computational reasoning and problem solving from a data science perspective</p>
+<p>learn to reason and problem solve like a data scientist</p>
 </li>
 <li>
 <p>get somewhat comfortable with RStudio</p>
@@ -172,6 +172,9 @@
 </li>
 <li>
 <p>enter a Kaggle submission file for evaluation</p>
+</li>
+<li>
+<p>have fun!</p>
 </li>
 </ul>
 </div>
