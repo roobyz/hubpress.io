@@ -21,7 +21,7 @@ Use this Kaggle exercise to:
 
 * learn to reason and problem solve like a data scientist
 * get somewhat comfortable with RStudio
-* predict whether or not a passenger would survive the sinking of the link:https://en.wikipedia.org/wiki/RMS_Titanic[RMS Titanic]
+* predict whether a passenger would survive the sinking of the link:https://en.wikipedia.org/wiki/RMS_Titanic[Titanic]
 * enter a Kaggle submission file for evaluation
 * have fun!
 
