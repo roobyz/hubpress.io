@@ -29,11 +29,11 @@ With the link:https://opensource.org/[open source] server management solution, l
 
 So what's the difference between a VM and a container anyway, and how do we choose between them? A VM is computer software that emulates a particular computer hardware system and requires an OS to function. In other words, VMs "pretend" to be an actual computer of the type that _we_ specify and will need to have a Guest OS like Windows or Linux running. Containers are software that emulates the Host OS, to enable software to run predictably.
 
-.Virtual Machines vs. Containers
 [cols="1, 8a, 1"]
 |===
 |
-|image:Server-Virtualization-Management/vms-and-containers.png[vms-cnt]
+|Diagram 1: Virtual Machine and Container compared.
+image:Server-Virtualization-Management/vms-and-containers.png[vms-cnt]
 |
 |===
 
