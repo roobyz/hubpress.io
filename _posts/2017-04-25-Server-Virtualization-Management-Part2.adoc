@@ -61,6 +61,15 @@ In the file: /etc/pve/qemu-server/101.conf
 
 ==== GPU Passthrough
 
+. Edit Grub: 
+.. Type: `vi /etc/default/grub`
+.. Enter edit mode: `i`
+.. Change: `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
+.. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"`
+.. Exit edit mode: <esc>
+.. Save: `wq <enter>`
+. Run: `update-grub`
+
 https://pve.proxmox.com/wiki/Pci_passthrough
 
 Identify the video card: 
