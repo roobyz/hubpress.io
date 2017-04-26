@@ -61,14 +61,43 @@ In the file: /etc/pve/qemu-server/101.conf
 
 ==== GPU Passthrough
 
-. Edit Grub: 
-.. Type: `vi /etc/default/grub`
+GPU Passthrough, allows our virtual machines to access GPU hardware for improved graphics and for calculations (i.e. deep learning). To enable, we must update our settings for IOMMU support icluding interrupt remapping, and to include some addition Linux modules.
+
+Edit boot settings:
+
+. Type: `vi /etc/default/grub`
 .. Enter edit mode: `i`
 .. Change: `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
 .. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"`
 .. Exit edit mode: <esc>
-.. Save: `wq <enter>`
+. Save and exit: `wq <enter>`
 . Run: `update-grub`
+
+Edit modules settings:
+
+. Type: `vi /etc/modules`
+.. Enter edit mode: `i`
+.. Add: `vfio`
+.. Add: `vfio_iommu_type1`
+.. Add: `vfio_pci`
+.. Add: `vfio_virqfd`
+.. Exit edit mode: <esc>
+. Save and exit: `wq <enter>`
+. Type: `echo "options vfio_iommu_type1 allow_unsafe_interrupts=1" > /etc/modprobe.d/iommu_unsafe_interrupts.conf`
+
+Identify the GPU to passthrough:
+
+. Identify all GPUs: `lspci | grep VGA`
+. Capture the GPU IDs: `lspci | grep VGA | cut -d "." -f1`
+.. My GPU ID for passthrough is: `28:00`
+.. My GPU ID for the host is: `21:00`
+. Identify the vendor IDs for the passthrough GPU: `lspci -ns 28:00`
+.. My GPU VGA device vendor ID: `10de:1b80`
+.. My GPU Audio device vendor ID: `10de:10f0`
+. Update module settings;
+.. Connect both of your IDs into a comma separate list (`10de:1b80,10de:10f0`) and update the following command parameter "ids".
+.. Type: `echo "options vfio-pci ids=10de:1b80,10de:10f0" > /etc/modprobe.d/vfio.conf`
+
 
 https://pve.proxmox.com/wiki/Pci_passthrough
 
