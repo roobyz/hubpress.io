@@ -62,7 +62,7 @@ The ship had enough lifeboats for about 1,100 people, and more than 1,500 died. 
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
 |*About That*: So the different variables like gender and class could influence whether someone survived, correct?
 
-Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated to third class. Also, children were disporptionately in third class, but they were also impacted by the "children first" protocal.
+Yes, for example, someone may not have been able to get to the lifeboats because they were in a lower deck, which is correlated with third class. Also, children were disporptionately in third class, but they were also impacted by the "children first" protocol.
 |===
 
 == Next Steps...
