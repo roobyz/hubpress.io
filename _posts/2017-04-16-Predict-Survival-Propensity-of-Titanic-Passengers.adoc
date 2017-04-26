@@ -15,14 +15,15 @@ So we are aspiring data scientists and want to dip our toes into link:http://rma
 
 toc::[]
 
-== Our objective
+== Our Objective
 
 Use this Kaggle exercise to:
 
-* learn computational reasoning and problem solving from a data science perspective
+* learn to reason and problem solve like a data scientist
 * get somewhat comfortable with RStudio
 * predict whether or not a passenger would survive the sinking of the link:https://en.wikipedia.org/wiki/RMS_Titanic[RMS Titanic]
 * enter a Kaggle submission file for evaluation
+* have fun!
 
 == Kaggle Basics
 
