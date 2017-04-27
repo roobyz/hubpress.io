@@ -86,7 +86,7 @@ Configure emulation settings for sound and passthrough. My Windows 7 virtual mac
 .. Update the following: `cpu: Haswell,hidden=1`
 .. Add the following:
 ... Audio passthrough: `args: -device AC97,addr=0x18`
-`args: -device intel-hda,id=sound5,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
+`args: -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
 ... GPU for passthrough: `hostpci0: 28:00.0;28:00.1,pcie=1`
 ... Emulation for PCI-E passthrough: `machine: q35`
 .. Exit edit mode: <esc>
