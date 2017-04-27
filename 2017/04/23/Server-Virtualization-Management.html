@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493179958488" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493305691976" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/04/23/Server-Virtualization-Management.html" />
     <meta name="referrer" content="origin" />
@@ -175,7 +175,7 @@
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With the <a href="https://opensource.org/">open source</a> server management solution, <a href="https://www.proxmox.com/en/">Proxmox Virtual Environment (PVE)</a>, we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of PVE on the following hardware:</p>
+<p>With the <a href="https://opensource.org/" target="_blank">open source</a> server management solution, <a href="https://www.proxmox.com/en/" target="_blank">Proxmox Virtual Environment (PVE)</a>, we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of PVE on the following hardware:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -253,13 +253,13 @@
 <h2 id="_software_considerations">Software Considerations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://jannikjung.me/proxmox-ve-5-0-beta1/">PVE 5.0</a> is based in <a href="https://wiki.debian.org/DebianStretch">Debian Linux (Stretch)</a>. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has better support for Ryzen than PVE 4.4.</p>
+<p><a href="https://jannikjung.me/proxmox-ve-5-0-beta1/" target="_blank">PVE 5.0</a> is based in <a href="https://wiki.debian.org/DebianStretch" target="_blank">Debian Linux (Stretch)</a>. Since our Ryzen hardware is rather new, our host system needs to have a Linux kernel version 4.10 or later. Although in beta at the time of this writing, PVE 5.0 has better support for Ryzen than PVE 4.4.</p>
 </div>
 <div class="paragraph">
-<p>PVE natively supports both <a href="https://www.linux-kvm.org/page/Main_Page">KVM</a> for hardware virtualization and <a href="https://linuxcontainers.org/lxc/introduction/">LXC containers</a> for Linux system virtualization. Since the guest systems can run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get <a href="http://www.pcworld.com/article/3189990/windows/microsoft-blocks-kaby-lake-and-ryzen-pcs-from-windows-7-81-updates.html">Windows 7 updates</a>. We would need to identify our Windows <a href="https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine">Universally Unique Identifier (UUID)</a> so that it may be identical on our VM. Otherwise, Microsoft may think that we have a new version of Windows that needs to be registered.</p>
+<p>PVE natively supports both <a href="https://www.linux-kvm.org/page/Main_Page" target="_blank">KVM</a> for hardware virtualization and <a href="https://linuxcontainers.org/lxc/introduction/" target="_blank">LXC containers</a> for Linux system virtualization. Since the guest systems can run under hardware virtualization, we get some added bonuses. For example, we can benefit from Ryzen hardware and still get <a href="http://www.pcworld.com/article/3189990/windows/microsoft-blocks-kaby-lake-and-ryzen-pcs-from-windows-7-81-updates.html" target="_blank">Windows 7 updates</a>. We would need to identify our Windows <a href="https://www.nextofwindows.com/the-best-way-to-uniquely-identify-a-windows-machine" target="_blank">Universally Unique Identifier (UUID)</a> so that it may be identical on our VM. Otherwise, Microsoft may think that we have a new version of Windows that needs to be registered.</p>
 </div>
 <div class="paragraph">
-<p>We will use <a href="https://github.com/zfsonlinux/zfs/wiki/faq">ZFS</a>, a storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, and performance. Our ZFS installation will be compressed and striped: our two SSD drives will run in parallel and require less storage space, which improves read/write performance. In addition, our ZFS will be mirrored: our SSD drives will be cloned so that we have a backup in case of drive failure.</p>
+<p>We will use <a href="https://github.com/zfsonlinux/zfs/wiki/faq" target="_blank">ZFS</a>, a storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, and performance. Our ZFS installation will be compressed and striped: our two SSD drives will run in parallel and require less storage space, which improves read/write performance. In addition, our ZFS will be mirrored: our SSD drives will be cloned so that we have a backup in case of drive failure.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -341,7 +341,7 @@
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493179958488"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493305691976"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
