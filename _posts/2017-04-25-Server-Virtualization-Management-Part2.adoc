@@ -59,8 +59,6 @@ To enable kvm passthrough, add the following module options (including the comma
 . Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
 
-// avic=1
-
 Update boot settings to enable IOMMU with pass-through mode and loads vfio-pci first so that framebuffer drivers, nouveau, nvidia, and others don’t grab it first while booting. Afterward we need to commit the changes to grub and generate a new initrd image.
 
 . Type: `vi /etc/default/grub`
@@ -72,13 +70,11 @@ Update boot settings to enable IOMMU with pass-through mode and loads vfio-pci f
 . Run: `update-grub`
 . Run: `update-initramfs -u`
 
-Reboot the host.
+Reboot. To check that the driver loaded correctly, run: "`lspci --nnks 28:00`". If everything went well, we should see: "`Kernel driver in use: *vfio-pci*`".
 
 `ll /sys/bus/pci/drivers/vfio-pci/* | grep 28:00`
 
-//echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf 
 // https://pve.proxmox.com/wiki/Pci_passthrough 
-
 // lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
 
 === Emulation Settings
@@ -90,7 +86,8 @@ Configure emulation settings for sound and passthrough. My Windows 7 virtual mac
 .. Update the following: `cpu: Haswell,hidden=1`
 .. Add the following:
 ... Audio passthrough: `args: -device AC97,addr=0x18`
-... GPU for passthrough: `hostpci0: 28:00,pcie=1,x-vga=on`
+`args: -device intel-hda,id=sound5,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
+... GPU for passthrough: `hostpci0: 28:00.0;28:00.1,pcie=1`
 ... Emulation for PCI-E passthrough: `machine: q35`
 .. Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
