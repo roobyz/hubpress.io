@@ -98,6 +98,8 @@ Identify the GPU to passthrough:
 .. Connect both of your IDs into a comma separate list (`10de:1b80,10de:10f0`) and update the following command parameter "ids".
 .. Type: `echo "options vfio-pci ids=10de:1b80,10de:10f0" > /etc/modprobe.d/vfio.conf`
 
+#echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf 
+
 
 https://pve.proxmox.com/wiki/Pci_passthrough
 
