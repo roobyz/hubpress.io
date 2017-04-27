@@ -1,9 +1,4 @@
-// = Your Blog title
-// See https://hubpress.gitbooks.io/hubpress-knowledgebase/content/ for information about the parameters.
 // :hp-image: /covers/cover.png
-// :published_at: 2019-01-31
-// :hp-tags: HubPress, Blog, Open_Source,
-// :hp-alt-title: My English Title
 
 = Proxmox VE: Virtualization for Work and Play (Getting Started)
 :hp-alt-title: Server Virtualization Management Part2
@@ -23,7 +18,6 @@ https://forum.level1techs.com/t/proxmox-zfs-with-ssd-caching-setup-guide/97663
 https://pve.proxmox.com/wiki/Quick_installation
 
 Disconnect all the drives except the boot drive
-
 KVM
 
 == Post-Install
@@ -32,27 +26,17 @@ KVM
 
 GPU Passthrough allows our VM to access GPU hardware for graphics and for computation (i.e. deep learning). To enable, we must update our settings for IOMMU support icluding interrupt remapping, and include additional Linux modules.
 
-Update boot settings:
-
-. Type: `vi /etc/default/grub`
-.. Enter edit mode: `i`
-.. Change: `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
-.. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"`
-.. Exit edit mode: <esc>
-. Save and exit: `wq <enter>`
-. Run: `update-grub`
-
-Update modules settings:
+Include the vfio modules:
 
 . Type: `vi /etc/modules`
-.. Enter edit mode: `i`
+. Enter edit mode: `i`
 .. Add: `vfio`
 .. Add: `vfio_iommu_type1`
 .. Add: `vfio_pci`
 .. Add: `vfio_virqfd`
-.. Exit edit mode: <esc>
+. Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
-. Type: `echo "options vfio_iommu_type1 allow_unsafe_interrupts=1" > /etc/modprobe.d/iommu_unsafe_interrupts.conf`
+. Run: `update-initramfs -u`
 
 Identify the GPU to passthrough:
 
@@ -63,9 +47,34 @@ Identify the GPU to passthrough:
 . Identify the vendor IDs for the passthrough GPU: `lspci -ns 28:00`
 .. The vendor ID for my GPU VGA device: `10de:1b80`
 .. The vendor ID for my GPU Audio device: `10de:10f0`
-. Update module settings;
-.. Connect both of your IDs into a comma separate list like `10de:1b80,10de:10f0` and update the "ids" parameter in the following command.
-.. Type: `echo "options vfio-pci ids=*10de:1b80,10de:10f0*" > /etc/modprobe.d/vfio.conf`
+
+To enable kvm passthrough, add the following module options (including the comma separated vendor IDs identified in the prior step):
+
+. Type: `vi /etc/modprobe.d/kvm.conf`
+. Enter edit mode: `i`
+.. `options vfio-pci         ids=*10de:1b80,10de:10f0*`
+.. `options vfio_iommu_type1 allow_unsafe_interrupts=1`
+.. `options kvm              ignore_msrs=1`
+.. `options kvm-amd          npt=0`
+. Exit edit mode: <esc>
+. Save and exit: `wq <enter>`
+
+// avic=1
+//.. `options vfio-pci         disable_vga=1`
+
+Update boot settings to enable IOMMU with pass-through mode:
+
+. Type: `vi /etc/default/grub`
+. Enter edit mode: `i`
+.. Change: `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
+.. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt"`
+. Exit edit mode: <esc>
+. Save and exit: `wq <enter>`
+. Run: `update-grub`
+
+Reboot the host.
+
+`ll /sys/bus/pci/drivers/vfio-pci/* | grep 28:00`
 
 //echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf 
 // https://pve.proxmox.com/wiki/Pci_passthrough 
@@ -74,11 +83,17 @@ Identify the GPU to passthrough:
 
 === Emulation Settings
 
-In the file: /etc/pve/qemu-server/101.conf
+Configure emulation settings for sound and passthrough. My Windows 7 virtual machine has an ID equal to 101. Update the next command with your Windows VM ID number.
 
-* Update the following: `cpu: Haswell,hidden=1`
-* Add the following: `args: ...`
-
+. Type: `vi /etc/pve/qemu-server/*101*.conf`
+.. Enter edit mode: `i`
+.. Update the following: `cpu: Haswell,hidden=1`
+.. Add the following:
+... Audio passthrough: `args: -device AC97,addr=0x18`
+... GPU for passthrough: `hostpci0: 28:00,pcie=1,x-vga=on`
+... Emulation for PCI-E passthrough: `machine: q35`
+.. Exit edit mode: <esc>
+. Save and exit: `wq <enter>`
 
 === Security
 
@@ -87,6 +102,7 @@ https://www.kiloroot.com/secure-proxmox-install-sudo-firewall-with-ipv6-and-more
 
 === Optimization
 
+Configure Ryzen to appear to have 2 sockets, 4 cores, and 2 threads
 
 Remove Proxmox License Nag: sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/pve-manager/ext6/pvemanagerlib.js
 
