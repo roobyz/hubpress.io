@@ -4,9 +4,10 @@
 :hp-alt-title: Server Virtualization Management Part2
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
+:linkattrs:
+:published_at: 2017-04-25
 :toc: macro
 :toclevels: 3
-:published_at: 2017-04-25
 
 In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and outlined our plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Now we begin.
 
