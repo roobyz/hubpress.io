@@ -25,7 +25,9 @@ KVM
 
 === GPU Passthrough
 
-GPU Passthrough allows our VM to access GPU hardware for graphics and for computation (i.e. deep learning). To enable, we must update our settings for IOMMU support icluding interrupt remapping, and include additional Linux modules.
+GPU Passthrough allows our VM to access GPU hardware for graphics and computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to physical addresses. IOMMU allows our virtual machines to communicate to our GPU using the virtual addresses as-if it were directly communicating to the actual GPU.
+
+link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a secure, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
 
 Include the vfio modules:
 
