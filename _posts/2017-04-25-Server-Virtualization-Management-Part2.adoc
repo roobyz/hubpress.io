@@ -25,11 +25,11 @@ KVM
 
 === GPU Passthrough
 
-GPU Passthrough allows our VM to access GPU hardware for graphics and computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to physical addresses. IOMMU allows our virtual machines to communicate to our GPU using the virtual addresses as-if it were directly communicating to the actual GPU.
+GPU Passthrough allows our VM to access GPU hardware for graphics and computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
 
 link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a secure, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
 
-Include the vfio modules:
+==== Include the VFIO Modules:
 
 . Type: `vi /etc/modules`
 . Enter edit mode: `i`
@@ -40,17 +40,19 @@ Include the vfio modules:
 . Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
 
+==== Configure the VFIO Modules
+
 Identify the GPU to passthrough:
 
-. Identify all GPUs: `lspci | grep VGA`
-. Capture the GPU IDs: `lspci | grep VGA | cut -d "." -f1`
-.. My GPU ID for passthrough is: `28:00`
-.. My GPU ID for the host is: `21:00`
-. Identify the vendor IDs for the passthrough GPU: `lspci -ns 28:00`
+. Identify all GPUs: `lspci -nn | grep VGA`
+. Capture the GPU slot IDs (first pair of numbers separated by a colon):
+.. My GPU Slot ID for passthrough is: `28:00`
+.. My GPU Slot ID for the host is: `21:00`
+. Capture the vendor IDs for the passthrough GPU Slot ID: `lspci -nns 00:02 | cut -d "]" -f 2 | cut -d "[" -f 2`
 .. The vendor ID for my GPU VGA device: `10de:1b80`
 .. The vendor ID for my GPU Audio device: `10de:10f0`
 
-To enable kvm passthrough, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads a kernel module called vfio-pci that maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
+To enable kvm passthrough, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
 
 . Type: `vi /etc/modprobe.d/kvm.conf`
 . Enter edit mode: `i`
@@ -62,7 +64,9 @@ To enable kvm passthrough, add the following module options (including the comma
 . Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
 
-Update boot settings to enable IOMMU with pass-through mode and loads vfio-pci first so that framebuffer drivers, nouveau, nvidia, and others don’t grab it first while booting. Afterward we need to commit the changes to grub and generate a new initrd image.
+==== Update Boot Settings
+
+Configure IOMMU for passthrough and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we need to commit them to grub and generate a new initrd image.
 
 . Type: `vi /etc/default/grub`
 . Enter edit mode: `i`
