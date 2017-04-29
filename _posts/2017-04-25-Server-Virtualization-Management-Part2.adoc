@@ -25,7 +25,7 @@ KVM
 
 === GPU Passthrough
 
-GPU Passthrough allows our VM to access GPU hardware for graphics and computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
+GPU Passthrough allows our VM to access GPU hardware for games, graphics and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
 
 link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a secure, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
 
@@ -52,30 +52,37 @@ Identify the GPU to passthrough:
 .. The vendor ID for my GPU VGA device: `10de:1b80`
 .. The vendor ID for my GPU Audio device: `10de:10f0`
 
-To enable kvm passthrough, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
+To enable KVM passthrough, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
 
 . Type: `vi /etc/modprobe.d/kvm.conf`
 . Enter edit mode: `i`
 .. `options vfio_iommu_type1 allow_unsafe_interrupts=1`
 .. `options vfio-pci         ids=*10de:1b80,10de:10f0*`
 .. `options vfio-pci         disable_vga=1`
-.. `options kvm              ignore_msrs=1`
 .. `options kvm-amd          npt=0`
+.. `options kvm              ignore_msrs=1`
 . Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
 
+// Nested Page Table... Linux guests with Q35 and OVMF may work with npt on or off. However a Linux guest with i440fx only works with npt disabled. 
+
 ==== Update Boot Settings
 
-Configure IOMMU for passthrough and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we need to commit them to grub and generate a new initrd image.
+Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we need to commit them to grub and generate a new initrd image.
 
 . Type: `vi /etc/default/grub`
 . Enter edit mode: `i`
 .. Change: `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
-.. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt rd.driver.pre=vfio-pci"`
+.. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on kvm_amd.avic=1 rd.driver.pre=vfio-pci video=efifb:off"`
 . Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
 . Run: `update-grub`
 . Run: `update-initramfs -u`
+
+//iommu=pt
+// AMD SVM Advance Virtual Interrupt Controller (AVIC) support virtualizes local APIC registers of each vCPU via the virtual APIC (vAPIC) backing page. This allows guest access to certain APIC registers without the need to emulate the hardware behavior and should speed up workloads which generate large amount of interrupts.
+// -machine q35,accel=kvm,mem-merge=off
+// -cpu host,kvm=off,hv_vendor_id=vgaptrocks,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time
 
 Reboot. To check that the driver loaded correctly, run: "`lspci --nnks 28:00`". If everything went well, we should see: "`Kernel driver in use: *vfio-pci*`".
 
@@ -86,15 +93,14 @@ Reboot. To check that the driver loaded correctly, run: "`lspci --nnks 28:00`". 
 
 === Emulation Settings
 
-Configure emulation settings for sound and passthrough. My Windows 7 virtual machine has an ID equal to 101. Update the next command with your Windows VM ID number.
+Configure emulation settings for sound and passthrough. My Windows 7 virtual machine has an ID equal to 101; update the next command with your Windows VM ID number.
 
 . Type: `vi /etc/pve/qemu-server/*101*.conf`
 .. Enter edit mode: `i`
-.. Update the following: `cpu: Haswell,hidden=1`
+.. Update the following: `cpu: Opteron_G5,hidden=1`
 .. Add the following:
-... Audio passthrough: `args: -device AC97,addr=0x18`
-`args: -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
-... GPU for passthrough: `hostpci0: 28:00.0;28:00.1,pcie=1`
+... Audio passthrough: `args: -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
+... GPU for passthrough: `hostpci0: 28:00,pcie=1`
 ... Emulation for PCI-E passthrough: `machine: q35`
 .. Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
