@@ -19,7 +19,7 @@ toc::[]
 
 == Introduction
 
-With the link:https://opensource.org/[open source^] server management solution, link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)^], we can achieve these goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of PVE on the following hardware:
+link:https://en.wikipedia.org/wiki/X86_virtualization[Hardware virtualization^] allows multiple operating systems to simultaneously share processor resources. With the link:https://opensource.org/[open source^] server management solution, link:https://www.proxmox.com/en/[Proxmox Virtual Environment (PVE)^], we can  leverage hardware virtualization to achieve our goals. PVE enables the creation of multiple virtual OS "servers" via a Web GUI; as many as our hardware setup will allow. This guide will document the setup of PVE on the following hardware:
 
 * AMD Ryzen 7 1600 (8 cores, 16 threads @ 3.7GHz)
 * 64GB 2400MHz DDR4
