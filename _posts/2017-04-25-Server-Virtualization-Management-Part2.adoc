@@ -27,7 +27,7 @@ KVM
 
 GPU Passthrough allows our VM to access GPU hardware for games, graphics and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
 
-link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a secure, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
+link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a _secure_, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
 
 ==== Include the VFIO Modules:
 
@@ -52,7 +52,7 @@ Identify the GPU to passthrough:
 .. The vendor ID for my GPU VGA device: `10de:1b80`
 .. The vendor ID for my GPU Audio device: `10de:10f0`
 
-To enable KVM passthrough, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
+To enable link:https://pve.proxmox.com/wiki/Pci_passthrough[PCI passthrough^] for our VM, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
 
 . Type: `vi /etc/modprobe.d/kvm.conf`
 . Enter edit mode: `i`
@@ -64,11 +64,31 @@ To enable KVM passthrough, add the following module options (including the comma
 . Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
 
-// Nested Page Table... Linux guests with Q35 and OVMF may work with npt on or off. However a Linux guest with i440fx only works with npt disabled. 
+.Option details
+[cols="4, 9a",options="header"]
+|===
+| Option | Details
+
+| allow_unsafe_interrupts=1
+| For platforms without interrupt remapping support. Removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this workaround.
+
+| ids=*10de:1b80,10de:10f0*`
+| Assign the specified GPU to the virtual pci for use in our VM.
+
+| disable_vga=1
+| Opt-out devices from vga arbitration if possible.
+
+| npt=0
+| Disable Nested Page Table If VM performance is very slow. Linux guests with Q35 and OVMF may work with npt on or off, however a Linux guest with i440fx only works with npt disabled.
+
+| ignore_msrs=1
+| Prevent some Nvidia applications from crashing the VM.
+
+|===
 
 ==== Update Boot Settings
 
-Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we need to commit them to grub and generate a new initrd image.
+Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we commit them to grub and generate a new initrd image.
 
 . Type: `vi /etc/default/grub`
 . Enter edit mode: `i`
@@ -79,16 +99,14 @@ Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab 
 . Run: `update-grub`
 . Run: `update-initramfs -u`
 
-//iommu=pt
+//iommu=pt ... AMD-Vi driver will not register itself as the dma_ops backend and allows all devices unlimited access to main memory as long as no other kernel part (currently only KVM will do so) assigns the device to another domain using the IOMMU-API.
+
 // AMD SVM Advance Virtual Interrupt Controller (AVIC) support virtualizes local APIC registers of each vCPU via the virtual APIC (vAPIC) backing page. This allows guest access to certain APIC registers without the need to emulate the hardware behavior and should speed up workloads which generate large amount of interrupts.
-// -machine q35,accel=kvm,mem-merge=off
-// -cpu host,kvm=off,hv_vendor_id=vgaptrocks,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time
 
 Reboot. To check that the driver loaded correctly, run: "`lspci --nnks 28:00`". If everything went well, we should see: "`Kernel driver in use: *vfio-pci*`".
 
 `ll /sys/bus/pci/drivers/vfio-pci/* | grep 28:00`
 
-// https://pve.proxmox.com/wiki/Pci_passthrough 
 // lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
 
 === Emulation Settings
@@ -104,6 +122,14 @@ Configure emulation settings for sound and passthrough. My Windows 7 virtual mac
 ... Emulation for PCI-E passthrough: `machine: q35`
 .. Exit edit mode: <esc>
 . Save and exit: `wq <enter>`
+
+
+//https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
+
+// -machine q35,accel=kvm,mem-merge=off
+
+// -cpu host,kvm=off,hv_vendor_id=vgaptrocks,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time
+
 
 === Security
 
