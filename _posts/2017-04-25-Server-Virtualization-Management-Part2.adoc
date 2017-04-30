@@ -50,31 +50,67 @@ Our drives should be the same size, otherwise we lose storage capacity. Since ou
 
 ```
 parted /dev/sdc --script mklabel gpt \
-       mkpart primary 0GB 1TB \
-       mkpart primary 1TB 2TB
+       mkpart primary 0% 50% \
+       mkpart primary 50% 100%
 ```
 
 After partitioning, we can mirror and stripe the drives. When we create the drive mirrors, ZFS creates virtual devices (vdevs). We can then connect the vdevs together and we'll have "striped" drives. For example, we can mirror two 1TB drives and we end up with a 1TB vdevs that will automatically replicate the data across both drives. Then we combine the two vdevs of 1TB each (both mirrored) and end up with 2TB of storage called a zpool.
 
 Since the zpool read/write transactions are balanced across the two vdevs, we actually can get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read/write transactions on the zpool. Because our CPU can compress/decompress data much faster than the drives can read/write data, our drive performance can improve due to the reduced size of the read/write transactions in the zpool.
 
-.Creating a zpool
+.Creating our ZFS Storage
 ```
 zpool create -o ashift=12 tank \    # pool called tank with 4k sectors
-      compression=lz4 \             # enable lz4 pool compression 
+      compression=lz4 \             # lz4 pool compression 
       mirror /dev/sda /dev/sdc1 \   # first vdev
       mirror /dev/sdb /dev/sdc2 \   # second vdev
       log   /dev/nvmen1p4 \         # 
-      cache /dev/nvmen1p5 \         # 
-      
-zpool status tank
+      cache /dev/nvmen1p5           # 
+
+zfs create tank/vm-disks            # ZFS layer to store VM images
 ```
+
+Once that's done, we can run *`zpool status tank`* and *`zpool list`* to verify that our pool has been created. We can also run *`pvesm zfsscan`* to get a list of available ZFS filesystems.
 
 == Post-Installation
 
-=== Configure Our Proxmox install
+The PVE open-source license allows for testing and non-production use. If you would like to use PVE for production, or would like commercial support, purchase a subscription, enter your key through the web interface, and skip to the GPU Passthrough section.
 
-The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. The PVE open-source license allows for testing and non-production use. If you would like to use PVE for production, or would like commercial support, purchase a subscription, enter your key through the web interface, and skip this step.
+=== Adjusting the PVE Repositories
+
+The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. 
+
+Edit the list of reponsitories `nano /etc/apt/sources.list` and update as follows:
+
+```
+```
+
+Update the PVE commercial repository file and comment out the ...
+`nano /etc/apt/sources.list.d/pve-enterprise.list`
+
+```
+```
+
+=== Update PVE
+
+```
+apt-get update
+apt-get upgrade -y
+update-grub
+```
+
+=== Adding ZPool to PVE Storage System:
+
+
+```
+
+```
+
+
+
+
+
+
 
 === GPU Passthrough
 
