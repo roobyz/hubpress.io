@@ -5,7 +5,7 @@
 // :hp-tags: HubPress, Blog, Open_Source,
 // :hp-alt-title: My English Title
 
-= Proxmox VE: Virtualization for Work and Play (The Plan)
+= PVE: Virtualization for Work and Play (The Plan)
 :hp-alt-title: Server Virtualization Management
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
