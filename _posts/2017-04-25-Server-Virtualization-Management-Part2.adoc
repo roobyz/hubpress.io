@@ -1,6 +1,6 @@
 // :hp-image: /covers/cover.png
 
-= Proxmox VE: Virtualization for Work and Play (Getting Started)
+= PVE: Virtualization for Work and Play (Getting Started)
 :hp-alt-title: Server Virtualization Management Part2
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
@@ -9,19 +9,72 @@
 :toc: macro
 :toclevels: 3
 
-In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox and outlined our plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Now we begin.
+In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Now lets begin.
 
 toc::[]
 
 == Installation
 
-https://forum.level1techs.com/t/proxmox-zfs-with-ssd-caching-setup-guide/97663
-https://pve.proxmox.com/wiki/Quick_installation
+The link:https://pve.proxmox.com/wiki/Quick_installation[PVE Quick Installation^] guide does a wonderful job at highlighting the key installation points and how simple the process really is. If you follow the defaults settings, PVE will install to _local disks_ and should take about 10 minutes or less. If you have a large single drive that you want to use, then you can skip to the post-installation section below since that guide is all that you would need.
 
-Disconnect all the drives except the boot drive
-KVM
+=== PVE Drive Options
 
-== Post-Install
+For our setup, we will disconnect all the drives except for our boot drive, and follow most of the default installation options with one exception. Since we only want to use half of the boot drive (512Gb NVMe) our _harddisk options_ are as follows: 
+
+* *`ext4`* filesystem: Standard Linux filesystem is the safe bet.
+* *`185.0`* hdsize: A bit less than half of our 512Gb. The following values should add up to this value or less.
+* *`64.0`* swapsize: Linux swap file size (equal to our ram size). Be sure to set vm.swappiness to a low value if you have your swap file on an SSD! It'll increase RAM usage a bit, but will be easier on our SSD.
+* *`64.0`* maxroot: / root partition 
+* *`40.0`* minfree: This should be your ZFS log + your ZFS cache size. In my 120GB SSD, this was 32+8=40
+* *`16.0`* maxve: This is the pve-data partition I refer to above. I wouldn't make this too big unless you know what you're doing.
+
+Have a peek at the link:https://forum.level1techs.com/t/proxmox-zfs-with-ssd-caching-setup-guide/97663[Level 1 Tech Forums^] post that covers additional background and some potential alternatives.
+
+When you get to the _Installation Successful_ step of the PVE install, click the "Reboot" button.
+
+=== Partitioning for ZFS
+
+After logging into our new PVE installation, we want to add two additional partitions (ZFS Log, and ZFS Cache). We want 8Gb for the log and 64Gb for the cache partitions. Combined with the 185Gb, that gets us to about half of our NVMe storage. We can use the remaining half of our NVMe for other options like dual-boot, additional storage, etc.
+
+part1
+
+part2
+
+Once these two partitions are added, we can shutdown PVE: `shutdown -h`.
+
+Then we can reconnect the remaining drives.
+
+Before setting up our ZFS storage, we need to backup any data that we want to keep. Afterward we can begin our link:http://open-zfs.org/wiki/Performance_tuning[ZFS configuration^]. As we mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we decided to mirror it as an automatic backup. 
+
+Our drives should be the same size, otherwise we lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before paritioning, identify the correct drives: `lsblk`. Since the first two drives are the SSD, the 2TB drive is `/dev/sdc`. The following command will recplace the drive with a new GPT partition table and create the 2 partitions:
+
+```
+parted /dev/sdc --script mklabel gpt \
+       mkpart primary 0GB 1TB \
+       mkpart primary 1TB 2TB
+```
+
+After partitioning, we can mirror and stripe the drives. When we create the drive mirrors, ZFS creates virtual devices (vdevs). We can then connect the vdevs together and we'll have "striped" drives. For example, we can mirror two 1TB drives and we end up with a 1TB vdevs that will automatically replicate the data across both drives. Then we combine the two vdevs of 1TB each (both mirrored) and end up with 2TB of storage called a zpool.
+
+Since the zpool read/write transactions are balanced across the two vdevs, we actually can get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read/write transactions on the zpool. Because our CPU can compress/decompress data much faster than the drives can read/write data, our drive performance can improve due to the reduced size of the read/write transactions in the zpool.
+
+.Creating a zpool
+```
+zpool create -o ashift=12 tank \    # pool called tank with 4k sectors
+      compression=lz4 \             # enable lz4 pool compression 
+      mirror /dev/sda /dev/sdc1 \   # first vdev
+      mirror /dev/sdb /dev/sdc2 \   # second vdev
+      log   /dev/nvmen1p4 \         # 
+      cache /dev/nvmen1p5 \         # 
+      
+zpool status tank
+```
+
+== Post-Installation
+
+=== Configure Our Proxmox install
+
+The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. The PVE open-source license allows for testing and non-production use. If you would like to use PVE for production, or would like commercial support, purchase a subscription, enter your key through the web interface, and skip this step.
 
 === GPU Passthrough
 
@@ -70,7 +123,7 @@ To enable link:https://pve.proxmox.com/wiki/Pci_passthrough[PCI passthrough^] fo
 | Option | Details
 
 | allow_unsafe_interrupts=1
-| For platforms without interrupt remapping support. Removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this workaround.
+| Interrupt remapping is designed to provide device isolation. This workaround is for platforms without interrupt remapping support. It removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this configuration.
 
 | ids=*10de:1b80,10de:10f0*`
 | Assign the specified GPU to the virtual pci for use in our VM.
