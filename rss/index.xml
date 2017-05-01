@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sun, 30 Apr 2017 05:45:01 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 01 May 2017 05:11:22 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Say we want a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. Lets do it!</p>
@@ -67,7 +67,7 @@
 </tbody>
 </table>
 <div class="paragraph">
-<p>If we need to run multiple applications on one server, we want increased security, or we want to run a different operating system on our host system, then a VM is our choice. To run different versions of an application (i.e RStudio) and validate reproducibility and reliability, then we want to use containers. Compared to VMs, containers are quicker, "lighter weight" and more transient so they can be readily packaged, shared, and moved to other hardware.</p>
+<p>If we want to run multiple applications on one server, to have increased security, or to run an operating system that is different from our host system, then a VM is our choice. To run different versions of an application (i.e RStudio) and validate reproducibility and reliability, then we want to use containers. Compared to VMs, containers are quicker, "lighter weight" and more transient so they can be readily packaged, shared, and moved to other hardware.</p>
 </div>
 </div>
 </div>
@@ -78,7 +78,7 @@
 <p>Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for PVE and potentially other VMs running simultaneously.</p>
 </div>
 <div class="paragraph">
-<p>While most of our computer hardware can be shared between multiple VMs, the graphics card (GPU) cannot readily be shared. We&#8217;ll need at least two GPUs:</p>
+<p>While most of our computer hardware can be shared between multiple VMs, the graphics card (GPU) may not readily be shared, so we&#8217;ll need at least two GPUs:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
