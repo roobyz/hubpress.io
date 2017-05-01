@@ -38,13 +38,13 @@ image:Server-Virtualization-Management/vms-and-containers.png[vms-cnt]
 |
 |===
 
-If we need to run multiple applications on one server, we want increased security, or we want to run a different operating system on our host system, then a VM is our choice. To run different versions of an application (i.e RStudio) and validate reproducibility and reliability, then we want to use containers. Compared to VMs, containers are quicker, "lighter weight" and more transient so they can be readily packaged, shared, and moved to other hardware.
+If we want to run multiple applications on one server, to have increased security, or to run an operating system that is different from our host system, then a VM is our choice. To run different versions of an application (i.e RStudio) and validate reproducibility and reliability, then we want to use containers. Compared to VMs, containers are quicker, "lighter weight" and more transient so they can be readily packaged, shared, and moved to other hardware.
 
 == Hardware Considerations
 
 Our CPU and motherboard must support "virtualization” (SVM) and IOMMU, which needs to be enabled in firmware for resource sharing. Also, we should have 32GB of RAM or more, so that we can reserve at least 16GB for a single virtual machine (VM) and still have enough memory left over for PVE and potentially other VMs running simultaneously.
 
-While most of our computer hardware can be shared between multiple VMs, the graphics card (GPU) cannot readily be shared. We'll need at least two GPUs:
+While most of our computer hardware can be shared between multiple VMs, the graphics card (GPU) may not readily be shared, so we'll need at least two GPUs:
 
 . One GPU for PVE (the host);
 . One powerful GPU for our VMs (the guests: Windows, Linux, etc.).
