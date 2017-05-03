@@ -11,7 +11,7 @@
 
 == Getting Started...
 
-In the link:/2017/04/23/Server-Virtualization-Management[previous post], we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the link:http://linuxcommand.org/lc3_learning_the_shell.php[Linux CLI (command line interface)^]. Now let's begin.
+In the link:/2017/04/23/Server-Virtualization-Management.html[previous post], we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the link:http://linuxcommand.org/lc3_learning_the_shell.php[Linux CLI (command line interface)^]. Now let's begin.
 
 toc::[]
 
