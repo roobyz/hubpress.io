@@ -137,9 +137,9 @@ The PVE open-source license allows for testing and non-production use. If we wou
 
 === Adjusting the PVE Repositories
 
-The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. Let's include the non-commercial the list of repositories. 
+The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. Let's include the non-commercial list of repositories. 
 
-Type: *`nano /etc/apt/sources.list`* and update as follows:
+Run *`nano /etc/apt/sources.list`* and update as follows:
 ```
 # main debian repo
 deb http://ftp.us.debian.org/debian stretch main contrib
@@ -151,7 +151,7 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 Comment-out the PVE commercial repository.
 
-Type: *`nano /etc/apt/sources.list.d/pve-enterprise.list`* and update as follows:
+Run *`nano /etc/apt/sources.list.d/pve-enterprise.list`* and update as follows:
 ```
 # non-subscription repo (manual update)
 deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
@@ -161,7 +161,7 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 === Update PVE
 
-Edit our _resume_ settings: type *`nano /etc/initramfs-tools/conf.d/resume`* and add:
+Edit our _resume_ settings: run *`nano /etc/initramfs-tools/conf.d/resume`* and add:
 ```
 RESUME=none
 ```
@@ -177,7 +177,7 @@ update-initramfs -u
 
 === Update the PVE Storage System:
 
-Once we create the ZFS partitions, we can go to the PVE Web GUI and add the 2TB of storage to our setup. Being sure to use _HTTPS_, open https://machine-ip-address:8006 in a web browser. When we get the _certificate warning_ message, we should proceed anyway. This happens because the machine does not have a certificate signed by a third party. Our goal is to end up with four storage volumes:
+Once we create our ZFS storage, we can go to the PVE Web GUI and add it to our setup. Being sure to use _HTTPS_, open https://machine-ip-address:8006 in a web browser. When we get the _certificate warning_ message, we should proceed anyway. This happens because the machine does not have a certificate signed by a third party. Our goal is to end up with four storage volumes:
 
 .PVE storage volumes.
 [cols="3a, 8a"]
@@ -187,16 +187,16 @@ Once we create the ZFS partitions, we can go to the PVE Web GUI and add the 2TB 
 . zfs-containers
 . zfs-templates
 
-|. Stores RAW disk images more efficiently
-. Stores VZDump backups of virtual machines
-. Stores LXC container filesystems
-. Stores ISOs and container templates
+|* Stores RAW disk images more efficiently
+* Stores VZDump backups of virtual machines
+* Stores LXC container filesystems
+* Stores ISOs and container templates
 
 |===
 
 Once logged in, we go to Datacenter > Storage, and:
 
-. click *Add* > *ZFS*, then enter "*_vm-disks_*" for ID, and select _tank/vm-disks_ for pool, choose only _Disk Image_ for content, and finally tick the _Thin Provision_ check box and select *Add*.
+. click *Add* > *ZFS*, then enter "*_vm-disks_*" for ID, and select _tank/vm-disks_ for pool, choose only _Disk Image_ for content, and finally tick the _Thin Provision_ checkbox and select *Add*.
 . click *Add* > *ZFS*, then enter "*_zfs-containers_*" for ID, and select _tank_ for pool, and _Container_ for content, and select *Add*.
 . click *Add* > *Directory*, then enter "*_zfs-backups_*" for ID, enter "_/tank_" (/our-zfs-pool) for directory, and choose only _VZDump backup files_ for content, then select *Add*. 
 . click *Add* > *Directory*, then enter "*_zfs-templates_*" for ID, enter "_/tank_" (/our-zfs-pool) for directory, and choose both _container templates_ and _ISO images_ for content, then select *Add*. 
@@ -216,7 +216,7 @@ image:Server-Virtualization-Management/pve-zfs-setup.gif[pve-zfs-setup]
 |
 |===
 
-We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs operates as normal. Our machine is ready to go. When complete, our next installment, will cover some opportunities for _System Optimization_.
+We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs functions as expected. Our machine is ready to go. When complete, our next installment, will cover some opportunities for _System Optimization_.
 
 * Part 3: System Optimization
 
