@@ -71,5 +71,3 @@ This is Part 1 of a multipart tutorial, and a work in progress. As I complete ea
 
 * link:/2017/04/25/Server-Virtualization-Management-Part2.html[Part 2: Getting Started]
 * Part 3: System Optimization
-
-
