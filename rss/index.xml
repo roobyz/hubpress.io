@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 03 May 2017 01:27:45 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Getting Started)]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 03 May 2017 01:29:29 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Getting Started)]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the <a href="/2017/04/23/Server-Virtualization-Management">previous post</a>, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the <a href="http://linuxcommand.org/lc3_learning_the_shell.php" target="_blank">Linux CLI (command line interface)</a>. Now let&#8217;s begin.</p>
@@ -415,7 +415,10 @@ update-initramfs -u</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>We made it! With only one storage volume for each type of content, there&#8217;s no way to accidentally misplace something. Creating containers and VMs should function as expected. Our machine is ready to go. When complete, our next installment will cover opportunities for <em>System Optimization</em>.</p>
+<p>We made it! With only one storage volume for each type of content, there&#8217;s no way to accidentally misplace something. Creating containers and VMs should function as expected. Our machine is ready to go.</p>
+</div>
+<div class="paragraph">
+<p>This is part 2 of our multipart tutorial. When complete, our next installment will cover some opportunities for <em>System Optimization</em>.</p>
 </div>
 <div class="ulist">
 <ul>
