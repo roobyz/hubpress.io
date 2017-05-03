@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493773024900" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493774103478" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html" />
     <meta name="referrer" content="origin" />
@@ -413,10 +413,10 @@ pvesm zfsscan       # list available ZFS file systems</code></pre>
 <div class="sect2">
 <h3 id="_adjusting_the_pve_repositories">Adjusting the PVE Repositories</h3>
 <div class="paragraph">
-<p>The <a href="https://pve.proxmox.com/wiki/Package_Repositories" target="_blank">PVE Package Repositories</a> can be configured depending on your usage goals. Let&#8217;s include the non-commercial the list of repositories.</p>
+<p>The <a href="https://pve.proxmox.com/wiki/Package_Repositories" target="_blank">PVE Package Repositories</a> can be configured depending on your usage goals. Let&#8217;s include the non-commercial list of repositories.</p>
 </div>
 <div class="paragraph">
-<p>Type: <strong><code>nano /etc/apt/sources.list</code></strong> and update as follows:</p>
+<p>Run <strong><code>nano /etc/apt/sources.list</code></strong> and update as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -434,7 +434,7 @@ deb http://security.debian.org stretch/updates main contrib</code></pre>
 <p>Comment-out the PVE commercial repository.</p>
 </div>
 <div class="paragraph">
-<p>Type: <strong><code>nano /etc/apt/sources.list.d/pve-enterprise.list</code></strong> and update as follows:</p>
+<p>Run <strong><code>nano /etc/apt/sources.list.d/pve-enterprise.list</code></strong> and update as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -450,7 +450,7 @@ deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
 <div class="sect2">
 <h3 id="_update_pve">Update PVE</h3>
 <div class="paragraph">
-<p>Edit our <em>resume</em> settings: type <strong><code>nano /etc/initramfs-tools/conf.d/resume</code></strong> and add:</p>
+<p>Edit our <em>resume</em> settings: run <strong><code>nano /etc/initramfs-tools/conf.d/resume</code></strong> and add:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -474,7 +474,7 @@ update-initramfs -u</code></pre>
 <div class="sect2">
 <h3 id="_update_the_pve_storage_system">Update the PVE Storage System:</h3>
 <div class="paragraph">
-<p>Once we create the ZFS partitions, we can go to the PVE Web GUI and add the 2TB of storage to our setup. Being sure to use <em>HTTPS</em>, open <a href="https://machine-ip-address:8006" class="bare">https://machine-ip-address:8006</a> in a web browser. When we get the <em>certificate warning</em> message, we should proceed anyway. This happens because the machine does not have a certificate signed by a third party. Our goal is to end up with four storage volumes:</p>
+<p>Once we create our ZFS storage, we can go to the PVE Web GUI and add it to our setup. Being sure to use <em>HTTPS</em>, open <a href="https://machine-ip-address:8006" class="bare">https://machine-ip-address:8006</a> in a web browser. When we get the <em>certificate warning</em> message, we should proceed anyway. This happens because the machine does not have a certificate signed by a third party. Our goal is to end up with four storage volumes:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 2. PVE storage volumes.</caption>
@@ -500,8 +500,8 @@ update-initramfs -u</code></pre>
 </li>
 </ol>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="olist arabic">
-<ol class="arabic">
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
 <li>
 <p>Stores RAW disk images more efficiently</p>
 </li>
@@ -514,7 +514,7 @@ update-initramfs -u</code></pre>
 <li>
 <p>Stores ISOs and container templates</p>
 </li>
-</ol>
+</ul>
 </div></div></td>
 </tr>
 </tbody>
@@ -525,7 +525,7 @@ update-initramfs -u</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>click <strong>Add</strong> &gt; <strong>ZFS</strong>, then enter "<strong><em>vm-disks</em></strong>" for ID, and select <em>tank/vm-disks</em> for pool, choose only <em>Disk Image</em> for content, and finally tick the <em>Thin Provision</em> check box and select <strong>Add</strong>.</p>
+<p>click <strong>Add</strong> &gt; <strong>ZFS</strong>, then enter "<strong><em>vm-disks</em></strong>" for ID, and select <em>tank/vm-disks</em> for pool, choose only <em>Disk Image</em> for content, and finally tick the <em>Thin Provision</em> checkbox and select <strong>Add</strong>.</p>
 </li>
 <li>
 <p>click <strong>Add</strong> &gt; <strong>ZFS</strong>, then enter "<strong><em>zfs-containers</em></strong>" for ID, and select <em>tank</em> for pool, and <em>Container</em> for content, and select <strong>Add</strong>.</p>
@@ -572,7 +572,7 @@ update-initramfs -u</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>We made it! With only one storage volume for each type of content, there&#8217;s no way to accidentally misplace something. Creating containers and VMs operates as normal. Our machine is ready to go. When complete, our next installment, will cover some opportunities for <em>System Optimization</em>.</p>
+<p>We made it! With only one storage volume for each type of content, there&#8217;s no way to accidentally misplace something. Creating containers and VMs functions as expected. Our machine is ready to go. When complete, our next installment, will cover some opportunities for <em>System Optimization</em>.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -630,7 +630,7 @@ update-initramfs -u</code></pre>
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493773024900"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493774103478"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
