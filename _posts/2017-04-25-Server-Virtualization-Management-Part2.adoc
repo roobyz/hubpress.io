@@ -216,7 +216,9 @@ image:Server-Virtualization-Management/pve-zfs-setup.gif[pve-zfs-setup]
 |
 |===
 
-We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs should function as expected. Our machine is ready to go. When complete, our next installment will cover opportunities for _System Optimization_.
+We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs should function as expected. Our machine is ready to go. 
+
+This is part 2 of our multipart tutorial. When complete, our next installment will cover some opportunities for _System Optimization_.
 
 * Part 3: System Optimization
 
