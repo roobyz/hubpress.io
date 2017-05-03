@@ -9,239 +9,213 @@
 :toc: macro
 :toclevels: 3
 
-In the link:/2017/04/23/Server-Virtualization-Management[previous post] we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Now lets begin.
+In the link:/2017/04/23/Server-Virtualization-Management[previous post], we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. You should feel a little comfortable with the link:http://linuxcommand.org/lc3_learning_the_shell.php[Linux CLI (command line interface)^]. Now let's begin.
 
 toc::[]
 
 == Installation
 
-The link:https://pve.proxmox.com/wiki/Quick_installation[PVE Quick Installation^] guide does a wonderful job at highlighting the key installation points and how simple the process really is. If you follow the defaults settings, PVE will install to _local disks_ and should take about 10 minutes or less. If you have a large single drive that you want to use, then you can skip to the post-installation section below since that guide is all that you would need.
+The link:https://pve.proxmox.com/wiki/Quick_installation[PVE Quick Installation^] guide does a wonderful job of highlighting the key installation points and showing how simple the process really is. If you follow the defaults settings, PVE will install to _local disks_ and should take about 10 minutes or less. If you have a large single drive that you want to use, then you can skip to the post-installation section below since that guide is all that you would need.
+
+[cols="1, 8a, 1"]
+|===
+|
+|PVE Installation Process
+image:Server-Virtualization-Management/pve-installation.gif[pve-install]
+|
+|===
 
 === PVE Drive Options
 
-For our setup, we will disconnect all the drives except for our boot drive, and follow most of the default installation options with one exception. Since we only want to use half of the boot drive (512Gb NVMe) our _harddisk options_ are as follows: 
+For our setup, we will disconnect all the drives except for our boot drive, and follow most of the default installation options with one exception. Since we only want to use half of the boot drive (512Gb NVMe) our _hard disk options_ are as follows: 
 
-* *`ext4`* filesystem: Standard Linux filesystem is the safe bet.
-* *`185.0`* hdsize: A bit less than half of our 512Gb. The following values should add up to this value or less.
-* *`64.0`* swapsize: Linux swap file size (equal to our ram size). Be sure to set vm.swappiness to a low value if you have your swap file on an SSD! It'll increase RAM usage a bit, but will be easier on our SSD.
-* *`64.0`* maxroot: / root partition 
-* *`40.0`* minfree: This should be your ZFS log + your ZFS cache size. In my 120GB SSD, this was 32+8=40
-* *`16.0`* maxve: This is the pve-data partition I refer to above. I wouldn't make this too big unless you know what you're doing.
-
-Have a peek at the link:https://forum.level1techs.com/t/proxmox-zfs-with-ssd-caching-setup-guide/97663[Level 1 Tech Forums^] post that covers additional background and some potential alternatives.
+* *`ext4`* _filesystem_: Standard Linux filesystem is the safe bet.
+* *`176.0`* _hdsize_: Shooting for half of our 512Gb. The following values should add up to 256Gb. Equal to 256Gb-80Gb (minfree).
+* *`64.0`* _swapsize_: Linux swap file size (equal to our ram size). Be sure to set vm.swappiness to a low value if you have your swap file on an SSD! It'll increase RAM usage a bit, but will be easier on our SSD.
+* *`96.0`* _maxroot_: / root file partition 
+* *`80.0`* _minfree_: This should equal our ZFS log (16GB) plus our ZFS cache (64GB).
+* *`16.0`* _maxve_: This is the pve-data partition.
 
 When you get to the _Installation Successful_ step of the PVE install, click the "Reboot" button.
 
-=== Partitioning for ZFS
+=== ZFS Partitions
 
-After logging into our new PVE installation, we want to add two additional partitions (ZFS Log, and ZFS Cache). We want 8Gb for the log and 64Gb for the cache partitions. Combined with the 185Gb, that gets us to about half of our NVMe storage. We can use the remaining half of our NVMe for other options like dual-boot, additional storage, etc.
+After rebooting you can log in via the PVE Web GUI or through the command line using SSH. Logging in via ssh:
+```
+ssh root@10.10.1.10
 
-part1
+#The authenticity of host '10.10.1.10 (10.10.1.10)' can't be established.
+#ECDSA key fingerprint is SHA256:2ExP+SHaCo+9ZOt+sk90DPLAafdHFJTHPyeU1qtFXIg.
+#Are you sure you want to continue connecting (yes/no)? 
+```
+Type "yes" and then enter the password set during installation. 
 
-part2
+After logging into our new PVE installation, we want to add two additional partitions (ZFS Log (16Gb), and ZFS Cache(64Gb)). The combined storage will be 256Gb, leaving us with half of our NVMe for other options like dual-boot, additional storage, etc.
 
-Once these two partitions are added, we can shutdown PVE: `shutdown -h`.
+After logging in, run (update for your drive): *`cfdisk /dev/sda`*
 
-Then we can reconnect the remaining drives.
+Go down to the "free space" line in green and add a 16Gb partition. Move down again to the next "free space" line in green and add a 64Gb partition. Then select `write` and then select `quit` and we are done.
 
-Before setting up our ZFS storage, we need to backup any data that we want to keep. Afterward we can begin our link:http://open-zfs.org/wiki/Performance_tuning[ZFS configuration^]. As we mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we decided to mirror it as an automatic backup. 
+[cols="1, 8a, 1"]
+|===
+|
+|Creating ZFS Log and Cache Partitions
+image:Server-Virtualization-Management/pve-cfdisk-process.gif[pve-cfdisk]
+|
+|===
 
-Our drives should be the same size, otherwise we lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before paritioning, identify the correct drives: `lsblk`. Since the first two drives are the SSD, the 2TB drive is `/dev/sdc`. The following command will recplace the drive with a new GPT partition table and create the 2 partitions:
+Once these two partitions are added, we can shut down PVE from the command line: 
+```
+shutdown -h
+```
+
+=== ZFS Setup
+
+Once PVE has shut down, we can reconnect the remaining drives and restart our system. Before setting up our ZFS storage, we must backup any data that we want to keep.
+
+Let's start our link:http://open-zfs.org/wiki/Performance_tuning[ZFS configuration^]. As mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we will mirror it as an _automatic_ backup. 
+
+Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run *`lsblk`* to get the list of block devices:
+
+[cols="1, 8a, 1"]
+|===
+|
+|List of block devices
+image:Server-Virtualization-Management/pve-lsblk.png[pve-lsblk]
+|
+|===
+
+In my example, the 2TB (1.8T) drive is `/dev/sdc`. The following commands will replace the drive with a new GPT partition table and create the 2 partitions:
 
 ```
+# Install parted
+apt-get install parted
+
+# remove everything on the /dev/sdc drive and 
+# replace with two empty equal-sized partitions
 parted /dev/sdc --script mklabel gpt \
        mkpart primary 0% 50% \
-       mkpart primary 50% 100%
+       mkpart primary 50% 100% p
 ```
 
-After partitioning, we can mirror and stripe the drives. When we create the drive mirrors, ZFS creates virtual devices (vdevs). We can then connect the vdevs together and we'll have "striped" drives. For example, we can mirror two 1TB drives and we end up with a 1TB vdevs that will automatically replicate the data across both drives. Then we combine the two vdevs of 1TB each (both mirrored) and end up with 2TB of storage called a zpool.
+After partitioning, we can mirror and stripe the drives. When we create the drive mirrors, ZFS creates virtual devices (vdevs). We can then connect the vdevs together into zpools. For example, we can _mirror_ two 1TB drives and we end up with a 1TB vdev that will automatically replicate our data across both drives. Then we combine the two 1TB mirrored vdevs and end up with 2TB of storage.
 
-Since the zpool read/write transactions are balanced across the two vdevs, we actually can get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read/write transactions on the zpool. Because our CPU can compress/decompress data much faster than the drives can read/write data, our drive performance can improve due to the reduced size of the read/write transactions in the zpool.
+Since the zpool read/write transactions are balanced across the two vdevs, we can actually get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read-write transactions on the zpool. Because our CPU can compress-decompress data much faster than the drives can read-write data, our drive performance can improve even more, because of the smaller size of the read-write transactions on the zpool.
 
-.Creating our ZFS Storage
+.Creating our ZFS Storage Pool
+[cols="5a, 5a"]
+|===
+|* zpool create -o ashift=12 tank \
+* mirror /dev/sda /dev/sdc1 \
+* mirror /dev/sdb /dev/sdc2 \
+* log   /dev/nvm0n1p4 \
+* cache /dev/nvm0n1p5
+
+|* pool called tank with 4k sectors
+* first vdev
+* second vdev
+* 16GB log partition
+* 64GB cache partition
+|===
+
 ```
-zpool create -o ashift=12 tank \    # pool called tank with 4k sectors
-      compression=lz4 \             # lz4 pool compression 
-      mirror /dev/sda /dev/sdc1 \   # first vdev
-      mirror /dev/sdb /dev/sdc2 \   # second vdev
-      log   /dev/nvmen1p4 \         # 
-      cache /dev/nvmen1p5           # 
-
-zfs create tank/vm-disks            # ZFS layer to store VM images
+zfs set compression=lz4 tank  # lz4 pool compression
+zfs create tank/vm-disks      # ZFS layer to store VM images
 ```
 
-Once that's done, we can run *`zpool status tank`* and *`zpool list`* to verify that our pool has been created. We can also run *`pvesm zfsscan`* to get a list of available ZFS filesystems.
+Once that's done, we can run the following commands:
+
+```
+zpool list          # verify that our pool has been created
+zpool status tank   # check pool status and configuration
+pvesm zfsscan       # list available ZFS file systems
+```
 
 == Post-Installation
 
-The PVE open-source license allows for testing and non-production use. If you would like to use PVE for production, or would like commercial support, purchase a subscription, enter your key through the web interface, and skip to the GPU Passthrough section.
+The PVE open-source license allows for testing and non-production use. If we would like to use PVE for production or we want commercial support, we can purchase a subscription, enter our key through the web interface, and skip to the "Update PVE" section.
 
 === Adjusting the PVE Repositories
 
-The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. 
+The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. Let's include the non-commercial the list of repositories. 
 
-Edit the list of reponsitories `nano /etc/apt/sources.list` and update as follows:
+Type: *`nano /etc/apt/sources.list`* and update as follows:
+```
+# main debian repo
+deb http://ftp.us.debian.org/debian stretch main contrib
 
+# security updates
+deb http://security.debian.org stretch/updates main contrib
 ```
-```
+Save and exit: press CTRL+X, Y for yes, and ENTER.
 
-Update the PVE commercial repository file and comment out the ...
-`nano /etc/apt/sources.list.d/pve-enterprise.list`
+Comment-out the PVE commercial repository.
 
+Type: *`nano /etc/apt/sources.list.d/pve-enterprise.list`* and update as follows:
 ```
+# non-subscription repo (manual update)
+deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
+#deb https://enterprise.proxmox.com/debian/pve stretch pve-enterprise
 ```
+Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 === Update PVE
 
+Edit our _resume_ settings: type *`nano /etc/initramfs-tools/conf.d/resume`* and add:
 ```
-apt-get update
-apt-get upgrade -y
+RESUME=none
+```
+Save and exit: press CTRL+X, Y for yes, and ENTER.
+
+Update the software packages, boot loader, and system image. From the PVE, command line type:
+
+```
+apt-get update && apt-get upgrade -y
 update-grub
+update-initramfs -u
 ```
 
-=== Adding ZPool to PVE Storage System:
+=== Update the PVE Storage System:
 
+Once we create the ZFS partitions, we can go to the PVE Web GUI and add the 2TB of storage to our setup. Being sure to use _HTTPS_, open https://machine-ip-address:8006 in a web browser. When we get the _certificate warning_ message, we should proceed anyway. This happens because the machine does not have a certificate signed by a third party. Our goal is to end up with four storage volumes:
 
-```
-
-```
-
-
-
-
-
-
-
-=== GPU Passthrough
-
-GPU Passthrough allows our VM to access GPU hardware for games, graphics and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
-
-link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a _secure_, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
-
-==== Include the VFIO Modules:
-
-. Type: `vi /etc/modules`
-. Enter edit mode: `i`
-.. Add: `vfio`
-.. Add: `vfio_iommu_type1`
-.. Add: `vfio_pci`
-.. Add: `vfio_virqfd`
-. Exit edit mode: <esc>
-. Save and exit: `wq <enter>`
-
-==== Configure the VFIO Modules
-
-Identify the GPU to passthrough:
-
-. Identify all GPUs: `lspci -nn | grep VGA`
-. Capture the GPU slot IDs (first pair of numbers separated by a colon):
-.. My GPU Slot ID for passthrough is: `28:00`
-.. My GPU Slot ID for the host is: `21:00`
-. Capture the vendor IDs for the passthrough GPU Slot ID: `lspci -nns 00:02 | cut -d "]" -f 2 | cut -d "[" -f 2`
-.. The vendor ID for my GPU VGA device: `10de:1b80`
-.. The vendor ID for my GPU Audio device: `10de:10f0`
-
-To enable link:https://pve.proxmox.com/wiki/Pci_passthrough[PCI passthrough^] for our VM, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
-
-. Type: `vi /etc/modprobe.d/kvm.conf`
-. Enter edit mode: `i`
-.. `options vfio_iommu_type1 allow_unsafe_interrupts=1`
-.. `options vfio-pci         ids=*10de:1b80,10de:10f0*`
-.. `options vfio-pci         disable_vga=1`
-.. `options kvm-amd          npt=0`
-.. `options kvm              ignore_msrs=1`
-. Exit edit mode: <esc>
-. Save and exit: `wq <enter>`
-
-.Option details
-[cols="4, 9a",options="header"]
+.PVE storage volumes.
+[cols="3a, 8a"]
 |===
-| Option | Details
+|. vm-disks
+. zfs-backups
+. zfs-containers
+. zfs-templates
 
-| allow_unsafe_interrupts=1
-| Interrupt remapping is designed to provide device isolation. This workaround is for platforms without interrupt remapping support. It removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this configuration.
-
-| ids=*10de:1b80,10de:10f0*`
-| Assign the specified GPU to the virtual pci for use in our VM.
-
-| disable_vga=1
-| Opt-out devices from vga arbitration if possible.
-
-| npt=0
-| Disable Nested Page Table If VM performance is very slow. Linux guests with Q35 and OVMF may work with npt on or off, however a Linux guest with i440fx only works with npt disabled.
-
-| ignore_msrs=1
-| Prevent some Nvidia applications from crashing the VM.
+|. Stores RAW disk images more efficiently
+. Stores VZDump backups of virtual machines
+. Stores LXC container filesystems
+. Stores ISOs and container templates
 
 |===
 
-==== Update Boot Settings
+Once logged in, we go to Datacenter > Storage, and:
 
-Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we commit them to grub and generate a new initrd image.
+. click *Add* > *ZFS*, then enter "*_vm-disks_*" for ID, and select _tank/vm-disks_ for pool, choose only _Disk Image_ for content, and finally tick the _Thin Provision_ check box and select *Add*.
+. click *Add* > *ZFS*, then enter "*_zfs-containers_*" for ID, and select _tank_ for pool, and _Container_ for content, and select *Add*.
+. click *Add* > *Directory*, then enter "*_zfs-backups_*" for ID, enter "_/tank_" (/our-zfs-pool) for directory, and choose only _VZDump backup files_ for content, then select *Add*. 
+. click *Add* > *Directory*, then enter "*_zfs-templates_*" for ID, enter "_/tank_" (/our-zfs-pool) for directory, and choose both _container templates_ and _ISO images_ for content, then select *Add*. 
 
-. Type: `vi /etc/default/grub`
-. Enter edit mode: `i`
-.. Change: `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
-.. To: `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on kvm_amd.avic=1 rd.driver.pre=vfio-pci video=efifb:off"`
-. Exit edit mode: <esc>
-. Save and exit: `wq <enter>`
-. Run: `update-grub`
-. Run: `update-initramfs -u`
+After adding our new storage options, we can disable the local storage:
 
-//iommu=pt ... AMD-Vi driver will not register itself as the dma_ops backend and allows all devices unlimited access to main memory as long as no other kernel part (currently only KVM will do so) assigns the device to another domain using the IOMMU-API.
+. select *local-lvm*, click *Edit*, untick the _Enable_ checkbox, and click "OK".
+. select *local*, click *Edit*, untick the _Enable_ checkbox, add "1" for _Max Backups_, and then click "OK".
 
-// AMD SVM Advance Virtual Interrupt Controller (AVIC) support virtualizes local APIC registers of each vCPU via the virtual APIC (vAPIC) backing page. This allows guest access to certain APIC registers without the need to emulate the hardware behavior and should speed up workloads which generate large amount of interrupts.
+Afterward, if we select the arrow next to pve in the _Server View_, we will only see only four enabled storage options.
 
-Reboot. To check that the driver loaded correctly, run: "`lspci --nnks 28:00`". If everything went well, we should see: "`Kernel driver in use: *vfio-pci*`".
+[cols="1, 8a, 1"]
+|===
+|
+|PVE Storage Volume Setup
+image:Server-Virtualization-Management/pve-zfs-setup.gif[pve-zfs-setup]
+|
+|===
 
-`ll /sys/bus/pci/drivers/vfio-pci/* | grep 28:00`
+We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs operates as normal. Our machine is ready to go. When complete, our next installment, will cover some opportunities for _System Optimization_.
 
-// lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
-
-=== Emulation Settings
-
-Configure emulation settings for sound and passthrough. My Windows 7 virtual machine has an ID equal to 101; update the next command with your Windows VM ID number.
-
-. Type: `vi /etc/pve/qemu-server/*101*.conf`
-.. Enter edit mode: `i`
-.. Update the following: `cpu: Opteron_G5,hidden=1`
-.. Add the following:
-... Audio passthrough: `args: -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
-... GPU for passthrough: `hostpci0: 28:00,pcie=1`
-... Emulation for PCI-E passthrough: `machine: q35`
-.. Exit edit mode: <esc>
-. Save and exit: `wq <enter>`
-
-
-//https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
-
-// -machine q35,accel=kvm,mem-merge=off
-
-// -cpu host,kvm=off,hv_vendor_id=vgaptrocks,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time
-
-
-=== Security
-
-https://www.kiloroot.com/secure-proxmox-install-sudo-firewall-with-ipv6-and-more-how-to-configure-from-start-to-finish/
-
-
-=== Optimization
-
-Configure Ryzen to appear to have 2 sockets, 4 cores, and 2 threads
-
-Remove Proxmox License Nag: sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/pve-manager/ext6/pvemanagerlib.js
-
-For good performance, we need to configure SPICE (Simple Protocol for Independent Computing Environments). The SPICE packages include drivers (QXL and virtio) that enhance virtualization performance:
-
-* SPICE Client (virt-viewer) for Linux, Windows, and Mac systems
-* SPICE Guest Tools for the virtual machines
-
-https://pve.proxmox.com/wiki/Paravirtualized_Block_Drivers_for_Windows
-
-https://pve.proxmox.com/wiki/Windows_7_guest_best_practices
-
-https://pve.proxmox.com/wiki/SPICE
-
-https://www.spice-space.org/download.html
-
-
+* Part 3: System Optimization
