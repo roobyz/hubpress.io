@@ -9,7 +9,7 @@
 :toc: macro
 :toclevels: 3
 
-In the link:/2017/04/23/Server-Virtualization-Management[previous post], we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. You should feel a little comfortable with the link:http://linuxcommand.org/lc3_learning_the_shell.php[Linux CLI (command line interface)^]. Now let's begin.
+In the link:/2017/04/23/Server-Virtualization-Management[previous post], we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the link:http://linuxcommand.org/lc3_learning_the_shell.php[Linux CLI (command line interface)^]. Now let's begin.
 
 toc::[]
 
@@ -52,7 +52,7 @@ Type "yes" and then enter the password set during installation.
 
 After logging into our new PVE installation, we want to add two additional partitions (ZFS Log (16Gb), and ZFS Cache(64Gb)). The combined storage will be 256Gb, leaving us with half of our NVMe for other options like dual-boot, additional storage, etc.
 
-After logging in, run (update for your drive): *`cfdisk /dev/sda`*
+After logging in, run (update for your drive): `cfdisk /dev/sda`
 
 Go down to the "free space" line in green and add a 16Gb partition. Move down again to the next "free space" line in green and add a 64Gb partition. Then select `write` and then select `quit` and we are done.
 
@@ -75,7 +75,7 @@ Once PVE has shut down, we can reconnect the remaining drives and restart our sy
 
 Let's start our link:http://open-zfs.org/wiki/Performance_tuning[ZFS configuration^]. As mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we will mirror it as an _automatic_ backup. 
 
-Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run *`lsblk`* to get the list of block devices:
+Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run `lsblk` to get the list of block devices:
 
 [cols="1, 8a, 1"]
 |===
@@ -139,7 +139,7 @@ The PVE open-source license allows for testing and non-production use. If we wou
 
 The link:https://pve.proxmox.com/wiki/Package_Repositories[PVE Package Repositories^] can be configured depending on your usage goals. Let's include the non-commercial list of repositories. 
 
-Run *`nano /etc/apt/sources.list`* and update as follows:
+Run `nano /etc/apt/sources.list` and update as follows:
 ```
 # main debian repo
 deb http://ftp.us.debian.org/debian stretch main contrib
@@ -151,7 +151,7 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 Comment-out the PVE commercial repository.
 
-Run *`nano /etc/apt/sources.list.d/pve-enterprise.list`* and update as follows:
+Run `nano /etc/apt/sources.list.d/pve-enterprise.list` and update as follows:
 ```
 # non-subscription repo (manual update)
 deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
@@ -161,7 +161,7 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 === Update PVE
 
-Edit our _resume_ settings: run *`nano /etc/initramfs-tools/conf.d/resume`* and add:
+Edit our _resume_ settings: run `nano /etc/initramfs-tools/conf.d/resume` and add:
 ```
 RESUME=none
 ```
