@@ -1,4 +1,432 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 01 May 2017 05:11:22 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 03 May 2017 00:57:04 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Getting Started)]]></title><description><![CDATA[<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <a href="/2017/04/23/Server-Virtualization-Management">previous post</a>, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. You should feel a little comfortable with the <a href="http://linuxcommand.org/lc3_learning_the_shell.php" target="_blank">Linux CLI (command line interface)</a>. Now let&#8217;s begin.</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_installation">Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_pve_drive_options">PVE Drive Options</a></li>
+<li><a href="#_zfs_partitions">ZFS Partitions</a></li>
+<li><a href="#_zfs_setup">ZFS Setup</a></li>
+</ul>
+</li>
+<li><a href="#_post_installation">Post-Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_adjusting_the_pve_repositories">Adjusting the PVE Repositories</a></li>
+<li><a href="#_update_pve">Update PVE</a></li>
+<li><a href="#_update_the_pve_storage_system">Update the PVE Storage System:</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <a href="https://pve.proxmox.com/wiki/Quick_installation" target="_blank">PVE Quick Installation</a> guide does a wonderful job of highlighting the key installation points and showing how simple the process really is. If you follow the defaults settings, PVE will install to <em>local disks</em> and should take about 10 minutes or less. If you have a large single drive that you want to use, then you can skip to the post-installation section below since that guide is all that you would need.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 80%;">
+<col style="width: 10%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>PVE Installation Process
+<span class="image"><img src="https://roobyz.github.io/images/Server-Virtualization-Management/pve-installation.gif" alt="pve-install"></span></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_pve_drive_options">PVE Drive Options</h3>
+<div class="paragraph">
+<p>For our setup, we will disconnect all the drives except for our boot drive, and follow most of the default installation options with one exception. Since we only want to use half of the boot drive (512Gb NVMe) our <em>hard disk options</em> are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>ext4</code></strong> <em>filesystem</em>: Standard Linux filesystem is the safe bet.</p>
+</li>
+<li>
+<p><strong><code>176.0</code></strong> <em>hdsize</em>: Shooting for half of our 512Gb. The following values should add up to 256Gb. Equal to 256Gb-80Gb (minfree).</p>
+</li>
+<li>
+<p><strong><code>64.0</code></strong> <em>swapsize</em>: Linux swap file size (equal to our ram size). Be sure to set vm.swappiness to a low value if you have your swap file on an SSD! It&#8217;ll increase RAM usage a bit, but will be easier on our SSD.</p>
+</li>
+<li>
+<p><strong><code>96.0</code></strong> <em>maxroot</em>: / root file partition</p>
+</li>
+<li>
+<p><strong><code>80.0</code></strong> <em>minfree</em>: This should equal our ZFS log (16GB) plus our ZFS cache (64GB).</p>
+</li>
+<li>
+<p><strong><code>16.0</code></strong> <em>maxve</em>: This is the pve-data partition.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you get to the <em>Installation Successful</em> step of the PVE install, click the "Reboot" button.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_zfs_partitions">ZFS Partitions</h3>
+<div class="paragraph">
+<p>After rebooting you can log in via the PVE Web GUI or through the command line using SSH. Logging in via ssh:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>ssh root@10.10.1.10
+
+#The authenticity of host '10.10.1.10 (10.10.1.10)' can't be established.
+#ECDSA key fingerprint is SHA256:2ExP+SHaCo+9ZOt+sk90DPLAafdHFJTHPyeU1qtFXIg.
+#Are you sure you want to continue connecting (yes/no)?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Type "yes" and then enter the password set during installation.</p>
+</div>
+<div class="paragraph">
+<p>After logging into our new PVE installation, we want to add two additional partitions (ZFS Log (16Gb), and ZFS Cache(64Gb)). The combined storage will be 256Gb, leaving us with half of our NVMe for other options like dual-boot, additional storage, etc.</p>
+</div>
+<div class="paragraph">
+<p>After logging in, run (update for your drive): <strong><code>cfdisk /dev/sda</code></strong></p>
+</div>
+<div class="paragraph">
+<p>Go down to the "free space" line in green and add a 16Gb partition. Move down again to the next "free space" line in green and add a 64Gb partition. Then select <code>write</code> and then select <code>quit</code> and we are done.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 80%;">
+<col style="width: 10%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Creating ZFS Log and Cache Partitions
+<span class="image"><img src="https://roobyz.github.io/images/Server-Virtualization-Management/pve-cfdisk-process.gif" alt="pve-cfdisk"></span></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Once these two partitions are added, we can shut down PVE from the command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>shutdown -h</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_zfs_setup">ZFS Setup</h3>
+<div class="paragraph">
+<p>Once PVE has shut down, we can reconnect the remaining drives and restart our system. Before setting up our ZFS storage, we must backup any data that we want to keep.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start our <a href="http://open-zfs.org/wiki/Performance_tuning" target="_blank">ZFS configuration</a>. As mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we will mirror it as an <em>automatic</em> backup.</p>
+</div>
+<div class="paragraph">
+<p>Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run <strong><code>lsblk</code></strong> to get the list of block devices:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 80%;">
+<col style="width: 10%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>List of block devices
+<span class="image"><img src="https://roobyz.github.io/images/Server-Virtualization-Management/pve-lsblk.png" alt="pve-lsblk"></span></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In my example, the 2TB (1.8T) drive is <code>/dev/sdc</code>. The following commands will replace the drive with a new GPT partition table and create the 2 partitions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># Install parted
+apt-get install parted
+
+# remove everything on the /dev/sdc drive and
+# replace with two empty equal-sized partitions
+parted /dev/sdc --script mklabel gpt \
+       mkpart primary 0% 50% \
+       mkpart primary 50% 100% p</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After partitioning, we can mirror and stripe the drives. When we create the drive mirrors, ZFS creates virtual devices (vdevs). We can then connect the vdevs together into zpools. For example, we can <em>mirror</em> two 1TB drives and we end up with a 1TB vdev that will automatically replicate our data across both drives. Then we combine the two 1TB mirrored vdevs and end up with 2TB of storage.</p>
+</div>
+<div class="paragraph">
+<p>Since the zpool read/write transactions are balanced across the two vdevs, we can actually get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read-write transactions on the zpool. Because our CPU can compress-decompress data much faster than the drives can read-write data, our drive performance can improve even more, because of the smaller size of the read-write transactions on the zpool.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Creating our ZFS Storage Pool</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
+<li>
+<p>zpool create -o ashift=12 tank \</p>
+</li>
+<li>
+<p>mirror /dev/sda /dev/sdc1 \</p>
+</li>
+<li>
+<p>mirror /dev/sdb /dev/sdc2 \</p>
+</li>
+<li>
+<p>log   /dev/nvm0n1p4 \</p>
+</li>
+<li>
+<p>cache /dev/nvm0n1p5</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
+<li>
+<p>pool called tank with 4k sectors</p>
+</li>
+<li>
+<p>first vdev</p>
+</li>
+<li>
+<p>second vdev</p>
+</li>
+<li>
+<p>16GB log partition</p>
+</li>
+<li>
+<p>64GB cache partition</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>zfs set compression=lz4 tank  # lz4 pool compression
+zfs create tank/vm-disks      # ZFS layer to store VM images</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once that&#8217;s done, we can run the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>zpool list          # verify that our pool has been created
+zpool status tank   # check pool status and configuration
+pvesm zfsscan       # list available ZFS file systems</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_post_installation">Post-Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The PVE open-source license allows for testing and non-production use. If we would like to use PVE for production or we want commercial support, we can purchase a subscription, enter our key through the web interface, and skip to the "Update PVE" section.</p>
+</div>
+<div class="sect2">
+<h3 id="_adjusting_the_pve_repositories">Adjusting the PVE Repositories</h3>
+<div class="paragraph">
+<p>The <a href="https://pve.proxmox.com/wiki/Package_Repositories" target="_blank">PVE Package Repositories</a> can be configured depending on your usage goals. Let&#8217;s include the non-commercial the list of repositories.</p>
+</div>
+<div class="paragraph">
+<p>Type: <strong><code>nano /etc/apt/sources.list</code></strong> and update as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># main debian repo
+deb http://ftp.us.debian.org/debian stretch main contrib
+
+# security updates
+deb http://security.debian.org stretch/updates main contrib</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save and exit: press CTRL+X, Y for yes, and ENTER.</p>
+</div>
+<div class="paragraph">
+<p>Comment-out the PVE commercial repository.</p>
+</div>
+<div class="paragraph">
+<p>Type: <strong><code>nano /etc/apt/sources.list.d/pve-enterprise.list</code></strong> and update as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># non-subscription repo (manual update)
+deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
+#deb https://enterprise.proxmox.com/debian/pve stretch pve-enterprise</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save and exit: press CTRL+X, Y for yes, and ENTER.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_pve">Update PVE</h3>
+<div class="paragraph">
+<p>Edit our <em>resume</em> settings: type <strong><code>nano /etc/initramfs-tools/conf.d/resume</code></strong> and add:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>RESUME=none</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save and exit: press CTRL+X, Y for yes, and ENTER.</p>
+</div>
+<div class="paragraph">
+<p>Update the software packages, boot loader, and system image. From the PVE, command line type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>apt-get update &amp;&amp; apt-get upgrade -y
+update-grub
+update-initramfs -u</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_the_pve_storage_system">Update the PVE Storage System:</h3>
+<div class="paragraph">
+<p>Once we create the ZFS partitions, we can go to the PVE Web GUI and add the 2TB of storage to our setup. Being sure to use <em>HTTPS</em>, open <a href="https://machine-ip-address:8006" class="bare">https://machine-ip-address:8006</a> in a web browser. When we get the <em>certificate warning</em> message, we should proceed anyway. This happens because the machine does not have a certificate signed by a third party. Our goal is to end up with four storage volumes:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. PVE storage volumes.</caption>
+<colgroup>
+<col style="width: 27.2727%;">
+<col style="width: 72.7273%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>vm-disks</p>
+</li>
+<li>
+<p>zfs-backups</p>
+</li>
+<li>
+<p>zfs-containers</p>
+</li>
+<li>
+<p>zfs-templates</p>
+</li>
+</ol>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Stores RAW disk images more efficiently</p>
+</li>
+<li>
+<p>Stores VZDump backups of virtual machines</p>
+</li>
+<li>
+<p>Stores LXC container filesystems</p>
+</li>
+<li>
+<p>Stores ISOs and container templates</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Once logged in, we go to Datacenter &gt; Storage, and:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>click <strong>Add</strong> &gt; <strong>ZFS</strong>, then enter "<strong><em>vm-disks</em></strong>" for ID, and select <em>tank/vm-disks</em> for pool, choose only <em>Disk Image</em> for content, and finally tick the <em>Thin Provision</em> check box and select <strong>Add</strong>.</p>
+</li>
+<li>
+<p>click <strong>Add</strong> &gt; <strong>ZFS</strong>, then enter "<strong><em>zfs-containers</em></strong>" for ID, and select <em>tank</em> for pool, and <em>Container</em> for content, and select <strong>Add</strong>.</p>
+</li>
+<li>
+<p>click <strong>Add</strong> &gt; <strong>Directory</strong>, then enter "<strong><em>zfs-backups</em></strong>" for ID, enter "<em>/tank</em>" (/our-zfs-pool) for directory, and choose only <em>VZDump backup files</em> for content, then select <strong>Add</strong>.</p>
+</li>
+<li>
+<p>click <strong>Add</strong> &gt; <strong>Directory</strong>, then enter "<strong><em>zfs-templates</em></strong>" for ID, enter "<em>/tank</em>" (/our-zfs-pool) for directory, and choose both <em>container templates</em> and <em>ISO images</em> for content, then select <strong>Add</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After adding our new storage options, we can disable the local storage:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>select <strong>local-lvm</strong>, click <strong>Edit</strong>, untick the <em>Enable</em> checkbox, and click "OK".</p>
+</li>
+<li>
+<p>select <strong>local</strong>, click <strong>Edit</strong>, untick the <em>Enable</em> checkbox, add "1" for <em>Max Backups</em>, and then click "OK".</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Afterward, if we select the arrow next to pve in the <em>Server View</em>, we will only see only four enabled storage options.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 80%;">
+<col style="width: 10%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>PVE Storage Volume Setup
+<span class="image"><img src="https://roobyz.github.io/images/Server-Virtualization-Management/pve-zfs-setup.gif" alt="pve-zfs-setup"></span></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>We made it! With only one storage volume for each type of content, there&#8217;s no way to accidentally misplace something. Creating containers and VMs operates as normal. Our machine is ready to go. When complete, our next installment, will cover some opportunities for <em>System Optimization</em>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Part 3: System Optimization</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>]]></description><link>https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Technology]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Tue, 25 Apr 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[PVE: Virtualization for Work and Play (The Plan)]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Say we want a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. We may want to run powerful analytics applications which would undoubtedly require Linux, but we may also want to run Windows applications. We may want near native 2D and 3D graphics performance inside the guest operating system (OS) while making dual-booting obsolete. Finally, we may want to do all of that from the comfort of our couch using a Windows, Linux or Mac laptop. Lets do it!</p>
