@@ -1,6 +1,6 @@
 // :hp-image: /covers/cover.png
 
-= PVE: Virtualization for Work and Play (Getting Started)
+= PVE: Virtualization for Work and Play (Part 2)
 :hp-alt-title: Server Virtualization Management Part2
 :hp-tags: Blog, Open_Source, Technology
 :icons: image
@@ -8,6 +8,8 @@
 :published_at: 2017-04-25
 :toc: macro
 :toclevels: 3
+
+== Getting Started...
 
 In the link:/2017/04/23/Server-Virtualization-Management[previous post], we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games _and_ other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the link:http://linuxcommand.org/lc3_learning_the_shell.php[Linux CLI (command line interface)^]. Now let's begin.
 
