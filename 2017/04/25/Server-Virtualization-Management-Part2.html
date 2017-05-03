@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493774103478" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/uno/assets/css/uno.css?v=1493774406195" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html" />
     <meta name="referrer" content="origin" />
@@ -33,7 +33,7 @@
     <meta property="og:site_name" content="Roobyz Ramblings" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="PVE: Virtualization for Work and Play (Getting Started)" />
-    <meta property="og:description" content="In the previous post, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful &quot;bang for the buck&quot; home server for games and other system-intensive pursuits. You should feel a little comfortable with the Linux CLI (command line interface). Now let&amp;#8217;s begin. Table" />
+    <meta property="og:description" content="In the previous post, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful &quot;bang for the buck&quot; home server for games and other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the Linux CLI (command line interface). Now let&amp;#8217;s" />
     <meta property="og:url" content="https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html" />
     <meta property="article:published_time" content="2017-04-25T00:00:00.000Z" />
     <meta property="article:tag" content="Blog" />
@@ -42,7 +42,7 @@
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="PVE: Virtualization for Work and Play (Getting Started)" />
-    <meta name="twitter:description" content="In the previous post, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful &quot;bang for the buck&quot; home server for games and other system-intensive pursuits. You should feel a little comfortable with the Linux CLI (command line interface). Now let&amp;#8217;s begin. Table" />
+    <meta name="twitter:description" content="In the previous post, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful &quot;bang for the buck&quot; home server for games and other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the Linux CLI (command line interface). Now let&amp;#8217;s" />
     <meta name="twitter:url" content="https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html" />
     
     <script type="application/ld+json">
@@ -61,7 +61,7 @@
     "url": "https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html",
     "datePublished": "2017-04-25T00:00:00.000Z",
     "keywords": "Blog, Open_Source, Technology",
-    "description": "In the previous post, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful &quot;bang for the buck&quot; home server for games and other system-intensive pursuits. You should feel a little comfortable with the Linux CLI (command line interface). Now let&amp;#8217;s begin. Table"
+    "description": "In the previous post, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful &quot;bang for the buck&quot; home server for games and other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the Linux CLI (command line interface). Now let&amp;#8217;s"
 }
     </script>
 
@@ -158,7 +158,7 @@
       <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the <a href="/2017/04/23/Server-Virtualization-Management">previous post</a>, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. You should feel a little comfortable with the <a href="http://linuxcommand.org/lc3_learning_the_shell.php" target="_blank">Linux CLI (command line interface)</a>. Now let&#8217;s begin.</p>
+<p>In the <a href="/2017/04/23/Server-Virtualization-Management">previous post</a>, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the <a href="http://linuxcommand.org/lc3_learning_the_shell.php" target="_blank">Linux CLI (command line interface)</a>. Now let&#8217;s begin.</p>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
@@ -256,7 +256,7 @@
 <p>After logging into our new PVE installation, we want to add two additional partitions (ZFS Log (16Gb), and ZFS Cache(64Gb)). The combined storage will be 256Gb, leaving us with half of our NVMe for other options like dual-boot, additional storage, etc.</p>
 </div>
 <div class="paragraph">
-<p>After logging in, run (update for your drive): <strong><code>cfdisk /dev/sda</code></strong></p>
+<p>After logging in, run (update for your drive): <code>cfdisk /dev/sda</code></p>
 </div>
 <div class="paragraph">
 <p>Go down to the "free space" line in green and add a 16Gb partition. Move down again to the next "free space" line in green and add a 64Gb partition. Then select <code>write</code> and then select <code>quit</code> and we are done.</p>
@@ -296,7 +296,7 @@
 <p>Let&#8217;s start our <a href="http://open-zfs.org/wiki/Performance_tuning" target="_blank">ZFS configuration</a>. As mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we will mirror it as an <em>automatic</em> backup.</p>
 </div>
 <div class="paragraph">
-<p>Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run <strong><code>lsblk</code></strong> to get the list of block devices:</p>
+<p>Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run <code>lsblk</code> to get the list of block devices:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -416,7 +416,7 @@ pvesm zfsscan       # list available ZFS file systems</code></pre>
 <p>The <a href="https://pve.proxmox.com/wiki/Package_Repositories" target="_blank">PVE Package Repositories</a> can be configured depending on your usage goals. Let&#8217;s include the non-commercial list of repositories.</p>
 </div>
 <div class="paragraph">
-<p>Run <strong><code>nano /etc/apt/sources.list</code></strong> and update as follows:</p>
+<p>Run <code>nano /etc/apt/sources.list</code> and update as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -434,7 +434,7 @@ deb http://security.debian.org stretch/updates main contrib</code></pre>
 <p>Comment-out the PVE commercial repository.</p>
 </div>
 <div class="paragraph">
-<p>Run <strong><code>nano /etc/apt/sources.list.d/pve-enterprise.list</code></strong> and update as follows:</p>
+<p>Run <code>nano /etc/apt/sources.list.d/pve-enterprise.list</code> and update as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -450,7 +450,7 @@ deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
 <div class="sect2">
 <h3 id="_update_pve">Update PVE</h3>
 <div class="paragraph">
-<p>Edit our <em>resume</em> settings: run <strong><code>nano /etc/initramfs-tools/conf.d/resume</code></strong> and add:</p>
+<p>Edit our <em>resume</em> settings: run <code>nano /etc/initramfs-tools/conf.d/resume</code> and add:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -630,7 +630,7 @@ update-initramfs -u</code></pre>
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493774103478"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/uno/assets/js/main.js?v=1493774406195"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

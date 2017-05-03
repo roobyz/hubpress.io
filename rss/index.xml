@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 03 May 2017 01:15:03 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Getting Started)]]></title><description><![CDATA[<div id="preamble">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 03 May 2017 01:20:06 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Getting Started)]]></title><description><![CDATA[<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the <a href="/2017/04/23/Server-Virtualization-Management">previous post</a>, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. You should feel a little comfortable with the <a href="http://linuxcommand.org/lc3_learning_the_shell.php" target="_blank">Linux CLI (command line interface)</a>. Now let&#8217;s begin.</p>
+<p>In the <a href="/2017/04/23/Server-Virtualization-Management">previous post</a>, we learned about ProxMox Virtual Environment (PVE) and outlined the plan to build a powerful "bang for the buck" home server for games <em>and</em> other system-intensive pursuits. Before proceeding, you should feel a little comfortable with the <a href="http://linuxcommand.org/lc3_learning_the_shell.php" target="_blank">Linux CLI (command line interface)</a>. Now let&#8217;s begin.</p>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
@@ -99,7 +99,7 @@
 <p>After logging into our new PVE installation, we want to add two additional partitions (ZFS Log (16Gb), and ZFS Cache(64Gb)). The combined storage will be 256Gb, leaving us with half of our NVMe for other options like dual-boot, additional storage, etc.</p>
 </div>
 <div class="paragraph">
-<p>After logging in, run (update for your drive): <strong><code>cfdisk /dev/sda</code></strong></p>
+<p>After logging in, run (update for your drive): <code>cfdisk /dev/sda</code></p>
 </div>
 <div class="paragraph">
 <p>Go down to the "free space" line in green and add a 16Gb partition. Move down again to the next "free space" line in green and add a 64Gb partition. Then select <code>write</code> and then select <code>quit</code> and we are done.</p>
@@ -139,7 +139,7 @@
 <p>Let&#8217;s start our <a href="http://open-zfs.org/wiki/Performance_tuning" target="_blank">ZFS configuration</a>. As mentioned in our previous post, we are configuring ZFS as striped-mirrored storage. Since we have a 2TB spinning disk that we want to use for backup, we will mirror it as an <em>automatic</em> backup.</p>
 </div>
 <div class="paragraph">
-<p>Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run <strong><code>lsblk</code></strong> to get the list of block devices:</p>
+<p>Our drives should all be the same size, otherwise, we will lose storage capacity. Since our SSD drives are 1TB each, we need to partition our 2TB spinning disk to two 1TB partitions. Before partitioning, identify the correct drives; run <code>lsblk</code> to get the list of block devices:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -259,7 +259,7 @@ pvesm zfsscan       # list available ZFS file systems</code></pre>
 <p>The <a href="https://pve.proxmox.com/wiki/Package_Repositories" target="_blank">PVE Package Repositories</a> can be configured depending on your usage goals. Let&#8217;s include the non-commercial list of repositories.</p>
 </div>
 <div class="paragraph">
-<p>Run <strong><code>nano /etc/apt/sources.list</code></strong> and update as follows:</p>
+<p>Run <code>nano /etc/apt/sources.list</code> and update as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -277,7 +277,7 @@ deb http://security.debian.org stretch/updates main contrib</code></pre>
 <p>Comment-out the PVE commercial repository.</p>
 </div>
 <div class="paragraph">
-<p>Run <strong><code>nano /etc/apt/sources.list.d/pve-enterprise.list</code></strong> and update as follows:</p>
+<p>Run <code>nano /etc/apt/sources.list.d/pve-enterprise.list</code> and update as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -293,7 +293,7 @@ deb http://download.proxmox.com/debian/pve stretch pve-no-subscription
 <div class="sect2">
 <h3 id="_update_pve">Update PVE</h3>
 <div class="paragraph">
-<p>Edit our <em>resume</em> settings: run <strong><code>nano /etc/initramfs-tools/conf.d/resume</code></strong> and add:</p>
+<p>Edit our <em>resume</em> settings: run <code>nano /etc/initramfs-tools/conf.d/resume</code> and add:</p>
 </div>
 <div class="listingblock">
 <div class="content">
