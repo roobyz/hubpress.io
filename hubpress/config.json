@@ -6,13 +6,13 @@
     "cname": ""
   },
   "theme": {
-    "name": "uno"
+    "name": "runoz"
   },
   "urls": {
-    "site": "http://https://roobyz.github.io/#blog",
+    "site": "https://roobyz.github.io",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//https://roobyz.github.io/#blog/themes/uno",
-    "images": "http://https://roobyz.github.io/#blog/images"
+    "theme": "//roobyz.github.io/themes/uno",
+    "images": "https://roobyz.github.io/images"
   },
   "initialisationConfigComponent": {
     "name": "initialise-configuration",
