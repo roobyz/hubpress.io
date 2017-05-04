@@ -44,10 +44,10 @@ To identify the GPU to passthrough run `lspci -nn | grep VGA`.
 
 Identify the GPU slot IDs (first pair of numbers separated by a colon):
 
-. My GPU Slot ID for passthrough is: *`#28:00#`*
+. My GPU Slot ID for passthrough is: `#28:00#`
 . My GPU Slot ID for the host is: `21:00`
 
-Identify the vendor ID for passthrough: `lspci -nns *#28:00#* | cut -d "(" -f 1 | cut -d ":" -f 3,4`
+Identify the vendor ID for passthrough: `lspci -nns #28:00# | cut -d "(" -f 1 | cut -d ":" -f 3,4`
 ```
  NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] 
  NVIDIA Corporation GP104 High Definition Audio Controller [10de:10f0] 
@@ -79,7 +79,7 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 | allow_unsafe_interrupts=1
 | This workaround is for platforms without interrupt remapping support, which provides device isolation. It removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this configuration.
 
-| ids=*#10de:1b80,10de:10f0#*
+| ids=#10de:1b80,10de:10f0#
 | Assign desired GPU to the virtual pci for use in our VM.
 
 | disable_vga=1
