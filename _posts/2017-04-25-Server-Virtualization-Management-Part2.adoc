@@ -222,5 +222,5 @@ We made it! With only one storage volume for each type of content, there's no wa
 
 Our machine is ready to go, however this is only part 2 of our multipart tutorial. Our next installment will cover some opportunities for _System Optimization_.
 
-* Part 3: System Optimization
+* link:/2017/05/03/Server-Virtualization-Management-Part3.html[Part 3: System Optimization]
 
