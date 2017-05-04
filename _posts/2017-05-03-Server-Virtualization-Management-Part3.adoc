@@ -11,7 +11,7 @@
 
 == System Optimization...
 
-In the link:/2017/04/25/Server-Virtualization-Management-Part2.html[previous post] we installed ProxMox Virtual Environment (PVE) and configured our ZFS ZPool storage system. Now let's tweak our system to improve performance.
+In the link:/2017/04/25/Server-Virtualization-Management-Part2.html[previous post] we installed ProxMox Virtual Environment (PVE) and configured our ZFS ZPool storage system. Let's tweak our system to improve performance.
 
 toc::[]
 
@@ -80,7 +80,7 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 | This workaround is for platforms without interrupt remapping support, which provides device isolation. It removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this configuration.
 
 | ids=*#10de:1b80,10de:10f0#*
-| Assign the specified GPU to the virtual pci for use in our VM.
+| Assign desired GPU to the virtual pci for use in our VM.
 
 | disable_vga=1
 | Opt-out devices from vga arbitration if possible.
@@ -110,7 +110,7 @@ update-initramfs -u  # update boot image
 reboot               # reboot machine
 ```
 
-Afterward, run `lspci -nnks 28:00` to check that the driver loaded correctly. If everything went well, for each device we should see:
+After our computer reboots, run `lspci -nnks #28:00#` to check that the driver loaded correctly. If everything went well, for each device we should see:
 
 ```
 Kernel driver in use: vfio-pci
@@ -140,6 +140,6 @@ Also, run `dmesg | grep -e AMD-Vi -e vAPIC` to check our IOMMU settings.
 
 Congratulations! We have our PVE server configured and ready to use. We can now begin link:https://pve.proxmox.com/wiki/VM_Templates_and_Clones[creating Virtual Machines (VMs)^] or link:https://pve.proxmox.com/wiki/Linux_Container[Containers^]. In future posts, we'll consider additional opportunties for enhancing performance and security for our server, VMs, and Containers. 
 
-Although we have configured passthrough on the server, updates to our VMs are required to leverage that feature. Because Nvidia sells a commercial line of GPUs (Quadro), they do not _support_ and actively try to inhibit passthrough on their consumer line (GeForce). We will have to consider potential workarounds to enable that functionality, which may involve future tweaks to our server settings.
+Although we have configured passthrough on the server, updates to our VMs are required to leverage that feature. Because Nvidia sells a commercial line of GPUs (Quadro), they do not _support_ passthrough, and actively try to inhibit passthrough on their consumer line (GeForce). We will have to consider potential workarounds to enable that functionality, which may involve future tweaks to our server settings.
 
 
