@@ -2,7 +2,7 @@
 
 = PVE: Virtualization for Work and Play (Part 2)
 :hp-alt-title: Server Virtualization Management Part2
-:hp-tags: Blog, Open_Source, Technology
+:hp-tags: Blog, Open_Source, Technology, ProxMox
 :icons: image
 :linkattrs:
 :published_at: 2017-04-25
@@ -218,9 +218,9 @@ image:Server-Virtualization-Management/pve-zfs-setup.gif[pve-zfs-setup]
 |
 |===
 
-We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs should function as expected. Our machine is ready to go. 
+We made it! With only one storage volume for each type of content, there's no way to accidentally misplace something. Creating containers and VMs should function as expected. 
 
-This is part 2 of our multipart tutorial. Our next installment will cover some opportunities for _System Optimization_.
+Our machine is ready to go, however this is only part 2 of our multipart tutorial. Our next installment will cover some opportunities for _System Optimization_.
 
 * Part 3: System Optimization
 
