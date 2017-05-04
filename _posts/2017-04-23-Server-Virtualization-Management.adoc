@@ -7,7 +7,7 @@
 
 = PVE: Virtualization for Work and Play (Part 1)
 :hp-alt-title: Server Virtualization Management
-:hp-tags: Blog, Open_Source, Technology
+:hp-tags: Blog, Open_Source, Technology, ProxMox
 :icons: image
 :linkattrs:
 :toc: macro 
