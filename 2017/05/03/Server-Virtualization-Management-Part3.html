@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1493936983945" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1493937188002" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/05/03/Server-Virtualization-Management-Part3.html" />
     <meta name="referrer" content="origin" />
@@ -228,7 +228,7 @@ vfio_virqfd</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>My GPU Slot ID for passthrough is: <strong><code><mark>28:00</mark></code></strong></p>
+<p>My GPU Slot ID for passthrough is: <code><mark>28:00</mark></code></p>
 </li>
 <li>
 <p>My GPU Slot ID for the host is: <code>21:00</code></p>
@@ -236,7 +236,7 @@ vfio_virqfd</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>Identify the vendor ID for passthrough: <code>lspci -nns <strong><mark>28:00</mark></strong> | cut -d "(" -f 1 | cut -d ":" -f 3,4</code></p>
+<p>Identify the vendor ID for passthrough: <code>lspci -nns <mark>28:00</mark> | cut -d "(" -f 1 | cut -d ":" -f 3,4</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -296,7 +296,7 @@ options kvm              ignore_msrs=1</code></pre>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ids=<strong><mark>10de:1b80,10de:10f0</mark></strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ids=<mark>10de:1b80,10de:10f0</mark></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Assign desired GPU to the virtual pci for use in our VM.</p>
 </div></div></td>
@@ -445,7 +445,7 @@ reboot               # reboot machine</code></pre>
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1493936983945"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1493937188002"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

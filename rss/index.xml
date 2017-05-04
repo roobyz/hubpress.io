@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 04 May 2017 22:29:43 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Thu, 04 May 2017 22:33:07 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_system_optimization">System Optimization&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -70,7 +70,7 @@ vfio_virqfd</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>My GPU Slot ID for passthrough is: <strong><code><mark>28:00</mark></code></strong></p>
+<p>My GPU Slot ID for passthrough is: <code><mark>28:00</mark></code></p>
 </li>
 <li>
 <p>My GPU Slot ID for the host is: <code>21:00</code></p>
@@ -78,7 +78,7 @@ vfio_virqfd</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>Identify the vendor ID for passthrough: <code>lspci -nns <strong><mark>28:00</mark></strong> | cut -d "(" -f 1 | cut -d ":" -f 3,4</code></p>
+<p>Identify the vendor ID for passthrough: <code>lspci -nns <mark>28:00</mark> | cut -d "(" -f 1 | cut -d ":" -f 3,4</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -138,7 +138,7 @@ options kvm              ignore_msrs=1</code></pre>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ids=<strong><mark>10de:1b80,10de:10f0</mark></strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ids=<mark>10de:1b80,10de:10f0</mark></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Assign desired GPU to the virtual pci for use in our VM.</p>
 </div></div></td>
