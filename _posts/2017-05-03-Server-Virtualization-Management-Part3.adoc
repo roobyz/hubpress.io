@@ -2,7 +2,7 @@
 
 = PVE: Virtualization for Work and Play (Part 3)
 :hp-alt-title: Server Virtualization Management Part3
-:hp-tags: Blog, Open_Source, Technology
+:hp-tags: Blog, Open_Source, Technology, ProxMox
 :icons: image
 :linkattrs:
 :published_at: 2017-05-03
@@ -11,19 +11,19 @@
 
 == System Optimization...
 
-In the link:/2017/04/25/Server-Virtualization-Management-Part2.html[previous post] we installed ProxMox Virtual Environment (PVE) and configured our ZFS ZPool storage system. Now let's make some system tweaks to improve performance.
+In the link:/2017/04/25/Server-Virtualization-Management-Part2.html[previous post] we installed ProxMox Virtual Environment (PVE) and configured our ZFS ZPool storage system. Now let's tweak our system to improve performance.
 
 toc::[]
 
-== GPU Passthrough
+== Graphics Processing Unit (GPU) Passthrough
 
-GPU Passthrough allows our VM to access GPU hardware for games, graphics and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible virtual addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
+Passthrough allows our Virtual Machine (VM) to access GPU hardware for games, graphics, and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible _virtual_ addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
 
-link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a _secure_, IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
+link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a _secure_ IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
 
-=== Include the VFIO Modules:
+=== Enable the VFIO Modules:
 
-Type: `nano /etc/modules` and add the following:
+Run `nano /etc/modules` and add the following:
 ```
 vfio
 vfio_iommu_type1
@@ -34,23 +34,36 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 === Configure the VFIO Modules
 
-Identify the GPU to passthrough:
+==== Identify Passthrough Device
 
-. Identify all GPUs: `lspci -nn | grep VGA`
-. Capture the GPU slot IDs (first pair of numbers separated by a colon):
-.. My GPU Slot ID for passthrough is: `28:00`
-.. My GPU Slot ID for the host is: `21:00`
-. Capture the vendor IDs for the passthrough GPU Slot ID: `lspci -nns 28:00`
-.. The vendor ID for my GPU VGA device: `10de:1b80`
-.. The vendor ID for my GPU Audio device: `10de:10f0`
-
-//lspci -nns 28:00 | cut -d "]" -f 2 | cut -d "[" -f 2
-
-To enable link:https://pve.proxmox.com/wiki/Pci_passthrough[PCI passthrough^] for our VM, add the following module options (including the comma separated vendor IDs identified in the prior step). This loads the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
-
-. Type: `nano /etc/modprobe.d/kvm.conf` and add the following:
+To identify the GPU to passthrough run `lspci -nn | grep VGA`.
 ```
-options vfio_iommu_type1 allow_unsafe_interrupts=1
+21:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM107 [GeForce GTX 745] [10de:1382] (rev a2)
+28:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] (rev a1)
+```
+
+Identify the GPU slot IDs (first pair of numbers separated by a colon):
+
+. My GPU Slot ID for passthrough is: *`#28:00#`*
+. My GPU Slot ID for the host is: `21:00`
+
+Identify the vendor ID for passthrough: `lspci -nns *#28:00#* | cut -d "(" -f 1 | cut -d ":" -f 3,4`
+```
+ NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] 
+ NVIDIA Corporation GP104 High Definition Audio Controller [10de:10f0] 
+```
+
+. Vendor ID for GPU VGA device: `10de:1b80`
+. Vendor ID for GPU Audio device: `10de:10f0`
+
+==== Enable Passthrough Device
+
+To enable link:https://pve.proxmox.com/wiki/Pci_passthrough[passthrough^], add the following module options (including the comma separated vendor IDs identified in the prior step). This loads options for the vfio-pci kernel module, which maps memory regions from the PCI bus to the VM, and activates support for IOMMU groups.
+
+Run `nano /etc/modprobe.d/kvm.conf` and add #_some_# of the following options (see Table 1 for details):
+```
+# uncomment the first option if required for your system.
+#options vfio_iommu_type1 allow_unsafe_interrupts=1
 options vfio-pci         ids=10de:1b80,10de:10f0
 options vfio-pci         disable_vga=1
 options kvm-amd          npt=0
@@ -64,9 +77,9 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 | Option | Details
 
 | allow_unsafe_interrupts=1
-| Interrupt remapping is designed to provide device isolation. This workaround is for platforms without interrupt remapping support. It removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this configuration.
+| This workaround is for platforms without interrupt remapping support, which provides device isolation. It removes protection against link:http://invisiblethingslab.com/resources/2011/Software%20Attacks%20on%20Intel%20VT-d.pdf[MSI-based interrupt injection attacks^] by guests.  Only trusted guests and drivers should be run with this configuration.
 
-| ids=*10de:1b80,10de:10f0*
+| ids=*#10de:1b80,10de:10f0#*
 | Assign the specified GPU to the virtual pci for use in our VM.
 
 | disable_vga=1
@@ -80,11 +93,11 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 |===
 
-=== Update Boot Settings
+== Update Boot Settings
 
-Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab the GPU first while booting. After these changes, we commit them to grub and generate a new initrd image.
+Configure IOMMU and VFIO to load first so that framebuffer drivers don’t grab the GPU while booting. After these changes, commit them to grub and generate a new boot image.
 
-Type: `nano /etc/default/grub` and change `GRUB_CMDLINE_LINUX_DEFAULT="quiet"` as follows:
+Run `nano /etc/default/grub` and change `GRUB_CMDLINE_LINUX_DEFAULT="quiet"` as follows:
 
 `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on kvm_amd.avic=1 rd.driver.pre=vfio-pci video=efifb:off"`
 
@@ -92,75 +105,41 @@ Save and exit: press CTRL+X, Y for yes, and ENTER.
 
 Afterward, run:
 ```
-update-grub
-update-initramfs -u
+update-grub          # update boot loader
+update-initramfs -u  # update boot image
+reboot               # reboot machine
 ```
 
-Reboot. 
+Afterward, run `lspci -nnks 28:00` to check that the driver loaded correctly. If everything went well, for each device we should see:
 
-Afterward, to check that the driver loaded correctly, run: 
 ```
-lspci -nnks 28:00
+Kernel driver in use: vfio-pci
 ```
-If everything went well, we should see: "`Kernel driver in use: *vfio-pci*`".
+
+Also, run `dmesg | grep -e AMD-Vi -e vAPIC` to check our IOMMU settings.
+
+```
+[    0.893699] AMD-Vi: IOMMU performance counters supported
+[    0.895145] AMD-Vi: Found IOMMU at 0000:00:00.2 cap 0x40
+[    0.895146] AMD-Vi: Extended features (0xf77ef22294ada):
+[    0.895146]  PPR NX GT IA GA PC GA_vAPIC
+[    0.895148] AMD-Vi: Interrupt remapping enabled
+[    0.895149] AMD-Vi: virtual APIC enabled
+[    0.895257] AMD-Vi: Lazy IO/TLB flushing enabled
+```
 
 //iommu=pt ... AMD-Vi driver will not register itself as the dma_ops backend and allows all devices unlimited access to main memory as long as no other kernel part (currently only KVM will do so) assigns the device to another domain using the IOMMU-API.
 
-// AMD SVM Advance Virtual Interrupt Controller (AVIC) support virtualizes local APIC registers of each vCPU via the virtual APIC (vAPIC) backing page. This allows guest access to certain APIC registers without the need to emulate the hardware behavior and should speed up workloads which generate large amount of interrupts.
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
+|*About That*: AMD Virtual Interrupt Controller (AVIC) virtualizes local link:https://en.wikipedia.org/wiki/Advanced_Programmable_Interrupt_Controller[APIC^] registers of each vCPU via the virtual APIC (vAPIC) backing page. This allows guest access to certain APIC registers without needing to emulate the hardware behavior, and should speed up workloads that generate large amount of interrupts.
+|===
 
-//`ll /sys/bus/pci/drivers/vfio-pci/* | grep 28:00`
+== Final Thoughts
 
-// lspci -nn | grep `lspci | grep VGA | cut -d "." -f1` 
+Congratulations! We have our PVE server configured and ready to use. We can now begin link:https://pve.proxmox.com/wiki/VM_Templates_and_Clones[creating Virtual Machines (VMs)^] or link:https://pve.proxmox.com/wiki/Linux_Container[Containers^]. In future posts, we'll consider additional opportunties for enhancing performance and security for our server, VMs, and Containers. 
 
-
-
-
-
-
-== Emulation Settings
-
-Configure emulation settings for sound and passthrough. My Windows 7 virtual machine has an ID equal to 101; update the next command with your Windows VM ID number.
-
-. Type: `vi /etc/pve/qemu-server/*101*.conf`
-.. Enter edit mode: `i`
-.. Update the following: `cpu: Opteron_G5,hidden=1`
-.. Add the following:
-... Audio passthrough: `args: -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1`
-... GPU for passthrough: `hostpci0: 28:00,pcie=1`
-... Emulation for PCI-E passthrough: `machine: q35`
-.. Exit edit mode: <esc>
-. Save and exit: `wq <enter>`
-
-
-//https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
-
-// -machine q35,accel=kvm,mem-merge=off
-
-// -cpu host,kvm=off,hv_vendor_id=vgaptrocks,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time
-
-
-== Security
-
-https://www.kiloroot.com/secure-proxmox-install-sudo-firewall-with-ipv6-and-more-how-to-configure-from-start-to-finish/
-
-
-== Optimization
-
-Configure Ryzen to appear to have 2 sockets, 4 cores, and 2 threads
-
-Remove Proxmox License Nag: sed -i.bak "s/data.status !== 'Active'/false/g" /usr/share/pve-manager/ext6/pvemanagerlib.js
-
-For good performance, we need to configure SPICE (Simple Protocol for Independent Computing Environments). The SPICE packages include drivers (QXL and virtio) that enhance virtualization performance:
-
-* SPICE Client (virt-viewer) for Linux, Windows, and Mac systems
-* SPICE Guest Tools for the virtual machines
-
-https://pve.proxmox.com/wiki/Paravirtualized_Block_Drivers_for_Windows
-
-https://pve.proxmox.com/wiki/Windows_7_guest_best_practices
-
-https://pve.proxmox.com/wiki/SPICE
-
-https://www.spice-space.org/download.html
+Although we have configured passthrough on the server, updates to our VMs are required to leverage that feature. Because Nvidia sells a commercial line of GPUs (Quadro), they do not _support_ and actively try to inhibit passthrough on their consumer line (GeForce). We will have to consider potential workarounds to enable that functionality, which may involve future tweaks to our server settings.
 
 
