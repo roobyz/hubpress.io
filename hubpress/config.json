@@ -3,16 +3,16 @@
     "username": "roobyz",
     "repositoryName": "roobyz.github.io",
     "branch": "master",
-    "cname": "https://roobyz.github.io/#blog"
+    "cname": ""
   },
   "theme": {
     "name": "uno"
   },
   "urls": {
-    "site": "https://roobyz.github.io",
+    "site": "http://https://roobyz.github.io/#blog",
     "hubpress": "https://roobyz.github.io",
-    "theme": "//roobyz.github.io/themes/uno",
-    "images": "https://roobyz.github.io/images"
+    "theme": "//https://roobyz.github.io/#blog/themes/uno",
+    "images": "http://https://roobyz.github.io/#blog/images"
   },
   "initialisationConfigComponent": {
     "name": "initialise-configuration",
