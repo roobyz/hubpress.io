@@ -70,4 +70,5 @@ We will use link:https://github.com/zfsonlinux/zfs/wiki/faq[ZFS^], a storage pla
 This is Part 1 of a multipart tutorial, and a work in progress. As I complete each part, I'll update the links. Roughly speaking the next parts are as follows:
 
 * link:/2017/04/25/Server-Virtualization-Management-Part2.html[Part 2: Getting Started]
-* link:/2017/05/03/Server-Virtualization-Management-Part3.html[Part 3: System Optimization^]
+* link:/2017/05/03/Server-Virtualization-Management-Part3.html[Part 3: System Optimization]
+
