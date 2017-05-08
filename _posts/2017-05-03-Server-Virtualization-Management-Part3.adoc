@@ -157,10 +157,17 @@ update-initramfs -u  # update boot image
 reboot               # reboot machine
 ```
 
-After our computer reboots, run `lspci -nnks #28:00#` to check that the driver loaded correctly. If everything went well, for each device we should see:
+After our computer reboots, run `lspci -nnks #28:00#` to check that the driver loaded correctly. If everything went well, for each device we should see `vfio-pci` for our "Kernel driver is use".
 
 ```
-Kernel driver in use: vfio-pci
+28:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] (rev a1)
+	Subsystem: ZOTAC International (MCO) Ltd. GP104 [GeForce GTX 1080] [19da:1451]
+	Kernel driver in use: vfio-pci
+	Kernel modules: nvidiafb, nouveau
+28:00.1 Audio device [0403]: NVIDIA Corporation GP104 High Definition Audio Controller [10de:10f0] (rev a1)
+	Subsystem: ZOTAC International (MCO) Ltd. GP104 High Definition Audio Controller [19da:1451]
+	Kernel driver in use: vfio-pci
+	Kernel modules: snd_hda_intel
 ```
 
 Also, run `dmesg | grep -e AMD-Vi -e vAPIC` to check our IOMMU settings.
