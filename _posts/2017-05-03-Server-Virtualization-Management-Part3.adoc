@@ -157,7 +157,7 @@ update-initramfs -u  # update boot image
 reboot               # reboot machine
 ```
 
-After our computer reboots, run `lspci -nnks #28:00#` to check that the driver loaded correctly. If everything went well, for each device we should see `vfio-pci` for our "Kernel driver is use".
+After our computer reboots, run `lspci -nnks #28:00#` to check that the driver loaded correctly. If everything went well, for each device we should see `vfio-pci` for our "Kernel driver in use".
 
 ```
 28:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] (rev a1)
