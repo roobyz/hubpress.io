@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 08 May 2017 03:53:49 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 08 May 2017 03:56:20 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_system_optimization">System Optimization&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -87,7 +87,7 @@ tank/vm-disks                relatime  off       default</code></pre>
 <tr>
 <td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p><strong>About That</strong>: Many ZFS properties are not retroactive. To apply to existing files, we would need to replace the files. In other words, if you already have files or data stored on your ZFS pool, you would need to move them somewhere else (i.e. backup) and then move them back so that the changes in properties can be applied correctly.</p>
+<p><strong>About That</strong>: Many ZFS properties are not retroactive. To apply to existing files, we would need to replace the files. In other words, if you already have files or data stored on your ZFS pool, you would need to move them somewhere else (i.e. backup) and then move them back so that the changes in properties are applied correctly.</p>
 </div></div></td>
 </tr>
 </tbody>
