@@ -58,7 +58,7 @@ We can set additional options for reliability. Run `zpool set autoreplace=on #ta
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
-|*About That*: Many ZFS properties are not retroactive. To apply to existing files, we would need to replace the files. In other words, if you already have files or data stored on your ZFS pool, you would need to move them somewhere else (i.e. backup) and then move them back so that the changes in properties can be applied correctly.
+|*About That*: Many ZFS properties are not retroactive. To apply to existing files, we would need to replace the files. In other words, if you already have files or data stored on your ZFS pool, you would need to move them somewhere else (i.e. backup) and then move them back so that the changes in properties are applied correctly.
 |===
 
 
