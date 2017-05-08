@@ -15,9 +15,56 @@ In the link:/2017/04/25/Server-Virtualization-Management-Part2.html[previous pos
 
 toc::[]
 
+== ZFS Tune-up
+
+link:https://www.openindiana.org/documentation/faq/#what-is-openindiana[Solaris-based UNIX^] and Linux treat link:https://en.wikipedia.org/wiki/Extended_file_attributes[extended attributes^] differently, which has some performance implications. By default, ZFS on Linux is set to `xattr=on` which causes the extended attributes to be stored in separate hidden directories. Changing this property to "_system attributes_" improves performance significantly under Linux as a results of extended attributes being stored more efficiently on disk.
+
+To check the attribute run `zfs get -r xattr #tank#` (update tank with your zpool name) and we'll see something like the following:
+
+```
+NAME                         PROPERTY  VALUE  SOURCE
+tank                         xattr     on     default
+tank/vm-disks                xattr     on     default
+```
+
+To update the property run `zfs set xattr=sa #tank#`
+
+Linux has extended attributes called link:https://access.redhat.com/documentation/en-US/Red_Hat_Storage/2.0/html/Administration_Guide/ch09s05.html["Posix ACL"^] that are not functional on other platforms. To check the attribute, run `zfs get -r acltype #tank#` and we should get something like:
+
+```
+NAME                         PROPERTY  VALUE     SOURCE
+tank                         acltype   off       local
+tank/vm-disks                acltype   off       inherited from zentank
+```
+
+To update the property run `zfs set acltype=posixacl #tank#`. Also, so that ACLs get passed to files created within a directory, we need to run `zfs set aclinherit=passthrough #tank#` as well.
+
+Linux has two parameters related to the times when files are accessed. The first is `atime`, which tracks the “last” access time. This creates a lot of overhead because every time a file is read, an update has to write to disk to reflect this access time. The second is `relatime`, which is similar but is a relative atime, and writes on fewer occasions. We can check both of them with `zfs get -r atime tank && zfs get -r relatime tank` and we should see something like:
+
+```
+NAME                         PROPERTY  VALUE  SOURCE
+tank                         atime     on     default
+tank/vm-disks                atime     on     default
+
+NAME                         PROPERTY  VALUE     SOURCE
+tank                         relatime  off       default
+tank/vm-disks                relatime  off       default
+```
+
+If we need to track access times, "relatime" is preferable, however, we can disable both by running `zfs set atime=off #tank#`, since "relatime" is already disabled.
+
+We can set additional options for reliability. Run `zpool set autoreplace=on #tank#` so that ZFS can automatically switch to an available hot spare if hardware errors are detected on online disks. Run `zpool set autoexpand=on  #tank#` to allows the pool to grow when all VDEVs have been replaced with larger ones. This must be set before any drives are replaced, so we may as well set it now.
+
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
+|*About That*: Many ZFS properties are not retroactive. To apply to existing files, we would need to replace the files. In other words, if you already have files or data stored on your ZFS pool, you would need to move them somewhere else (i.e. backup) and then move them back so that the changes in properties can be applied correctly.
+|===
+
+
 == Graphics Processing Unit (GPU) Passthrough
 
-Passthrough allows our Virtual Machine (VM) to access GPU hardware for games, graphics, and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible _virtual_ addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.
+Passthrough allows our Virtual Machine (VM) to access GPU hardware for games, graphics, and heavy computation (i.e. deep learning). We must enable link:https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit[IOMMU ("Input–output memory management unit")^] drivers, which allocate device-visible _virtual_ addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses _as if_ it were directly communicating to the GPU.
 
 link:https://www.kernel.org/doc/Documentation/vfio.txt[VFIO ("Virtual Function I/O")^] modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a _secure_ IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.
 
@@ -142,4 +189,7 @@ Congratulations! We have our PVE server configured and ready to use. We can now 
 
 Although we have configured passthrough on the server, updates to our VMs are required to leverage that feature. Because Nvidia sells a commercial line of GPUs (Quadro), they do not _support_ passthrough, and actively try to inhibit passthrough on their consumer line (GeForce). We will have to consider potential workarounds to enable that functionality, which may involve future tweaks to our server settings.
 
+// dd if=/dev/zvol/zentank/vm-disks/vm-101-disk-1 of=/zentank/vm-101-disk-1.raw
+
+// (103 GB, 96 GiB) copied, 1421.25 s, 72.5 MB/s
 
