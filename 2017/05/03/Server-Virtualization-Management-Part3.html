@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1494215780724" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1494216335037" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/05/03/Server-Virtualization-Management-Part3.html" />
     <meta name="referrer" content="origin" />
@@ -420,11 +420,18 @@ reboot               # reboot machine</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After our computer reboots, run <code>lspci -nnks <mark>28:00</mark></code> to check that the driver loaded correctly. If everything went well, for each device we should see:</p>
+<p>After our computer reboots, run <code>lspci -nnks <mark>28:00</mark></code> to check that the driver loaded correctly. If everything went well, for each device we should see <code>vfio-pci</code> for our "Kernel driver is use".</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>Kernel driver in use: vfio-pci</code></pre>
+<pre class="highlight"><code>28:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] (rev a1)
+	Subsystem: ZOTAC International (MCO) Ltd. GP104 [GeForce GTX 1080] [19da:1451]
+	Kernel driver in use: vfio-pci
+	Kernel modules: nvidiafb, nouveau
+28:00.1 Audio device [0403]: NVIDIA Corporation GP104 High Definition Audio Controller [10de:10f0] (rev a1)
+	Subsystem: ZOTAC International (MCO) Ltd. GP104 High Definition Audio Controller [19da:1451]
+	Kernel driver in use: vfio-pci
+	Kernel modules: snd_hda_intel</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -514,7 +521,7 @@ reboot               # reboot machine</code></pre>
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1494215780724"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1494216335037"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

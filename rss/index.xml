@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 08 May 2017 03:56:20 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 08 May 2017 04:05:35 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_system_optimization">System Optimization&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -262,11 +262,18 @@ reboot               # reboot machine</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After our computer reboots, run <code>lspci -nnks <mark>28:00</mark></code> to check that the driver loaded correctly. If everything went well, for each device we should see:</p>
+<p>After our computer reboots, run <code>lspci -nnks <mark>28:00</mark></code> to check that the driver loaded correctly. If everything went well, for each device we should see <code>vfio-pci</code> for our "Kernel driver is use".</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>Kernel driver in use: vfio-pci</code></pre>
+<pre class="highlight"><code>28:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP104 [GeForce GTX 1080] [10de:1b80] (rev a1)
+	Subsystem: ZOTAC International (MCO) Ltd. GP104 [GeForce GTX 1080] [19da:1451]
+	Kernel driver in use: vfio-pci
+	Kernel modules: nvidiafb, nouveau
+28:00.1 Audio device [0403]: NVIDIA Corporation GP104 High Definition Audio Controller [10de:10f0] (rev a1)
+	Subsystem: ZOTAC International (MCO) Ltd. GP104 High Definition Audio Controller [19da:1451]
+	Kernel driver in use: vfio-pci
+	Kernel modules: snd_hda_intel</code></pre>
 </div>
 </div>
 <div class="paragraph">
