@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sat, 06 May 2017 16:57:07 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 08 May 2017 03:50:37 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_system_optimization">System Optimization&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -8,6 +8,7 @@
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_system_optimization">System Optimization&#8230;&#8203;</a></li>
+<li><a href="#_zfs_tune_up">ZFS Tune-up</a></li>
 <li><a href="#_graphics_processing_unit_gpu_passthrough">Graphics Processing Unit (GPU) Passthrough</a>
 <ul class="sectlevel2">
 <li><a href="#_enable_the_vfio_modules">Enable the VFIO Modules:</a></li>
@@ -26,10 +27,78 @@
 </div>
 </div>
 <div class="sect1">
+<h2 id="_zfs_tune_up">ZFS Tune-up</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://www.openindiana.org/documentation/faq/#what-is-openindiana" target="_blank">Solaris-based UNIX</a> and Linux treat <a href="https://en.wikipedia.org/wiki/Extended_file_attributes" target="_blank">extended attributes</a> differently, which has some performance implications. By default, ZFS on Linux is set to <code>xattr=on</code> which causes the extended attributes to be stored in separate hidden directories. Changing this property to "<em>system attributes</em>" improves performance significantly under Linux as a results of extended attributes being stored more efficiently on disk.</p>
+</div>
+<div class="paragraph">
+<p>To check the attribute run <code>zfs get -r xattr <mark>tank</mark></code> (update tank with your zpool name) and we&#8217;ll see something like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>NAME                         PROPERTY  VALUE  SOURCE
+tank                         xattr     on     default
+tank/vm-disks                xattr     on     default</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To update the property run <code>zfs set xattr=sa <mark>tank</mark></code></p>
+</div>
+<div class="paragraph">
+<p>Linux has extended attributes called <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Storage/2.0/html/Administration_Guide/ch09s05.html">Posix ACL</a> that are not functional on other platforms. To check the attribute, run <code>zfs get -r acltype <mark>tank</mark></code> and we should get something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>NAME                         PROPERTY  VALUE     SOURCE
+tank                         acltype   off       local
+tank/vm-disks                acltype   off       inherited from zentank</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To update the property run <code>zfs set acltype=posixacl <mark>tank</mark></code>. Also, so that ACLs get passed to files created within a directory, we need to run <code>zfs set aclinherit=passthrough <mark>tank</mark></code> as well.</p>
+</div>
+<div class="paragraph">
+<p>Linux has two parameters related to the times when files are accessed. The first is <code>atime</code>, which tracks the “last” access time. This creates a lot of overhead because every time a file is read, an update has to write to disk to reflect this access time. The second is <code>relatime</code>, which is similar but is a relative atime, and writes on fewer occasions. We can check both of them with <code>zfs get -r atime tank &amp;&amp; zfs get -r relatime tank</code> and we should see something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>NAME                         PROPERTY  VALUE  SOURCE
+tank                         atime     on     default
+tank/vm-disks                atime     on     default
+
+NAME                         PROPERTY  VALUE     SOURCE
+tank                         relatime  off       default
+tank/vm-disks                relatime  off       default</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we need to track access times, "relatime" is preferable, however, we can disable both by running <code>zfs set atime=off <mark>tank</mark></code>, since "relatime" is already disabled.</p>
+</div>
+<div class="paragraph">
+<p>We can set additional options for reliability. Run <code>zpool set autoreplace=on <mark>tank</mark></code> so that ZFS can automatically switch to an available hot spare if hardware errors are detected on online disks. Run <code>zpool set autoexpand=on  <mark>tank</mark></code> to allows the pool to grow when all VDEVs have been replaced with larger ones. This must be set before any drives are replaced, so we may as well set it now.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>About That</strong>: Many ZFS properties are not retroactive. To apply to existing files, we would need to replace the files. In other words, if you already have files or data stored on your ZFS pool, you would need to move them somewhere else (i.e. backup) and then move them back so that the changes in properties can be applied correctly.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_graphics_processing_unit_gpu_passthrough">Graphics Processing Unit (GPU) Passthrough</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Passthrough allows our Virtual Machine (VM) to access GPU hardware for games, graphics, and heavy computation (i.e. deep learning). We must enable <a href="https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit" target="_blank">IOMMU ("Input–output memory management unit")</a> drivers, which allocate device-visible <em>virtual</em> addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses as-if it were directly communicating to the GPU.</p>
+<p>Passthrough allows our Virtual Machine (VM) to access GPU hardware for games, graphics, and heavy computation (i.e. deep learning). We must enable <a href="https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit" target="_blank">IOMMU ("Input–output memory management unit")</a> drivers, which allocate device-visible <em>virtual</em> addresses to the actual physical addresses. IOMMU enables our VM to communicate with our GPU using the virtual addresses <em>as if</em> it were directly communicating to the GPU.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://www.kernel.org/doc/Documentation/vfio.txt" target="_blank">VFIO ("Virtual Function I/O")</a> modules are part of an IOMMU device-agnostic framework for exposing direct device access to userspace, in a <em>secure</em> IOMMU protected environment.  In other words, they provide access to non-privileged, low-overhead userspace drivers.</p>
