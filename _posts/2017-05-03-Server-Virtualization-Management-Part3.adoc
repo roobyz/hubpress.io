@@ -29,7 +29,7 @@ tank/vm-disks                xattr     on     default
 
 To update the property run `zfs set xattr=sa #tank#`
 
-Linux has extended attributes called link:https://access.redhat.com/documentation/en-US/Red_Hat_Storage/2.0/html/Administration_Guide/ch09s05.html["Posix ACL"^] that are not functional on other platforms. To check the attribute, run `zfs get -r acltype #tank#` and we should get something like:
+Linux has extended attributes called link:https://access.redhat.com/documentation/en-US/Red_Hat_Storage/2.0/html/Administration_Guide/ch09s05.html[Posix ACL^] that are not functional on other platforms. To check the attribute, run `zfs get -r acltype #tank#` and we should get something like:
 
 ```
 NAME                         PROPERTY  VALUE     SOURCE
