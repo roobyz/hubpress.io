@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Mon, 08 May 2017 04:06:37 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Fri, 19 May 2017 02:01:07 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_system_optimization">System Optimization&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -498,6 +498,16 @@ parted /dev/sdc --script mklabel gpt \
 </div>
 <div class="paragraph">
 <p>Since the zpool read/write transactions are balanced across the two vdevs, we can actually get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read-write transactions on the zpool. Because our CPU can compress-decompress data much faster than the drives can read-write data, our drive performance can improve even more, because of the smaller size of the read-write transactions on the zpool.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># Creating our ZFS mirrored storage pool
+zpool create -o ashift=12 tank \
+      mirror /dev/sda /dev/sdc1 \
+      mirror /dev/sdb /dev/sdc2 \
+      log   /dev/nvm0n1p4 \
+      cache /dev/nvm0n1p5</code></pre>
+</div>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Creating our ZFS Storage Pool</caption>

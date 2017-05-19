@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1494089827387" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1495159267798" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/04/25/Server-Virtualization-Management-Part2.html" />
     <meta name="referrer" content="origin" />
@@ -339,6 +339,16 @@ parted /dev/sdc --script mklabel gpt \
 <div class="paragraph">
 <p>Since the zpool read/write transactions are balanced across the two vdevs, we can actually get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read-write transactions on the zpool. Because our CPU can compress-decompress data much faster than the drives can read-write data, our drive performance can improve even more, because of the smaller size of the read-write transactions on the zpool.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># Creating our ZFS mirrored storage pool
+zpool create -o ashift=12 tank \
+      mirror /dev/sda /dev/sdc1 \
+      mirror /dev/sdb /dev/sdc2 \
+      log   /dev/nvm0n1p4 \
+      cache /dev/nvm0n1p5</code></pre>
+</div>
+</div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Creating our ZFS Storage Pool</caption>
 <colgroup>
@@ -636,7 +646,7 @@ update-initramfs -u</code></pre>
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1494089827387"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1495159267798"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
