@@ -69,7 +69,7 @@ image:Server-Virtualization-Management/pve-cfdisk-process.gif[pve-cfdisk]
 
 Once these two partitions are added, we can shut down PVE from the command line: 
 ```
-shutdown -h
+shutdown -h now
 ```
 
 === ZFS Setup
@@ -110,8 +110,8 @@ Since the zpool read/write transactions are balanced across the two vdevs, we ca
 zpool create -o ashift=12 tank \
       mirror /dev/sda /dev/sdc1 \
       mirror /dev/sdb /dev/sdc2 \
-      log   /dev/nvm0n1p4 \
-      cache /dev/nvm0n1p5
+      log   /dev/nvme0n1p4 \
+      cache /dev/nvme0n1p5
 ```
 
 .Creating our ZFS Storage Pool
