@@ -105,6 +105,15 @@ After partitioning, we can mirror and stripe the drives. When we create the driv
 
 Since the zpool read/write transactions are balanced across the two vdevs, we can actually get an increase in drive performance with the transactions happening in parallel across two physical drives. We can also compress the read-write transactions on the zpool. Because our CPU can compress-decompress data much faster than the drives can read-write data, our drive performance can improve even more, because of the smaller size of the read-write transactions on the zpool.
 
+```
+# Creating our ZFS mirrored storage pool
+zpool create -o ashift=12 tank \
+      mirror /dev/sda /dev/sdc1 \
+      mirror /dev/sdb /dev/sdc2 \
+      log   /dev/nvm0n1p4 \
+      cache /dev/nvm0n1p5
+```
+
 .Creating our ZFS Storage Pool
 [cols="5a, 5a"]
 |===
