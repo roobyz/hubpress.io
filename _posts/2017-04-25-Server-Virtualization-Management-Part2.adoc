@@ -30,7 +30,7 @@ image:Server-Virtualization-Management/pve-installation.gif[pve-install]
 
 === PVE Drive Options
 
-For our setup, we will disconnect all the drives except for our boot drive, and follow most of the default installation options with one exception. Since we only want to use half of the boot drive (512Gb NVMe) our _hard disk options_ are as follows: 
+For our setup, we will disconnect all the drives except for our boot drive, and follow most of the default installation options with one exception. Have a peek at the link:https://pve.proxmox.com/wiki/Installation[ProxMox PVE installation^] guide for background on these options. Since we only want to use half of the boot drive (512Gb NVMe) our _hard disk options_ are as follows: 
 
 * *`ext4`* _filesystem_: Standard Linux filesystem is the safe bet.
 * *`176.0`* _hdsize_: Shooting for half of our 512Gb. The following values should add up to 256Gb. Equal to 256Gb-80Gb (minfree).
