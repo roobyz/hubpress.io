@@ -138,6 +138,7 @@ After backing up our VM, we may want to verify the integrity of our backup. PVE 
 
 We can also back the drive image directly from the command line. There are multiple ways to do this. Using the Unix command `link:https://en.wikipedia.org/wiki/Dd_(Unix)[dd^]`, we will duplicate the emulated zvol block device as a raw file in our zfs pool.
 
+.Backing up our VM disk image
 ```
 # Install "pixie" for parallel compression of our disk image
 agt-get install pixz
