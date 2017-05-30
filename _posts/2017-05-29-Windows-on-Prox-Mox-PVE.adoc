@@ -1,6 +1,6 @@
 // :hp-image: /covers/cover.png
 
-= PVE: Windows Virtualization
+= PVE: Virtual Windows
 :hp-alt-title: Windows on ProxMox PVE
 :hp-tags: Blog, Open_Source, Technology, ProxMox
 :icons: image
