@@ -22,7 +22,7 @@ We will complete this process in three steps. First, we create the VM. Second, w
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/important.png[icon="tip",size="4x",width=56]
-|*Note*: This post took a bit longer than planned. This is a result of the beta status of the PVE version we are using combined with the newness of the Ryzen platform. This means that not all of the kinks are guaranteed to be sorted, yet. As a result, there were some interesting issues with UEFI, ZFS, and the backup/restore process that needed to be resolved. That said, we have some work-arounds and can continue with our journey.
+|*Note*: This post took a bit longer than planned. This is a result of the beta status of the PVE version we are using combined with the newness of the Ryzen platform. This means that not all of the kinks are guaranteed to be sorted, yet. As a result, there were some interesting issues with UEFI, ZFS, and the backup/restore process that needed to be resolved. That said, we have some workarounds and can continue with our journey.
 |===
 
 === Step 1: Create the VM
@@ -93,7 +93,7 @@ Before watching this great link:https://www.youtube.com/watch?v=thVmhIw4-jU[PVE 
 ... click #OK#
 ... click #Next#
 
-At this point the installation process will recognize the virtual disk and be able to continue with the installation process. In addition, Windows should automatically recognize and configure the network card. We can bypass the registration process until later. Select our "Home" network.
+At this point, the installation process will recognize the virtual disk and be able to continue with the installation process. In addition, Windows should automatically recognize and configure the network card. We can bypass the registration process until later. Select our "Home" network.
 
 === Step 3: Post Installation
 
@@ -119,7 +119,7 @@ After updating, we should install the link:https://www.spice-space.org/download.
 
 This is a great time to save our work. In case something goes haywire, we should have a backup so that we don't go through that whole process again, right? In addition, wouldn't it be nice to have a clean slate in case of a virus or worm? We are talking about Windows after all.
 
-Backing up our VM is easy to do with PVE. First, we shutdown Windows. Next, on our PVE Web GUI we select the "Summary" tab of our Windows VM and confirm the Status is "Stopped". Finally, we select the "Backup" tab, click "Backup Now" and then click "Backup". Then we need to be patient until it completes.
+Backing up our VM is easy to do with PVE. First, we shutdown Windows. Next, on our PVE Web GUI, we select the "Summary" tab of our Windows VM and confirm the Status is "Stopped". Finally, we select the "Backup" tab, click "Backup Now" and then click "Backup". Then we need to be patient until it completes.
 
 ```
 INFO: transferred 137438 MB in 515 seconds (266 MB/s)
@@ -133,7 +133,7 @@ After backing up our VM, we may want to verify the integrity of our backup. PVE 
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/important.png[icon="tip",size="4x",width=56]
-|*Note*: While trying to restore, the PVE process generated an error and failed. Unfortunately this process removes the original VM disk image and then tries to restore the backup, which meant that I had to repeat the installation process multiple times. However, this should be resolved when the production version of PVE is released. In the mean time, use the following manual process to backup and restore.
+|*Note*: While trying to restore, the PVE process generated an error and failed. Unfortunately, this process removes the original VM disk image and then tries to restore the backup, which meant that I had to repeat the installation process multiple times. However, this should be resolved when the production version of PVE is released. In the mean time, we can use the following manual process to backup and restore.
 |===
 
 We can also back the drive image directly from the command line. There are multiple ways to do this. Using the Unix command `link:https://en.wikipedia.org/wiki/Dd_(Unix)[dd^]`, we will duplicate the emulated zvol block device as a raw file in our zfs pool.
@@ -163,7 +163,7 @@ dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 | pixz -2 > /tank/100-windows.raw.xz
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
-|*About That*: A zvol is an emulated "block device" provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: `zfs list -t all -r tank`. The disks would be hidden in the tank folder, however they would be mapped as block devices which we can see if we run: `ll /sys/block/zd*`. It is important to note that PVE saves the disk size in our configuration file, however it also runs a command similar to `zfs create -V 128G tank/vm-disks/vm-100-disk-1` which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.
+|*About That*: A zvol is an emulated "block device" provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: `zfs list -t all -r tank`. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: `ll /sys/block/zd*`. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to `zfs create -V 128G tank/vm-disks/vm-100-disk-1` which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.
 |===
 
 .Restoring our backup:
@@ -194,7 +194,7 @@ Congratulations! We can now backup and restore our disk images. In case of emerg
 
 === Cloning
 
-Another cool feature of PVE is cloning. We can get our existing Windows VM and clone it to have alternate installation to experiment with. For example, maybe we want to install some experimental software or make hardware changes without risking our standard VM.
+Another cool feature of PVE is cloning. We can get our existing Windows VM and clone it to have an alternate installation to experiment with. For example, maybe we want to install some experimental software or make hardware changes without risking our standard VM.
 
 Depending on how large the VM disk image is, the cloning process may take a while. Be patient for it to complete. To check progress, we can run from the command line: `zfs list -t all -r tank`. In this example, we can see that *vm-101-disk-1* REFER size is only 20.1G compared to 22.1G for *vm-100-disk-1*, which we are cloning:
 
@@ -209,6 +209,6 @@ tank/vm-disks/vm-101-disk-1  20.1G  1.59T  20.1G  -
 
 == Next Steps
 
-At this point, we should have our Windows installation running on our Ryzen server as-if it were running on a Haswell machine, at near native performance. Our NVidia drivers should be installed, however the "Display Adapter" status will likely show as: "This device cannot find enough free resources that it can use. (Code 12)". 
+At this point, we should have our Windows installation running on our Ryzen server as-if it were running on a Haswell machine, at near native performance. Our NVidia drivers should be installed, however, the "Display Adapter" status will likely show as: "This device cannot find enough free resources that it can use. (Code 12)". 
 
 Considering that Ryzen is a new platform, the system bios and Linux Kernel support are not quite at 100% yet. AMD recently released an link:https://community.amd.com/community/gaming/blog/2017/05/25/community-update-4-lets-talk-dram[AGESA Update^] that should make it into a bios update over the next few weeks. This should improve virtualization support for PCI Express Access Control Services (ACS). The ACS support also needs to make it into the Linux kernel. After these updates are ready, we should be able to finish enabling full GPU Passthrough to our VM.
