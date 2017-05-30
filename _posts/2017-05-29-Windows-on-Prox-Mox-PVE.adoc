@@ -164,7 +164,7 @@ dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 | pixz -2 > /tank/100-windows.raw.xz
 [cols="1, 8a"]
 |===
 ^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
-|*About That*: A zvol is an emulated "block device" provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: `zfs list -t all -r tank`. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: `ll /sys/block/zd*`. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to `zfs create -V 128G tank/vm-disks/vm-100-disk-1` which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.
+|*About That*: A zvol is an emulated link:https://en.wikipedia.org/wiki/Device_file#Block_devices[block device^] provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: `zfs list -t all -r tank`. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: `ll /sys/block/zd*`. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to `zfs create -V 128G tank/vm-disks/vm-100-disk-1` which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.
 |===
 
 .Restoring our backup:
