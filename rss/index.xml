@@ -1,4 +1,384 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Sat, 20 May 2017 06:12:32 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 30 May 2017 00:42:19 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Windows Migration]]></title><description><![CDATA[<div class="sect1">
+<h2 id="_create_our_windows_image">Create our Windows Image&#8230;&#8203;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Imagine you are running Windows 7 in a VM, with near-native Windows performance and the ability to easily switch between Windows and Linux. Sit back and relax, because we are planning to solve the first part of that wish!</p>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_create_our_windows_image">Create our Windows Image&#8230;&#8203;</a></li>
+<li><a href="#_install_windows_7">Install Windows 7</a>
+<ul class="sectlevel2">
+<li><a href="#_step_1_create_the_vm">Step 1: Create the VM</a>
+<ul class="sectlevel3">
+<li><a href="#_initial_setup">Initial Setup</a></li>
+<li><a href="#_setting_tweaks">Setting Tweaks</a></li>
+</ul>
+</li>
+<li><a href="#_step_2_begin_installation">Step 2: Begin Installation</a></li>
+<li><a href="#_step_3_post_installation">Step 3: Post Installation</a>
+<ul class="sectlevel3">
+<li><a href="#_update_windows">Update Windows!</a></li>
+<li><a href="#_install_additional_drivers">Install Additional Drivers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_checkpoint">Checkpoint</a>
+<ul class="sectlevel2">
+<li><a href="#_backup">Backup</a></li>
+<li><a href="#_cloning">Cloning</a></li>
+</ul>
+</li>
+<li><a href="#_next_steps">Next Steps</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_windows_7">Install Windows 7</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will complete this process in three steps. First, we create the VM. Second, we install Windows into the VM. Third, we tweak the VM and Windows environment for improved performance.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/important.png" alt="important.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>Note</strong>: This post took a bit longer than planned. This is a result of the beta status of the PVE version we are using combined with the newness of the Ryzen platform. This means that not all of the kinks are guaranteed to be sorted, yet. As a result, there were some interesting issues with UEFI, ZFS, and the backup/restore process that needed to be resolved. That said, we have some workarounds and can continue with our journey.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_step_1_create_the_vm">Step 1: Create the VM</h3>
+<div class="sect3">
+<h4 id="_initial_setup">Initial Setup</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Place the ISO images into the templates folder.</p>
+</li>
+<li>
+<p>Setup our VM using OVMF (UEFI Bios)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>At the end of this process, we will have a PVE configuration file (<a href="https://pve.proxmox.com/pve-docs/chapter-qm.html" target="_blank">/etc/pve/qemu-server/&lt;VMID&gt;.conf</a>) with our Windows VM settings. The VMID for this example is 100, so therefore the file would be called <code>/etc/pve/qemu-server/100.conf</code> and will contain something like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>bios: ovmf
+bootdisk: virtio0
+cores: 4
+cpu: host
+hotplug: disk,usb
+ide0: zfs-templates:iso/virtio-win-0.1.126.iso,media=cdrom,size=152204K
+ide2: zfs-templates:iso/Win7_HomePrem_SP1_English_x64.iso,media=cdrom
+memory: 16384
+name: Windoze
+numa: 0
+ostype: win7
+scsihw: virtio-scsi-pci
+sockets: 1
+vga: qxl
+virtio0: vm-disks:vm-100-disk-1,cache=writeback,size=128G</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_tweaks">Setting Tweaks</h4>
+<div class="paragraph">
+<p>We need to make some manual updates to this configuration.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add the <code>args</code> line to enable sound and make our Ryzen processor <em>appear</em> as a Haswell processor in Windows. This should allow for continued Windows updates with balanced compatibility and performance.</p>
+</li>
+<li>
+<p>Update the <code>cpu</code> line to include a <code>hidden</code> parameter that makes Windows appear <em>as if</em> it isn&#8217;t running inside a virtual machine. This should help avoid issues with GPU passthrough on Nvidia cards.</p>
+</li>
+<li>
+<p>Add the <code>hostpci</code> lines to include the GPU IDs identified in our prior post: <a href="/2017/05/03/Server-Virtualization-Management-Part3.html" target="_blank">Configure the VFIO Modules</a>. This will allow Windows to recognize the GPU for driver setup. We will update this again later.</p>
+</li>
+<li>
+<p>Update the ide lines to sata lines.</p>
+</li>
+<li>
+<p>Ensure the machine line is set to <code>q35</code></p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>args: -cpu Haswell-noTSX,hv_vendor_id=TowerVM,kvm=off -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1
+cpu: host,hidden=1
+hostpci0: host=28:00.0,pcie=1
+hostpci1: host=28:00.1,pcie=1
+sata0: zfs-templates:iso/virtio-win-0.1.126.iso,media=cdrom,size=152204K
+sata2: zfs-templates:iso/Win7_HomePrem_SP1_English_x64.iso,media=cdrom
+machine: q35</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We should now be ready to install Windows.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_begin_installation">Step 2: Begin Installation</h3>
+<div class="paragraph">
+<p>Before watching this great <a href="https://www.youtube.com/watch?v=thVmhIw4-jU" target="_blank">PVE Installation Video</a> from ProxMox, make note of the following key points:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Important first step: quickly open the Spice console and hit the spacebar after the UEFI boot screen, to launch the Windows installation process. Then initiate the Windows Setup. Windows will complain that "no drives were found".</p>
+</li>
+<li>
+<p>Select "Custom (advanced)" and then:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Install NetKVM drivers:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>click <mark>Load Driver</mark></p>
+</li>
+<li>
+<p>click <mark>Browse</mark> and then select the drive with the "virtio-win" drivers.</p>
+</li>
+<li>
+<p>select the folder: NetKVM &#8594; w7 &#8594; amd64</p>
+</li>
+<li>
+<p>click <mark>OK</mark></p>
+</li>
+<li>
+<p>click <mark>Next</mark></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Install viostor drivers:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>click <mark>Load Driver</mark></p>
+</li>
+<li>
+<p>click <mark>Browse</mark> and then select the drive with the "virtio-win" drivers.</p>
+</li>
+<li>
+<p>select folder: viostor&#8594; w7 &#8594; amd64</p>
+</li>
+<li>
+<p>click <mark>OK</mark></p>
+</li>
+<li>
+<p>click <mark>Next</mark></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>At this point, the installation process will recognize the virtual disk and be able to continue with the installation process. In addition, Windows should automatically recognize and configure the network card. We can bypass the registration process until later. Select our "Home" network.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_post_installation">Step 3: Post Installation</h3>
+<div class="sect3">
+<h4 id="_update_windows">Update Windows!</h4>
+<div class="paragraph">
+<p>After installing Windows we should immediately check for Windows updates. This will likely take the most time of this process and require many reboots. Keep checking for updates until Windows says there are no more.</p>
+</div>
+<div class="paragraph">
+<p>Afterward, we should go back to our PVE Web GUI and select our Windows VM, select <code>Hardware</code> and then for each <code>CD/DVD Drive</code> click <code>Edit</code>.  In the edit window, we should select "Do not use any media" and then click <code>OK</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/important.png" alt="important.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>Note</strong>: Although Windows 7 supports UEFI boot, Microsoft designed it under the assumption that it is running alone on real hardware. It is likely that when you try to run our Windows VM it will bail out to the <em>UEFI Interactive Shell</em>. If you get stuck there, on the PVE Web GUI click <code>Shutdown &#8594; PowerOff</code> for the Windows VM. We can download <a href="http://www.supergrubdisk.org/" target="_blank">Super Grub Disk</a> and then upload the iso to our zfs-templates folder. Once we have assigned it to our first "CD/DVD", we can start our VM, which will boot into the Grub bootloader. Press &lt;enter&gt; on <code>Detect and show boot methods</code> to quickly identify the boot partitions, select the first entry <code>(hd0,gpt1)/efi/Boot/booxx64.efi</code>, and press &lt;enter&gt; again to boot into Windows.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_install_additional_drivers">Install Additional Drivers</h4>
+<div class="paragraph">
+<p>After updating, we should install the <a href="https://www.spice-space.org/download.html" target="_blank">Spice Guest Tools</a> for Windows. This will include drivers that will speed up the VM and make it nicer to use with Virt-Viewer. Also, we should install the <a href="http://www.geforce.com/drivers" target="_blank">Nvidia Geforce graphics drivers</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_checkpoint">Checkpoint</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_backup">Backup</h3>
+<div class="paragraph">
+<p>This is a great time to save our work. In case something goes haywire, we should have a backup so that we don&#8217;t go through that whole process again, right? In addition, wouldn&#8217;t it be nice to have a clean slate in case of a virus or worm? We are talking about Windows after all.</p>
+</div>
+<div class="paragraph">
+<p>Backing up our VM is easy to do with PVE. First, we shutdown Windows. Next, on our PVE Web GUI, we select the "Summary" tab of our Windows VM and confirm the Status is "Stopped". Finally, we select the "Backup" tab, click "Backup Now" and then click "Backup". Then we need to be patient until it completes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>INFO: transferred 137438 MB in 515 seconds (266 MB/s)
+INFO: stopping kvm after backup task
+INFO: archive file size: 13.89GB
+INFO: Finished Backup of VM 100 (00:08:43)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After backing up our VM, we may want to verify the integrity of our backup. PVE uses a new backup format called <a href="https://pve.proxmox.com/wiki/VMA" target="_blank">VMA</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/important.png" alt="important.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>Note</strong>: While trying to restore, the PVE process generated an error and failed. Unfortunately, this process removes the original VM disk image and then tries to restore the backup, which meant that I had to repeat the installation process multiple times. However, this should be resolved when the production version of PVE is released. In the mean time, we can use the following manual process to backup and restore.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>We can also back the drive image directly from the command line. There are multiple ways to do this. Using the Unix command <code><a href="https://en.wikipedia.org/wiki/Dd_(Unix)" target="_blank">dd</a></code>, we will duplicate the emulated zvol block device as a raw file in our zfs pool.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code># Install "pixie" for parallel compression of our disk image
+agt-get install pixz
+
+# Backup ("dd") and compress ("pixz") our VM disk image
+# Note: it is a good idea to add a date to the filename in case
+#       you want to have multiple backup versions.
+dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 | pixz -2 &gt; /tank/100-windows.raw.xz
+
+# 137438953472 bytes (137 GB, 128 GiB) copied, 603.995 s, 228 MB/s
+# 4.4G 100-windows.raw.xz
+
+# Note: we could back up our image without compression and let zfs
+# handle the compression by default (lz4). Although lz4 is
+# faster for interactive I/O, it isn't as space efficient as xz. In
+# addition, since pixz can run in parallel, it is more than twice as
+# fast as the default compression. Compare this performance to above.
+# dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 of=/tank/100-windows.raw
+# 137438953472 bytes (137 GB, 128 GiB) copied, 1480.54 s, 92.8 MB/s
+# 128G 100-windows.raw</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>About That</strong>: A zvol is an emulated "block device" provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: <code>zfs list -t all -r tank</code>. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: <code>ll /sys/block/zd*</code>. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to <code>zfs create -V 128G tank/vm-disks/vm-100-disk-1</code> which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Restoring our backup:</div>
+<div class="content">
+<pre class="highlight"><code># Check to ensure our VM disk is still enabled:
+zfs list -t all -r tank
+
+# We should see something like:
+# tank/vm-disks/vm-100-disk-1   132G  1.72T  21.7G  -
+#
+# if something bad happened and we cannot see the zvol, we can
+# manually recreate it with the following command:
+zfs create -V 128G tank/vm-disks/vm-100-disk-1
+
+# Restore our compressed VM disk image.
+pixz -d -i /tank/100-windows.raw.xz | dd of=/dev/zvol/tank/vm-disks/vm-100-disk-1
+
+# 137438953472 bytes (137 GB, 128 GiB) copied, 799.285 s, 172 MB/s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations! We can now backup and restore our disk images. In case of emergency, we can recreate our image to a known good state. In addition, we have the opportunity to move our disk image to another computer.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>About That</strong>: If we already have a VM disk image that we want to restore to PVE, we can use a similar process to our backup and restore process. Key points to consider, whether the disk image is in qcow2 or some other format, we need to convert it to "raw" format. For example, we could run something like: <code>qemu-img convert -O raw windoze.qcow2 windoze.raw</code>. Once converted to raw format we might want to compress it like: <code>pixz -2 windoze.raw windoze.raw.xz</code>. Finally, we need to create a VM that has a disk size that is equal to our original image and then we can restore similar to above.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_cloning">Cloning</h3>
+<div class="paragraph">
+<p>Another cool feature of PVE is cloning. We can get our existing Windows VM and clone it to have an alternate installation to experiment with. For example, maybe we want to install some experimental software or make hardware changes without risking our standard VM.</p>
+</div>
+<div class="paragraph">
+<p>Depending on how large the VM disk image is, the cloning process may take a while. Be patient for it to complete. To check progress, we can run from the command line: <code>zfs list -t all -r tank</code>. In this example, we can see that <strong>vm-101-disk-1</strong> REFER size is only 20.1G compared to 22.1G for <strong>vm-100-disk-1</strong>, which we are cloning:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre class="highlight"><code>NAME                          USED  AVAIL  REFER  MOUNTPOINT
+tank                          169G  1.59T  16.7G  /tank
+tank/vm-disks                 152G  1.59T    96K  /tank/vm-disks
+tank/vm-disks/vm-100-disk-1   132G  1.70T  22.1G  -
+tank/vm-disks/vm-101-disk-1  20.1G  1.59T  20.1G  -</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_next_steps">Next Steps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At this point, we should have our Windows installation running on our Ryzen server as-if it were running on a Haswell machine, at near native performance. Our NVidia drivers should be installed, however, the "Display Adapter" status will likely show as: "This device cannot find enough free resources that it can use. (Code 12)".</p>
+</div>
+<div class="paragraph">
+<p>Considering that Ryzen is a new platform, the system bios and Linux Kernel support are not quite at 100% yet. AMD recently released an <a href="https://community.amd.com/community/gaming/blog/2017/05/25/community-update-4-lets-talk-dram" target="_blank">AGESA Update</a> that should make it into a bios update over the next few weeks. This should improve virtualization support for PCI Express Access Control Services (ACS). The ACS support also needs to make it into the Linux kernel. After these updates are ready, we should be able to finish enabling full GPU Passthrough to our VM.</p>
+</div>
+</div>
+</div>]]></description><link>https://roobyz.github.io/2017/05/29/Migrate-Windows-VM-to-PVE.html</link><guid isPermaLink="true">https://roobyz.github.io/2017/05/29/Migrate-Windows-VM-to-PVE.html</guid><category><![CDATA[Blog]]></category><category><![CDATA[Open_Source]]></category><category><![CDATA[Technology]]></category><category><![CDATA[ProxMox]]></category><dc:creator><![CDATA[Roberto Rivera]]></dc:creator><pubDate>Mon, 29 May 2017 00:00:00 GMT</pubDate></item><item><title><![CDATA[PVE: Virtualization for Work and Play (Part 3)]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_system_optimization">System Optimization&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
