@@ -58,7 +58,7 @@ We need to make some manual updates to this configuration.
 
 . Add the `args` line to enable sound and make our Ryzen processor _appear_ as a Haswell processor in Windows. This should allow for continued Windows updates with balanced compatibility and performance.
 . Update the `cpu` line to include a `hidden` parameter that makes Windows appear _as if_ it isn't running inside a virtual machine. This should help avoid issues with GPU passthrough on Nvidia cards.
-. Add the `hostpci` lines to include the GPU IDs identified in our prior post: link:/2017/05/03/Server-Virtualization-Management-Part3.html[Configure the VFIO Modules^]. This will allow Windows to recognize the GPU for driver setup. We will update this again later.
+. Add the `hostpci` lines to include the GPU IDs identified in our prior post: link:/2017/05/03/Server-Virtualization-Management-Part3.html#_configure_the_vfio_modules[Configure the VFIO Modules^]. This will allow Windows to recognize the GPU for driver setup. We will update this again later.
 . Update the ide lines to sata lines.
 . Ensure the machine line is set to `q35`
 
