@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 30 May 2017 00:49:28 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Windows Virtualization]]></title><description><![CDATA[<div class="sect1">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Roobyz Ramblings]]></title><description><![CDATA[A responsive site for sharing thoughts and lessons learned on data science, programming, and technology.]]></description><link>https://roobyz.github.io</link><image><url>/images/background.jpg</url><title>Roobyz Ramblings</title><link>https://roobyz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Tue, 30 May 2017 00:55:28 GMT</lastBuildDate><atom:link href="https://roobyz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[PVE: Windows Virtualization]]></title><description><![CDATA[<div class="sect1">
 <h2 id="_create_a_windows_image">Create a Windows Image&#8230;&#8203;</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -274,6 +274,7 @@ INFO: Finished Backup of VM 100 (00:08:43)</code></pre>
 <p>We can also back the drive image directly from the command line. There are multiple ways to do this. Using the Unix command <code><a href="https://en.wikipedia.org/wiki/Dd_(Unix)" target="_blank">dd</a></code>, we will duplicate the emulated zvol block device as a raw file in our zfs pool.</p>
 </div>
 <div class="listingblock">
+<div class="title">Backing up our VM disk image</div>
 <div class="content">
 <pre class="highlight"><code># Install "pixie" for parallel compression of our disk image
 agt-get install pixz
