@@ -25,7 +25,7 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
 
-    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1496114957323" />
+    <link rel="stylesheet" type="text/css" href="//roobyz.github.io/themes/runoz/assets/css/uno.css?v=1496115313089" />
 
     <link rel="canonical" href="https://roobyz.github.io/2017/05/29/Windows-on-Prox-Mox-PVE.html" />
     <meta name="referrer" content="origin" />
@@ -464,7 +464,7 @@ dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 | pixz -2 &gt; /tank/100-windows.raw
 <tr>
 <td class="tableblock halign-center valign-middle"><p class="tableblock"><span class="image"><img src="/images/icons/lightbulb.png" alt="lightbulb.png" width="56"></span></p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p><strong>About That</strong>: A zvol is an emulated "block device" provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: <code>zfs list -t all -r tank</code>. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: <code>ll /sys/block/zd*</code>. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to <code>zfs create -V 128G tank/vm-disks/vm-100-disk-1</code> which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.</p>
+<p><strong>About That</strong>: A zvol is an emulated <a href="https://en.wikipedia.org/wiki/Device_file#Block_devices" target="_blank">block device</a> provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: <code>zfs list -t all -r tank</code>. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: <code>ll /sys/block/zd*</code>. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to <code>zfs create -V 128G tank/vm-disks/vm-100-disk-1</code> which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -584,7 +584,7 @@ tank/vm-disks/vm-101-disk-1  20.1G  1.59T  20.1G  -</code></pre>
        
     <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
-    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1496114957323"></script>
+    <script type="text/javascript" src="//roobyz.github.io/themes/runoz/assets/js/main.js?v=1496115313089"></script>
     
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
