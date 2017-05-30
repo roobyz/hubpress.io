@@ -1,0 +1,214 @@
+// :hp-image: /covers/cover.png
+
+= PVE: Windows Virtualization
+:hp-alt-title: Windows on ProxMox PVE
+:hp-tags: Blog, Open_Source, Technology, ProxMox
+:icons: image
+:linkattrs:
+:published_at: 2017-05-29
+:toc: macro
+:toclevels: 3
+
+== Create a Windows Image...
+
+Imagine you are running Windows 7 in a VM, with near-native Windows performance and the ability to easily switch between Windows and Linux. Sit back and relax, because we are planning to solve the first part of that wish!
+
+toc::[]
+
+== Install Windows 7
+
+We will complete this process in three steps. First, we create the VM. Second, we install Windows into the VM. Third, we tweak the VM and Windows environment for improved performance.
+
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/important.png[icon="tip",size="4x",width=56]
+|*Note*: This post took a bit longer than planned. This is a result of the beta status of the PVE version we are using combined with the newness of the Ryzen platform. This means that not all of the kinks are guaranteed to be sorted, yet. As a result, there were some interesting issues with UEFI, ZFS, and the backup/restore process that needed to be resolved. That said, we have some workarounds and can continue with our journey.
+|===
+
+=== Step 1: Create the VM
+
+==== Initial Setup
+
+. Place the ISO images into the templates folder.
+. Setup our VM using OVMF (UEFI Bios)
+
+At the end of this process, we will have a PVE configuration file (link:https://pve.proxmox.com/pve-docs/chapter-qm.html[/etc/pve/qemu-server/<VMID>.conf^]) with our Windows VM settings. The VMID for this example is 100, so therefore the file would be called `/etc/pve/qemu-server/100.conf` and will contain something like the following:
+
+```
+bios: ovmf
+bootdisk: virtio0
+cores: 4
+cpu: host
+hotplug: disk,usb
+ide0: zfs-templates:iso/virtio-win-0.1.126.iso,media=cdrom,size=152204K
+ide2: zfs-templates:iso/Win7_HomePrem_SP1_English_x64.iso,media=cdrom
+memory: 16384
+name: Windoze
+numa: 0
+ostype: win7
+scsihw: virtio-scsi-pci
+sockets: 1
+vga: qxl
+virtio0: vm-disks:vm-100-disk-1,cache=writeback,size=128G
+```
+
+==== Setting Tweaks
+
+We need to make some manual updates to this configuration. 
+
+. Add the `args` line to enable sound and make our Ryzen processor _appear_ as a Haswell processor in Windows. This should allow for continued Windows updates with balanced compatibility and performance.
+. Update the `cpu` line to include a `hidden` parameter that makes Windows appear _as if_ it isn't running inside a virtual machine. This should help avoid issues with GPU passthrough on Nvidia cards.
+. Add the `hostpci` lines to include the GPU IDs identified in our prior post: link:/2017/05/03/Server-Virtualization-Management-Part3.html[Configure the VFIO Modules^]. This will allow Windows to recognize the GPU for driver setup. We will update this again later.
+. Update the ide lines to sata lines.
+. Ensure the machine line is set to `q35`
+
+```
+args: -cpu Haswell-noTSX,hv_vendor_id=TowerVM,kvm=off -device intel-hda,id=sound5,bus=pcie.0,addr=0x18 -device hda-micro,id=sound5-codec0,bus=sound5.0,cad=0 -device hda-duplex,id=sound5-codec1,bus=sound5.0,cad=1
+cpu: host,hidden=1
+hostpci0: host=28:00.0,pcie=1
+hostpci1: host=28:00.1,pcie=1
+sata0: zfs-templates:iso/virtio-win-0.1.126.iso,media=cdrom,size=152204K
+sata2: zfs-templates:iso/Win7_HomePrem_SP1_English_x64.iso,media=cdrom
+machine: q35
+```
+
+We should now be ready to install Windows.
+
+=== Step 2: Begin Installation
+
+Before watching this great link:https://www.youtube.com/watch?v=thVmhIw4-jU[PVE Installation Video^] from ProxMox, make note of the following key points:
+
+. Important first step: quickly open the Spice console and hit the spacebar after the UEFI boot screen, to launch the Windows installation process. Then initiate the Windows Setup. Windows will complain that "no drives were found".
+. Select "Custom (advanced)" and then: 
+.. Install NetKVM drivers:
+... click #Load Driver#
+... click #Browse# and then select the drive with the "virtio-win" drivers.
+... select the folder: NetKVM -> w7 -> amd64
+... click #OK#
+... click #Next#
+.. Install viostor drivers:
+... click #Load Driver#
+... click #Browse# and then select the drive with the "virtio-win" drivers.
+... select folder: viostor-> w7 -> amd64
+... click #OK#
+... click #Next#
+
+At this point, the installation process will recognize the virtual disk and be able to continue with the installation process. In addition, Windows should automatically recognize and configure the network card. We can bypass the registration process until later. Select our "Home" network.
+
+=== Step 3: Post Installation
+
+==== Update Windows!
+
+After installing Windows we should immediately check for Windows updates. This will likely take the most time of this process and require many reboots. Keep checking for updates until Windows says there are no more.
+
+Afterward, we should go back to our PVE Web GUI and select our Windows VM, select `Hardware` and then for each `CD/DVD Drive` click `Edit`.  In the edit window, we should select "Do not use any media" and then click `OK`. 
+
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/important.png[icon="tip",size="4x",width=56]
+|*Note*: Although Windows 7 supports UEFI boot, Microsoft designed it under the assumption that it is running alone on real hardware. It is likely that when you try to run our Windows VM it will bail out to the _UEFI Interactive Shell_. If you get stuck there, on the PVE Web GUI click `Shutdown -> PowerOff` for the Windows VM. We can download link:http://www.supergrubdisk.org/[Super Grub Disk^] and then upload the iso to our zfs-templates folder. Once we have assigned it to our first "CD/DVD", we can start our VM, which will boot into the Grub bootloader. Press <enter> on `Detect and show boot methods` to quickly identify the boot partitions, select the first entry `(hd0,gpt1)/efi/Boot/booxx64.efi`, and press <enter> again to boot into Windows.
+|===
+
+==== Install Additional Drivers
+
+After updating, we should install the link:https://www.spice-space.org/download.html[Spice Guest Tools^] for Windows. This will include drivers that will speed up the VM and make it nicer to use with Virt-Viewer. Also, we should install the link:http://www.geforce.com/drivers[Nvidia Geforce graphics drivers^].
+
+== Checkpoint
+
+=== Backup
+
+This is a great time to save our work. In case something goes haywire, we should have a backup so that we don't go through that whole process again, right? In addition, wouldn't it be nice to have a clean slate in case of a virus or worm? We are talking about Windows after all.
+
+Backing up our VM is easy to do with PVE. First, we shutdown Windows. Next, on our PVE Web GUI, we select the "Summary" tab of our Windows VM and confirm the Status is "Stopped". Finally, we select the "Backup" tab, click "Backup Now" and then click "Backup". Then we need to be patient until it completes.
+
+```
+INFO: transferred 137438 MB in 515 seconds (266 MB/s)
+INFO: stopping kvm after backup task
+INFO: archive file size: 13.89GB
+INFO: Finished Backup of VM 100 (00:08:43)
+```
+
+After backing up our VM, we may want to verify the integrity of our backup. PVE uses a new backup format called link:https://pve.proxmox.com/wiki/VMA[VMA^].
+
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/important.png[icon="tip",size="4x",width=56]
+|*Note*: While trying to restore, the PVE process generated an error and failed. Unfortunately, this process removes the original VM disk image and then tries to restore the backup, which meant that I had to repeat the installation process multiple times. However, this should be resolved when the production version of PVE is released. In the mean time, we can use the following manual process to backup and restore.
+|===
+
+We can also back the drive image directly from the command line. There are multiple ways to do this. Using the Unix command `link:https://en.wikipedia.org/wiki/Dd_(Unix)[dd^]`, we will duplicate the emulated zvol block device as a raw file in our zfs pool.
+
+```
+# Install "pixie" for parallel compression of our disk image
+agt-get install pixz
+
+# Backup ("dd") and compress ("pixz") our VM disk image
+# Note: it is a good idea to add a date to the filename in case 
+#       you want to have multiple backup versions.
+dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 | pixz -2 > /tank/100-windows.raw.xz
+
+# 137438953472 bytes (137 GB, 128 GiB) copied, 603.995 s, 228 MB/s
+# 4.4G 100-windows.raw.xz
+
+# Note: we could back up our image without compression and let zfs
+# handle the compression by default (lz4). Although lz4 is 
+# faster for interactive I/O, it isn't as space efficient as xz. In
+# addition, since pixz can run in parallel, it is more than twice as
+# fast as the default compression. Compare this performance to above.
+# dd if=/dev/zvol/tank/vm-disks/vm-100-disk-1 of=/tank/100-windows.raw
+# 137438953472 bytes (137 GB, 128 GiB) copied, 1480.54 s, 92.8 MB/s
+# 128G 100-windows.raw
+```
+
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
+|*About That*: A zvol is an emulated "block device" provided by ZFS. By default, PVE creates one zvol for each VM-disk. Once we create our VM we can see our disks by running: `zfs list -t all -r tank`. The disks would be hidden in the tank folder, however, they would be mapped as block devices which we can see if we run: `ll /sys/block/zd*`. It is important to note that PVE saves the disk size in our configuration file, however, it also runs a command similar to `zfs create -V 128G tank/vm-disks/vm-100-disk-1` which also sets the zvol block device size in our zpool. Ensure you update your drive size in the PVE Web GUI so that they match up.
+|===
+
+.Restoring our backup:
+```
+# Check to ensure our VM disk is still enabled:
+zfs list -t all -r tank
+
+# We should see something like:
+# tank/vm-disks/vm-100-disk-1   132G  1.72T  21.7G  -
+#
+# if something bad happened and we cannot see the zvol, we can
+# manually recreate it with the following command:
+zfs create -V 128G tank/vm-disks/vm-100-disk-1
+
+# Restore our compressed VM disk image.
+pixz -d -i /tank/100-windows.raw.xz | dd of=/dev/zvol/tank/vm-disks/vm-100-disk-1
+
+# 137438953472 bytes (137 GB, 128 GiB) copied, 799.285 s, 172 MB/s
+```
+
+Congratulations! We can now backup and restore our disk images. In case of emergency, we can recreate our image to a known good state. In addition, we have the opportunity to move our disk image to another computer.
+
+[cols="1, 8a"]
+|===
+^.^|image:/images/icons/lightbulb.png[icon="tip",size="4x",width=56]
+|*About That*: If we already have a VM disk image that we want to restore to PVE, we can use a similar process to our backup and restore process. Key points to consider, whether the disk image is in qcow2 or some other format, we need to convert it to "raw" format. For example, we could run something like: `qemu-img convert -O raw windoze.qcow2 windoze.raw`. Once converted to raw format we might want to compress it like: `pixz -2 windoze.raw windoze.raw.xz`. Finally, we need to create a VM that has a disk size that is equal to our original image and then we can restore similar to above.
+|===
+
+=== Cloning
+
+Another cool feature of PVE is cloning. We can get our existing Windows VM and clone it to have an alternate installation to experiment with. For example, maybe we want to install some experimental software or make hardware changes without risking our standard VM.
+
+Depending on how large the VM disk image is, the cloning process may take a while. Be patient for it to complete. To check progress, we can run from the command line: `zfs list -t all -r tank`. In this example, we can see that *vm-101-disk-1* REFER size is only 20.1G compared to 22.1G for *vm-100-disk-1*, which we are cloning:
+
+.Example
+```
+NAME                          USED  AVAIL  REFER  MOUNTPOINT
+tank                          169G  1.59T  16.7G  /tank
+tank/vm-disks                 152G  1.59T    96K  /tank/vm-disks
+tank/vm-disks/vm-100-disk-1   132G  1.70T  22.1G  -
+tank/vm-disks/vm-101-disk-1  20.1G  1.59T  20.1G  -
+```
+
+== Next Steps
+
+At this point, we should have our Windows installation running on our Ryzen server as-if it were running on a Haswell machine, at near native performance. Our NVidia drivers should be installed, however, the "Display Adapter" status will likely show as: "This device cannot find enough free resources that it can use. (Code 12)". 
+
+Considering that Ryzen is a new platform, the system bios and Linux Kernel support are not quite at 100% yet. AMD recently released an link:https://community.amd.com/community/gaming/blog/2017/05/25/community-update-4-lets-talk-dram[AGESA Update^] that should make it into a bios update over the next few weeks. This should improve virtualization support for PCI Express Access Control Services (ACS). The ACS support also needs to make it into the Linux kernel. After these updates are ready, we should be able to finish enabling full GPU Passthrough to our VM.
